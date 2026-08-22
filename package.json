@@ -1,0 +1,18 @@
+{
+  "name": "clutch-skill",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Human-approved model routing through compact context cards",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JakeTOpenSource/clutch-skill.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "refresh-manifests": "node scripts/generate-manifests.mjs",
+    "test": "node scripts/verify-release.mjs"
+  }
+}

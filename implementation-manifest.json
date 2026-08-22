@@ -1,0 +1,83 @@
+{
+  "schema_version": "implementation-manifest.v1",
+  "status": "PREPARE_ONLY",
+  "hash_algorithm": "sha256",
+  "file_encoding": "RAW_BYTES",
+  "files": [
+    {
+      "path": "AGENTS.example.md",
+      "bytes": 1628,
+      "sha256": "9aec380194160cdcbd0b3658036d82c9f77e0f43a706b9237fa45caf2c202146"
+    },
+    {
+      "path": "Clutch-Skill.md",
+      "bytes": 6939,
+      "sha256": "1b0481e793e0054b797782c77054c5388a026a1970cf81d1eaa2056f7dc5cb41"
+    },
+    {
+      "path": "clutch/agents/openai.yaml",
+      "bytes": 271,
+      "sha256": "41441a938f1bf43db5d7b5111a479b34ade0a3802814f0c8898bdaf0d2206469"
+    },
+    {
+      "path": "clutch/references/card-contract.md",
+      "bytes": 4814,
+      "sha256": "85db47deb539809a0a316297be3e76d4e7b42d67ccb8d17fe813c1f0042ff443"
+    },
+    {
+      "path": "clutch/references/model-profiles.md",
+      "bytes": 2096,
+      "sha256": "47c5a280a9aeb33e20f3a94c52c392da728e743bae580cd24d07a7caef8b1f7f"
+    },
+    {
+      "path": "clutch/references/protocol.md",
+      "bytes": 5954,
+      "sha256": "3fde9e6203d139567042551544ca3bd1572f821b1b6102b158445ee11440e983"
+    },
+    {
+      "path": "clutch/scripts/card-gate.mjs",
+      "bytes": 22657,
+      "sha256": "43a7ed0e96ac778c4305b6d1df4ef677cdfc0700bb1c35e0e1635633d0f1cc40"
+    },
+    {
+      "path": "clutch/scripts/fixtures/conformance-cases.json",
+      "bytes": 85685,
+      "sha256": "f45c0fb3bf614238df70a3d08d69643ca51058517b71a1f9420a8878f8d2794b"
+    },
+    {
+      "path": "clutch/scripts/release-reference.mjs",
+      "bytes": 18305,
+      "sha256": "cf6a13dd0155c7b6c668440d0cdd2380977986ee1e84e7eea8488ce7845941e4"
+    },
+    {
+      "path": "clutch/scripts/validate-skill.mjs",
+      "bytes": 7865,
+      "sha256": "a9b7369dee58774766d8f0735ca9da41222a6b0e7ffd4a9d1e9c46576db03e9c"
+    },
+    {
+      "path": "clutch/scripts/verify.mjs",
+      "bytes": 13162,
+      "sha256": "1ae25978ab461399dcccce6e2960afc4ac7c3a495730d64f46431c2c43c8756b"
+    },
+    {
+      "path": "clutch/SKILL.md",
+      "bytes": 6918,
+      "sha256": "2f2a211eabe9b9a2b4a04bb2edbd79cb86973c76858c9cec861bf5f6adb71df6"
+    },
+    {
+      "path": "model-map.example.json",
+      "bytes": 477,
+      "sha256": "84f9404941819689758283e765eb63b6042e77e6296c6cac5eb6662b172be9d1"
+    },
+    {
+      "path": "scripts/generate-manifests.mjs",
+      "bytes": 3219,
+      "sha256": "625bdf0eda5d37573d1259f1d722fa03e04b286ac40b260d726be36944ae5f18"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "bytes": 8183,
+      "sha256": "aaf78b7eccd675b4a2d6367e17852cee2685d87f28bddc96ee6f64ad91e501a1"
+    }
+  ]
+}

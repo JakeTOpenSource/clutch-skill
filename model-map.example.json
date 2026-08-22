@@ -1,0 +1,21 @@
+{
+  "schema_version": "model-map.v1",
+  "status": "EXAMPLE_NOT_ACTIVATED",
+  "profiles": {
+    "advisor": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "mutation_mode": "READ_ONLY"
+    },
+    "economy": {
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "mutation_mode": "CARD_BOUNDED"
+    },
+    "balanced": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "mutation_mode": "CARD_BOUNDED"
+    }
+  }
+}

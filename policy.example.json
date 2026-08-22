@@ -1,0 +1,21 @@
+{
+  "schema_version": "routing-policy.v1",
+  "policy_id": "clutch-policy-v1@sha256:6d077e9d572fe93e241856bbf39666236639ad8f7dfc314bf98712deca6aab3c",
+  "stream_id": "clutch-stream-v1",
+  "phase": "PREPARE_ONLY",
+  "human_actor_ids": [
+    "owner"
+  ],
+  "advisor_actor_ids": [
+    "advisor"
+  ],
+  "advisor_profile": "advisor",
+  "worker_profiles": [
+    "economy",
+    "balanced"
+  ],
+  "max_worker_attempts": 1,
+  "max_concurrent_workers": 2,
+  "max_context_turns": 3,
+  "max_card_bytes": 12000
+}

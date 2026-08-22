@@ -1,0 +1,128 @@
+{
+  "schema_version": "manual-transmission-metaphor.v4",
+  "title": "Human-in-the-loop manual routing",
+  "core_meaning": "The advisor retains full context, a human approves one compact task card, and one lower-cost worker executes one bounded attempt.",
+  "states": [
+    {
+      "id": "neutral",
+      "label": "NEUTRAL",
+      "descriptor": "Full context held. No worker runs.",
+      "plain_english": "The advisor session retains the full history while the trusted host withholds worker assignment.",
+      "image_rule": "base",
+      "screen_state": {
+        "label": "FULL CONTEXT",
+        "mode": "dense_history",
+        "meaning": "The long conversation remains with the advisor."
+      }
+    },
+    {
+      "id": "approve_card",
+      "label": "APPROVE CARD",
+      "descriptor": "Human scopes one compact task.",
+      "plain_english": "The human reviews and approves the exact bounded card. Approval permits one assignment, not unlimited reuse.",
+      "image_rule": "base",
+      "screen_state": {
+        "label": "APPROVED CARD",
+        "mode": "compact_card",
+        "meaning": "One compact task card is visible for human approval."
+      }
+    },
+    {
+      "id": "engaged",
+      "label": "ENGAGED",
+      "descriptor": "One card. One lower-cost attempt.",
+      "plain_english": "The trusted host sends the exact approved card to one qualified lower-cost worker for one bounded attempt.",
+      "image_rule": "base_plus_engagement",
+      "screen_state": {
+        "label": "BOUNDED WORKER",
+        "mode": "single_attempt",
+        "meaning": "The worker receives the compact card, not the full conversation."
+      }
+    }
+  ],
+  "image_receipts": {
+    "base": {
+      "file": "manual-transmission-shop-diagnostics.png",
+      "sha256": "f08a2fce8bab1b257a5ad4b42da2b8ac2d4fd419848dc2cdc4fc29c8a74cf553",
+      "width": 1083,
+      "height": 1453,
+      "bytes": 2193187
+    },
+    "engaged": {
+      "file": "manual-transmission-shop-engaged-source.png",
+      "sha256": "eb69e08756b713e57e5e687a8c12dead4d729cd8d1f0674321a87c8722ddb2d9",
+      "width": 1084,
+      "height": 1451,
+      "bytes": 2194861
+    }
+  },
+  "engagement_overlay": {
+    "source": "engaged",
+    "target_panel": "engaged",
+    "explanation": "Only the lever, selector fork, and synchronizer engagement region comes from the edited source. Every frame otherwise reuses the same pinned base image.",
+    "feather": 3.5,
+    "ellipses": [
+      {
+        "cx": 1718,
+        "cy": 310,
+        "rx": 112,
+        "ry": 154
+      },
+      {
+        "cx": 1684,
+        "cy": 448,
+        "rx": 118,
+        "ry": 108
+      }
+    ]
+  },
+  "thesis": {
+    "kicker": "HUMAN IN THE LOOP",
+    "headline": "FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.",
+    "body": "That limits worker context and moves routine labor to a lower-cost model. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.",
+    "caveat_label": "CALIBRATION",
+    "caveat": "Savings vary; short tasks may not offset routing overhead.",
+    "efficiency_mechanism": "The worker receives a compact approved card rather than the full conversation, reducing worker-context volume while routine execution moves to a lower-cost model.",
+    "neutral_definition": "No worker is engaged while scope, approval, or retry is unresolved.",
+    "retry_rule": "One card authorizes one attempt. A failed check returns to neutral and every retry requires a new card and human approval.",
+    "acceptance_rule": "Verification informs later human acceptance; successful worker execution does not accept itself."
+  },
+  "deterministic_reading": {
+    "forward": [
+      "neutral",
+      "approve_card",
+      "engaged"
+    ],
+    "reverse_audit": [
+      "engaged",
+      "approve_card",
+      "neutral"
+    ],
+    "authority_trace": [
+      "advisor_context",
+      "human_approval",
+      "trusted_host",
+      "bounded_worker"
+    ],
+    "retry_trace": [
+      "failed_check",
+      "neutral",
+      "new_card",
+      "new_human_approval"
+    ]
+  },
+  "invariants": [
+    "All three frames reuse the exact same pinned laptop-and-shop base image.",
+    "Only the engaged frame overlays the shifter, selector fork, and synchronizer engagement region.",
+    "Laptop screen states are deterministic SVG overlays; generated text is never trusted.",
+    "Neutral means no worker is engaged.",
+    "Human approval is mandatory before worker assignment, so the architecture is human-in-the-loop.",
+    "One approved card authorizes one worker attempt.",
+    "A retry requires a new card and new human approval.",
+    "The worker receives the compact card, not the full conversation.",
+    "Lower context volume and lower model price are distinct possible cost benefits.",
+    "Verification and human acceptance occur after the depicted engagement state.",
+    "Savings are workload-dependent and are not established by this visual."
+  ],
+  "claim_ceiling": "This is a control and cost-routing metaphor. It does not prove authenticated identity, secure isolation, correct model judgment, measured savings, or accepted output."
+}

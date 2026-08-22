@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1166" viewBox="0 0 2048 1166" role="img" aria-labelledby="title description">
+  <title id="title">Human-in-the-loop manual routing</title>
+  <desc id="description">The same transmission shop progresses from neutral, to human approval of one compact task card, to one engaged lower-cost worker attempt. The laptop remains fixed while its screen compresses full context into one bounded card. Only the third transmission is mechanically engaged.</desc>
+  <defs>
+    <filter id="engagement-feather" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5"/></filter>
+    <mask id="engagement-only" maskUnits="userSpaceOnUse" x="0" y="0" width="2048" height="918">
+      <rect x="0" y="0" width="2048" height="918" fill="black"/>
+      <g fill="white" filter="url(#engagement-feather)"><ellipse cx="1718" cy="310" rx="112" ry="154"/><ellipse cx="1684" cy="448" rx="118" ry="108"/></g>
+    </mask>
+    <linearGradient id="label-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16301F" stop-opacity=".72"/><stop offset="1" stop-color="#16301F" stop-opacity="0"/></linearGradient>
+  </defs>
+  <style>
+    .state-label,.state-copy,.screen-label,.loop-title,.thesis-headline,.loop-copy,.fit-copy{font-family:Arial,Helvetica,sans-serif}
+    .state-label{fill:#FAFCF7;font-size:23px;font-weight:600;letter-spacing:2.5px;paint-order:stroke;stroke:#16301F;stroke-width:4px;stroke-linejoin:round}
+    .state-copy{fill:#E8E4D8;font-size:17px;font-weight:400;letter-spacing:.15px;paint-order:stroke;stroke:#16301F;stroke-width:3px;stroke-linejoin:round}
+    .screen-label{fill:#FAFCF7;font-size:9px;font-weight:600;letter-spacing:1.1px}
+    .loop-title{fill:#A8794F;font-size:16px;font-weight:600;letter-spacing:2.2px}
+    .thesis-headline{fill:#FAFCF7;font-size:27px;font-weight:600;letter-spacing:1.5px}
+    .loop-copy{fill:#E8E4D8;font-size:17px;font-weight:400}
+    .fit-copy{fill:#E8E4D8;font-size:14px;font-weight:400;letter-spacing:.2px}
+  </style>
+  <g id="shop-states">
+    <image href="manual-transmission-shop-diagnostics.png" x="0" y="0" width="683" height="918" preserveAspectRatio="xMidYMid slice"/>
+    <image href="manual-transmission-shop-diagnostics.png" x="683" y="0" width="682" height="918" preserveAspectRatio="xMidYMid slice"/>
+    <image href="manual-transmission-shop-diagnostics.png" x="1365" y="0" width="683" height="918" preserveAspectRatio="xMidYMid slice"/>
+    <image href="manual-transmission-shop-engaged-source.png" x="1365" y="0" width="683" height="918" preserveAspectRatio="xMidYMid slice" mask="url(#engagement-only)"/>
+    <g id="screen-neutral" role="group" aria-label="FULL CONTEXT: The long conversation remains with the advisor.">
+      <rect x="7" y="307" width="151" height="94" rx="3" fill="#101715" stroke="#43525C" stroke-width="1.2"/>
+      <text class="screen-label" x="15" y="323">FULL CONTEXT</text>
+      <rect x="15" y="334" width="126" height="3" rx="1.5" fill="#A8794F" opacity=".86"/>
+      <rect x="15" y="342" width="112" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+      <rect x="15" y="350" width="131" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+      <rect x="15" y="358" width="104" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+      <rect x="15" y="366" width="121" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+      <rect x="15" y="374" width="116" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+      <rect x="15" y="382" width="128" height="3" rx="1.5" fill="#E8E4D8" opacity=".52"/>
+    </g>
+    <g id="screen-approve_card" role="group" aria-label="APPROVED CARD: One compact task card is visible for human approval.">
+      <rect x="690" y="307" width="151" height="94" rx="3" fill="#101715" stroke="#43525C" stroke-width="1.2"/>
+      <text class="screen-label" x="698" y="323">APPROVED CARD</text>
+      <rect x="722" y="334" width="86" height="50" rx="3" fill="#2C4A38" stroke="#A8794F" stroke-width="1.4"/>
+      <rect x="732" y="344" width="53" height="3" rx="1.5" fill="#E8E4D8" opacity=".82"/>
+      <rect x="732" y="353" width="65" height="3" rx="1.5" fill="#E8E4D8" opacity=".58"/>
+      <rect x="732" y="362" width="45" height="3" rx="1.5" fill="#E8E4D8" opacity=".58"/>
+      <circle cx="794" cy="373" r="5.5" fill="#68A77B"/>
+      <path d="M791 373 l2 2 4 -5" fill="none" stroke="#FAFCF7" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g id="screen-engaged" role="group" aria-label="BOUNDED WORKER: The worker receives the compact card, not the full conversation.">
+      <rect x="1372" y="307" width="151" height="94" rx="3" fill="#101715" stroke="#43525C" stroke-width="1.2"/>
+      <text class="screen-label" x="1380" y="323">BOUNDED WORKER</text>
+      <rect x="1382" y="337" width="55" height="42" rx="3" fill="#2C4A38" stroke="#A8794F" stroke-width="1.2"/>
+      <rect x="1390" y="347" width="36" height="3" rx="1.5" fill="#E8E4D8" opacity=".78"/>
+      <rect x="1390" y="356" width="29" height="3" rx="1.5" fill="#E8E4D8" opacity=".55"/>
+      <rect x="1452" y="343" width="52" height="5" rx="2.5" fill="#2C4A38"/>
+      <rect x="1452" y="343" width="38" height="5" rx="2.5" fill="#68A77B"/>
+      <circle cx="1458" cy="363" r="5" fill="#68A77B"/>
+      <circle cx="1476" cy="363" r="5" fill="#68A77B" opacity=".72"/>
+      <circle cx="1494" cy="363" r="5" fill="#68A77B" opacity=".44"/>
+    </g>
+    <rect x="0" y="0" width="683" height="145" fill="url(#label-shade)"/>
+    <rect x="683" y="0" width="682" height="145" fill="url(#label-shade)"/>
+    <rect x="1365" y="0" width="683" height="145" fill="url(#label-shade)"/>
+    <line x1="683" y1="0" x2="683" y2="918" stroke="#FAFCF7" stroke-width="2" opacity=".78"/>
+    <line x1="1365" y1="0" x2="1365" y2="918" stroke="#FAFCF7" stroke-width="2" opacity=".78"/>
+    <g id="state-neutral" role="group" aria-label="NEUTRAL: Full context held. No worker runs.">
+      <text class="state-label" x="38" y="62">NEUTRAL</text>
+      <text class="state-copy" x="38" y="91">Full context held. No worker runs.</text>
+    </g>
+    <g id="state-approve_card" role="group" aria-label="APPROVE CARD: Human scopes one compact task.">
+      <text class="state-label" x="721" y="62">APPROVE CARD</text>
+      <text class="state-copy" x="721" y="91">Human scopes one compact task.</text>
+    </g>
+    <g id="state-engaged" role="group" aria-label="ENGAGED: One card. One lower-cost attempt.">
+      <text class="state-label" x="1403" y="62">ENGAGED</text>
+      <text class="state-copy" x="1403" y="91">One card. One lower-cost attempt.</text>
+    </g>
+  </g>
+  <g id="thesis">
+    <rect x="0" y="918" width="2048" height="248" fill="#16301F"/>
+    <line x1="0" y1="918" x2="2048" y2="918" stroke="#4A6B56" stroke-width="2"/>
+    <text class="loop-title" x="58" y="955">HUMAN IN THE LOOP</text>
+    <text class="thesis-headline" x="58" y="997">FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.</text>
+    <text class="loop-copy" x="58" y="1045">That limits worker context and moves routine labor to a lower-cost model. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.</text>
+    <text class="fit-copy" x="58" y="1127"><tspan fill="#A8794F" font-weight="600" letter-spacing="1.5px">CALIBRATION</tspan><tspan dx="16">Savings vary; short tasks may not offset routing overhead.</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,171 @@
+{
+  "schema_version": "clutch-release-manifest.v1",
+  "status": "PREPARE_ONLY",
+  "hash_algorithm": "sha256",
+  "file_encoding": "RAW_BYTES",
+  "excluded_paths": [
+    "release-manifest.json"
+  ],
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 32,
+      "sha256": "23302dd90b8bb74b44d365fafef8df20f809b61cb347023951ecf60a88a29651"
+    },
+    {
+      "path": ".github/workflows/verify.yml",
+      "bytes": 378,
+      "sha256": "42d5e747d16b58301b31feadb9486aafb26de0bc7a5e7bd58b1012a75c4b6d2d"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 40,
+      "sha256": "e59e0b2e5b7b054d318feb8a23b85e604ac6f9f89c5309e80ea83e08fa5ce264"
+    },
+    {
+      "path": "AGENTS.example.md",
+      "bytes": 1628,
+      "sha256": "9aec380194160cdcbd0b3658036d82c9f77e0f43a706b9237fa45caf2c202146"
+    },
+    {
+      "path": "Clutch-Skill.md",
+      "bytes": 6939,
+      "sha256": "1b0481e793e0054b797782c77054c5388a026a1970cf81d1eaa2056f7dc5cb41"
+    },
+    {
+      "path": "clutch/agents/openai.yaml",
+      "bytes": 271,
+      "sha256": "41441a938f1bf43db5d7b5111a479b34ade0a3802814f0c8898bdaf0d2206469"
+    },
+    {
+      "path": "clutch/references/card-contract.md",
+      "bytes": 4814,
+      "sha256": "85db47deb539809a0a316297be3e76d4e7b42d67ccb8d17fe813c1f0042ff443"
+    },
+    {
+      "path": "clutch/references/model-profiles.md",
+      "bytes": 2096,
+      "sha256": "47c5a280a9aeb33e20f3a94c52c392da728e743bae580cd24d07a7caef8b1f7f"
+    },
+    {
+      "path": "clutch/references/protocol.md",
+      "bytes": 5954,
+      "sha256": "3fde9e6203d139567042551544ca3bd1572f821b1b6102b158445ee11440e983"
+    },
+    {
+      "path": "clutch/scripts/card-gate.mjs",
+      "bytes": 22657,
+      "sha256": "43a7ed0e96ac778c4305b6d1df4ef677cdfc0700bb1c35e0e1635633d0f1cc40"
+    },
+    {
+      "path": "clutch/scripts/fixtures/conformance-cases.json",
+      "bytes": 85685,
+      "sha256": "f45c0fb3bf614238df70a3d08d69643ca51058517b71a1f9420a8878f8d2794b"
+    },
+    {
+      "path": "clutch/scripts/release-reference.mjs",
+      "bytes": 18305,
+      "sha256": "cf6a13dd0155c7b6c668440d0cdd2380977986ee1e84e7eea8488ce7845941e4"
+    },
+    {
+      "path": "clutch/scripts/validate-skill.mjs",
+      "bytes": 7865,
+      "sha256": "a9b7369dee58774766d8f0735ca9da41222a6b0e7ffd4a9d1e9c46576db03e9c"
+    },
+    {
+      "path": "clutch/scripts/verify.mjs",
+      "bytes": 13162,
+      "sha256": "1ae25978ab461399dcccce6e2960afc4ac7c3a495730d64f46431c2c43c8756b"
+    },
+    {
+      "path": "clutch/SKILL.md",
+      "bytes": 6918,
+      "sha256": "2f2a211eabe9b9a2b4a04bb2edbd79cb86973c76858c9cec861bf5f6adb71df6"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "bytes": 776,
+      "sha256": "61b93b951c25c6166b02156a95200f2fee262215da1e0c5001bdcda573135bfe"
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 2929,
+      "sha256": "08e993b3fe5ba8ee3ea3105a2a0b0c7aa3f31fead4eab174119f94522c60acdc"
+    },
+    {
+      "path": "implementation-manifest.json",
+      "bytes": 2603,
+      "sha256": "2c4ef6d21746e2f3f407be1fd11925a01aa8af04a83551a7c99a44595158e2a8"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "model-map.example.json",
+      "bytes": 477,
+      "sha256": "84f9404941819689758283e765eb63b6042e77e6296c6cac5eb6662b172be9d1"
+    },
+    {
+      "path": "package.json",
+      "bytes": 452,
+      "sha256": "12f618712284cd6b9ace68cc112989393253b2b64373bc30b820ed657f88139b"
+    },
+    {
+      "path": "policy.example.json",
+      "bytes": 499,
+      "sha256": "eb38158c0f7cc6efb2cb2d7590e6eb29cb53fd48dca639566d449ad434570417"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4889,
+      "sha256": "3267f8e573d7fb208b57eaeedc17753941878d34c1d4abd57f342ca18aded166"
+    },
+    {
+      "path": "scripts/generate-manifests.mjs",
+      "bytes": 3219,
+      "sha256": "625bdf0eda5d37573d1259f1d722fa03e04b286ac40b260d726be36944ae5f18"
+    },
+    {
+      "path": "scripts/verify-release.mjs",
+      "bytes": 8183,
+      "sha256": "aaf78b7eccd675b4a2d6367e17852cee2685d87f28bddc96ee6f64ad91e501a1"
+    },
+    {
+      "path": "visuals/manual-transmission-diagram.mjs",
+      "bytes": 19073,
+      "sha256": "c9af39f13dc36842414592962bd3b8cb10ec88118eceb8c7e216a53c0308b1fe"
+    },
+    {
+      "path": "visuals/manual-transmission-human-loop.png",
+      "bytes": 2737359,
+      "sha256": "59a9add9c7eaa32b6854d0fa07080c3a1ac84ab9a34a8bcf50be62df4e0f4d63"
+    },
+    {
+      "path": "visuals/manual-transmission-human-loop.svg",
+      "bytes": 7453,
+      "sha256": "3a477059b469270ca24e44d53631b1e06cd38f6f8fe34afcd0b65d9dc194f9c4"
+    },
+    {
+      "path": "visuals/manual-transmission-legend.json",
+      "bytes": 5146,
+      "sha256": "9d912d26b38fbd6d61e5c2d3078e66d83529aa30d0a29824c95e2d38236e7d29"
+    },
+    {
+      "path": "visuals/manual-transmission-shop-diagnostics.png",
+      "bytes": 2193187,
+      "sha256": "f08a2fce8bab1b257a5ad4b42da2b8ac2d4fd419848dc2cdc4fc29c8a74cf553"
+    },
+    {
+      "path": "visuals/manual-transmission-shop-engaged-source.png",
+      "bytes": 2194861,
+      "sha256": "eb69e08756b713e57e5e687a8c12dead4d729cd8d1f0674321a87c8722ddb2d9"
+    },
+    {
+      "path": "visuals/verify-manual-transmission.mjs",
+      "bytes": 6085,
+      "sha256": "78ebc201c8ec5e28042e43fc2b4ef0cfa28b2d7392acf47b8b6be5ab0b39e0c0"
+    }
+  ]
+}

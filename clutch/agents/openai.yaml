@@ -1,0 +1,6 @@
+interface:
+  display_name: "Clutch"
+  short_description: "Gate approved work to lower-cost models"
+  default_prompt: "Use $clutch to create an exact context card and route one approved attempt to the least-cost qualified model."
+policy:
+  allow_implicit_invocation: true
