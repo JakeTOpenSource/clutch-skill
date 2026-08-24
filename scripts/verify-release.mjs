@@ -61,6 +61,7 @@ const implementationManifest = readJson(join(root, "implementation-manifest.json
 const releaseManifest = readJson(join(root, "release-manifest.json"));
 const policy = readJson(join(root, "policy.example.json"));
 const modelMap = readJson(join(root, "model-map.example.json"));
+const harnessTargets = readJson(join(root, "adapters", "harness-targets.json"));
 const packageMetadata = readJson(join(root, "package.json"));
 
 const canonicalSkill = readFileSync(join(skillRoot, "SKILL.md"), "utf8");
@@ -68,11 +69,22 @@ const expectedHumanSkill = canonicalSkill.replaceAll("](references/", "](clutch/
 const humanSkill = readFileSync(join(root, "Clutch-Skill.md"), "utf8");
 assert.equal(humanSkill, expectedHumanSkill, "Clutch-Skill.md differs beyond its path-aware reference links");
 assert.ok(!humanSkill.includes("](references/"), "Clutch-Skill.md retains install-directory links");
-for (const target of ["protocol.md", "card-contract.md", "model-profiles.md"]) {
+for (const target of ["protocol.md", "card-contract.md", "model-profiles.md", "host-integration.md", "evidence.md"]) {
   assert.ok(humanSkill.includes(`](clutch/references/${target})`), `Clutch-Skill.md lacks a working link to ${target}`);
 }
 const skillValidation = validateSkill(skillRoot);
 assert.equal(skillValidation.valid, true, skillValidation.message);
+
+assert.equal(harnessTargets.schema_version, "clutch-harness-targets.v1");
+assert.equal(harnessTargets.status, "REFERENCE_NOT_ACTIVATED");
+assert.equal(harnessTargets.skill_name, "clutch");
+assert.equal(harnessTargets.targets["agent-skills-shared"].project_path, ".agents/skills/clutch");
+assert.deepEqual(harnessTargets.targets["agent-skills-shared"].harnesses, ["codex", "github-copilot", "cursor", "gemini-cli"]);
+assert.equal(harnessTargets.targets["claude-code"].project_path, ".claude/skills/clutch");
+assert.deepEqual(harnessTargets.targets["claude-code"].harnesses, ["claude-code"]);
+for (const targetId of Object.values(harnessTargets.aliases)) {
+  assert.ok(Object.hasOwn(harnessTargets.targets, targetId), `Harness alias points to unknown target: ${targetId}`);
+}
 
 assert.equal(implementationManifest.schema_version, "implementation-manifest.v1");
 assert.equal(implementationManifest.status, "PREPARE_ONLY");
@@ -83,7 +95,12 @@ const implementationPaths = [
   join(root, "Clutch-Skill.md"),
   join(root, "model-map.example.json"),
   join(root, "scripts", "generate-manifests.mjs"),
+  join(root, "scripts", "install-skill.mjs"),
+  join(root, "scripts", "recompute-evaluation.mjs"),
+  join(root, "scripts", "verify-evaluation.mjs"),
+  join(root, "scripts", "verify-portability.mjs"),
   join(root, "scripts", "verify-release.mjs"),
+  ...walkFiles(join(root, "adapters")),
   ...walkFiles(skillRoot),
 ];
 assert.deepEqual(implementationManifest.files, sortedReceipts(implementationPaths), "Implementation manifest differs from the executable decision surface");
@@ -111,10 +128,26 @@ assert.equal(reference.released_card_ids.length, 0);
 
 const conformanceOutput = runNode(join(skillRoot, "scripts", "verify.mjs"));
 assert.match(conformanceOutput, /^VERIFY PASS$/m);
+const portabilityOutput = runNode(join(root, "scripts", "verify-portability.mjs"));
+assert.match(portabilityOutput, /^PORTABILITY VERIFY PASS$/m);
+assert.match(portabilityOutput, /^documented_harnesses=5$/m);
+assert.match(portabilityOutput, /^lock_contention_rejection=PASS$/m);
+assert.match(portabilityOutput, /^drift_rejection=PASS$/m);
+assert.match(portabilityOutput, /^path_escape_rejection=PASS$/m);
+const evaluationOutput = runNode(join(root, "scripts", "verify-evaluation.mjs"));
+assert.match(evaluationOutput, /^CLUTCH V2 EVALUATION VERIFY PASS$/m);
+assert.match(evaluationOutput, /^provider_requests=241$/m);
+assert.match(evaluationOutput, /^statistical_replay=PASS$/m);
+assert.match(evaluationOutput, /^execution_integrity=RECEIPT_BOUND_NOT_RAW_REPLAYABLE$/m);
+assert.match(evaluationOutput, /^switch_resilience=NEUTRAL_OR_UNRESOLVED$/m);
 const visualOutput = runNode(join(root, "visuals", "verify-manual-transmission.mjs"));
 assert.match(visualOutput, /^TRANSMISSION VISUAL VERIFY PASS$/m);
 
+assert.equal(packageMetadata.version, "0.2.0");
 assert.equal(packageMetadata.license, "Apache-2.0");
+assert.equal(packageMetadata.scripts["recompute:evaluation"], "node scripts/recompute-evaluation.mjs");
+assert.equal(packageMetadata.scripts["verify:evaluation"], "node scripts/verify-evaluation.mjs");
+assert.equal(packageMetadata.scripts["verify:portability"], "node scripts/verify-portability.mjs");
 const licenseText = readFileSync(join(root, "LICENSE"), "utf8");
 assert.match(licenseText, /^ {33}Apache License\r?\n {27}Version 2\.0, January 2004/m);
 const normalizedLicense = licenseText.replaceAll("\r\n", "\n");
@@ -165,9 +198,17 @@ process.stdout.write([
   `release_files=${releaseManifest.files.length}`,
   "skill_name=clutch",
   "skill_mirror_match=PASS",
+  "documented_harnesses=5",
+  "installation_layouts=2",
+  "manual_handoff=SUPPORTED",
+  "portability_projection=PASS",
+  "confirmatory_evidence=PASS",
+  "public_statistical_replay=PASS",
+  "execution_integrity=RECEIPT_BOUND_NOT_RAW_REPLAYABLE",
+  "switch_resilience=NEUTRAL_OR_UNRESOLVED",
   "license=Apache-2.0",
   "privacy_scan=PASS",
   "conformance_cases=26",
   "primary_reference_parity=26/26",
-  "claim_ceiling=LOCAL_SYNTHETIC_CONFORMANCE_AND_RELEASE_BYTE_IDENTITY_ONLY",
+  "claim_ceiling=LOCAL_SYNTHETIC_CONFORMANCE_INSTALL_PROJECTION_CONFIRMATORY_SUMMARY_AND_RELEASE_BYTE_IDENTITY_ONLY",
 ].join("\n") + "\n");

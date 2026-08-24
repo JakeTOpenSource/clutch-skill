@@ -20,15 +20,25 @@ The advisor may inspect, reason, search, red-team, and draft a card. After activ
 
 One card authorizes one attempt. After a failed check, repair request, missing capability, or desired model change, every retry requires a new card and human approval.
 
+## Host modes
+
+The canonical skill follows the open Agent Skills folder format. Harness adapters only choose where that folder is installed. They do not duplicate or rewrite the protocol.
+
+`NATIVE_ROUTING` uses a host-created clean worker context. `MANUAL_HANDOFF` uses a new session created by the human, who transfers only the exact approved worker package. `CARD_ONLY` stops after planning when neither clean transfer is available. These modes preserve one state machine while keeping host capability claims explicit.
+
 ## Cost mechanism
 
 The full conversation remains with the advisor. The worker receives the compact approved card and explicit source references. This may reduce input-context volume. The worker may also run on a lower-priced model. Lower context volume and lower model price are separate possible benefits. Both must be measured against an all-frontier baseline on representative tasks.
+
+## Empirical status
+
+A preregistered fixed synthetic benchmark found about 95.9 percent raw-input reduction after advisor allocation, lower provider cost, and average post-handoff quality within a 10 percentage point noninferiority margin for both stable Terra and Terra-to-Luna paths. Stable-Terra cards still produced fewer fully correct final tasks than full history. The model-switch protection endpoint remained neutral or unresolved. See [evaluation-v2.md](evaluation-v2.md) for the complete calibrated result and limitations.
 
 ## Authority boundary
 
 The included Node checker consumes untrusted caller-supplied JSON. Hashes prove exact bytes and internal ordering under the declared canonicalization rules. They do not prove who supplied an event. The checker emits eligibility metadata and never emits card content.
 
-A production host must separately provide authenticated human identity, trusted policy and manifest storage, durable append-only events, recipient-bound delivery, filesystem isolation where needed, and real cost telemetry. This repository supplies none of those infrastructure guarantees.
+A production host must separately provide authenticated human identity, trusted policy and manifest storage, durable append-only events, recipient-bound delivery, filesystem isolation where needed, and real cost telemetry. Manual handoff relies on the human to preserve the clean-session boundary. This repository supplies none of those infrastructure guarantees.
 
 ## Visual invariants
 

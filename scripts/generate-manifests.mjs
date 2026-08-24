@@ -53,7 +53,12 @@ const implementationPaths = [
   humanSkillPath,
   join(root, "model-map.example.json"),
   join(root, "scripts", "generate-manifests.mjs"),
+  join(root, "scripts", "install-skill.mjs"),
+  join(root, "scripts", "recompute-evaluation.mjs"),
+  join(root, "scripts", "verify-evaluation.mjs"),
+  join(root, "scripts", "verify-portability.mjs"),
   join(root, "scripts", "verify-release.mjs"),
+  ...walkFiles(join(root, "adapters")),
   ...walkFiles(join(root, "clutch")),
 ];
 

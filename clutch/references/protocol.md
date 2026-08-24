@@ -4,6 +4,8 @@
 
 This protocol separates expensive judgment from lower-cost execution without treating a summary, model choice, or passing test as authority. It is a model-routing profile, not a security boundary, proof of correctness, or guarantee of savings.
 
+The protocol can run through native host routing, a human-mediated clean-session handoff, or card-only preparation. Select the mode through [host-integration.md](host-integration.md). Installation alone does not select or activate a mode.
+
 ## State sequence
 
 ```text
@@ -73,7 +75,7 @@ Do not add ceremonial approvals between bounded worker steps that were already i
 
 ## Worker boundary
 
-After the host-observed approval and metadata-only consistency check, the worker receives:
+After the approval observer confirms the exact human decision and the metadata-only consistency check passes, the worker receives:
 
 - the worker envelope and exact approved card;
 - only the source references authorized by that card;
@@ -82,7 +84,7 @@ After the host-observed approval and metadata-only consistency check, the worker
 - deterministic checks; and
 - a stop condition.
 
-The worker does not receive the full chat history, advisor scratch work, rejected cards, private reasoning, or unrelated project files. It must not spawn other agents. It may not widen scope or change its own model profile.
+The worker does not receive the full chat history, advisor scratch work, rejected cards, private reasoning, or unrelated project files. A native host must create that clean context. In manual mode, the human creates it by opening a new session and transferring only the approved package. The worker must not spawn other agents, widen scope, or change its own model profile.
 
 The worker returns the fixed receipt defined in [card-contract.md](card-contract.md). It does not declare acceptance.
 

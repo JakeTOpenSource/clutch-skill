@@ -2,6 +2,7 @@
 name: clutch
 description: Route bounded implementation through a read-only frontier advisor and exact human-approved context cards before assigning work to lower-cost models. Use when a user requests model-tier routing, lower agent cost, preserved long-context coherence, or approval-gated subagents. Do not use for ordinary single-model work unless routed execution is requested or activated by project policy.
 license: Apache-2.0
+compatibility: Agent Skills-compatible harness or manual handoff; Node.js 20 or newer is needed only for the included deterministic checks.
 ---
 
 # Clutch
@@ -18,7 +19,7 @@ Determine the declared phase before routing:
 - `ACTIVE`: apply the workflow only when an exact human activation record binds the current policy. The frontier advisor becomes read-only for project artifacts.
 - Missing, conflicting, or stale phase evidence is `UNKNOWN` and fails closed.
 
-Read [protocol.md](clutch/references/protocol.md) when activating the workflow, creating a card, assigning a worker, reviewing a result, or handling a correction. Read [card-contract.md](clutch/references/card-contract.md) when drafting or validating card fields. Read [model-profiles.md](clutch/references/model-profiles.md) when selecting or changing a model mapping.
+Read [protocol.md](clutch/references/protocol.md) when activating the workflow, creating a card, assigning a worker, reviewing a result, or handling a correction. Read [card-contract.md](clutch/references/card-contract.md) when drafting or validating card fields. Read [model-profiles.md](clutch/references/model-profiles.md) when selecting or changing a model mapping. Read [host-integration.md](clutch/references/host-integration.md) when installing the skill, selecting an operating mode, or transferring a card between sessions. Read [evidence.md](clutch/references/evidence.md) when deciding whether routing overhead is justified or reporting measured savings.
 
 ## Active workflow
 
@@ -26,8 +27,8 @@ Read [protocol.md](clutch/references/protocol.md) when activating the workflow, 
 2. Classify the request as `ADVISORY_ONLY` or `EXECUTION_REQUIRED`. Answer advisory-only requests directly. For execution, draft one context card in the human-visible response.
 3. Show the card ID, version, exact digest, proposed worker profile, allowed actions, forbidden actions, acceptance checks, unknowns, and stop conditions. Do not spawn or brief a worker yet.
 4. Wait for a human to approve that exact card and scope. Approval of a topic, an earlier revision, or a similar card is insufficient.
-5. The orchestrator that directly received the human approval runs the deterministic consistency checker. The checker returns eligibility metadata only. It never authenticates the human, exposes card content, or grants authority. If it withholds the card, stop and report the reason.
-6. If the checker confirms eligibility, that same orchestrator assigns the exact approved card to the least-cost qualified worker. Use `fork_turns: "none"` by default and provide only the worker envelope, approved card, and authorized source references. Never fork the complete history. Tell the worker not to spawn children.
+5. The trusted host or human operator that directly observed the approval runs the deterministic consistency checker. The checker returns eligibility metadata only. It never authenticates the human, exposes card content, or grants authority. If it withholds the card, stop and report the reason.
+6. Select the operating mode from [host-integration.md](clutch/references/host-integration.md). In `NATIVE_ROUTING`, the host starts one clean worker context. In `MANUAL_HANDOFF`, the human starts a clean worker session. In either mode, provide only the worker envelope, exact approved card, and authorized source references. Do not transfer the advisor conversation or let the worker spawn children. In `CARD_ONLY`, stop after the proposed card.
 7. Run deterministic checks directly where possible. The worker returns artifacts and a bounded receipt. Failure does not create acceptance.
 8. The advisor may review the result read-only. Any repair, retry, or model change needs a new card and new human approval. The failed result remains evidence for the next card.
 9. Only the human may accept, reject, defer, or request correction. Append a new event; never rewrite an accepted record.
@@ -35,6 +36,8 @@ Read [protocol.md](clutch/references/protocol.md) when activating the workflow, 
 ## Routing defaults
 
 - One worker at a time. Use two only for human-approved, independent cards.
+- Use direct execution for a short, self-contained task unless the human or active policy requires Clutch. Prefer Clutch when a cumulative session would otherwise resend a large history across repeated worker passes or a model handoff.
+- Prefer `NATIVE_ROUTING` when the host can enforce a clean worker context. Use `MANUAL_HANDOFF` when the human can create that boundary explicitly. Use `CARD_ONLY` when neither is available.
 - Start with the `economy` profile for bounded execution. After a declared failure or capability mismatch, the advisor may propose a new `balanced` card. It is never an automatic fallback.
 - The `advisor` profile never becomes an implementation worker after activation.
 - Maximum worker attempts per approved card: one. Every retry requires a new card and human decision.

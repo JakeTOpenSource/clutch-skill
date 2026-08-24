@@ -1,8 +1,8 @@
 {
   "name": "clutch-skill",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Human-approved model routing through compact context cards",
+  "description": "Cross-harness human-approved model routing through compact context cards",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -12,7 +12,10 @@
     "node": ">=20"
   },
   "scripts": {
+    "recompute:evaluation": "node scripts/recompute-evaluation.mjs",
     "refresh-manifests": "node scripts/generate-manifests.mjs",
+    "verify:evaluation": "node scripts/verify-evaluation.mjs",
+    "verify:portability": "node scripts/verify-portability.mjs",
     "test": "node scripts/verify-release.mjs"
   }
 }

@@ -117,7 +117,9 @@ function verifySkillValidator() {
       { expected: false, root: skillFixture(temporaryRoot, 6, { shortDescription: '"Too short"' }), fragment: "25 to 64" },
       { expected: false, root: skillFixture(temporaryRoot, 7, { unquotedDisplayName: true }), fragment: "display_name" },
       { expected: false, root: skillFixture(temporaryRoot, 8, { skillName: "different-skill" }), fragment: "must match" },
-      { expected: false, root: skillFixture(temporaryRoot, 9, { omitOpenAiYaml: true }), fragment: "not found" },
+      { expected: true, root: skillFixture(temporaryRoot, 9, { omitOpenAiYaml: true }), fragment: "SKILL VALID" },
+      { expected: true, root: skillFixture(temporaryRoot, 10, { extraFrontmatter: "compatibility: Any Agent Skills-compatible host." }), fragment: "SKILL VALID" },
+      { expected: false, root: skillFixture(temporaryRoot, 11, { extraFrontmatter: `compatibility: ${"x".repeat(501)}` }), fragment: "500" },
     ];
     for (const testCase of cases) {
       const validation = validateSkill(testCase.root);

@@ -9,7 +9,7 @@ These instructions are not active merely because this file exists. Activation re
 - The root frontier model is the read-only advisor. It may inspect, reason, search, draft context cards, route exact approved cards, and review results.
 - The advisor must not edit project artifacts, perform implementation labor, accept results, publish, deploy, merge, purchase, or widen access.
 - Execution work requires direct human approval of an exact context card plus a passing metadata-only consistency check. Caller-supplied hashes do not authenticate the human.
-- The trusted host gives workers only the approved card, worker envelope, and authorized source references. Use no full-history fork and no nested subagents.
+- The trusted host starts a clean worker context, or the human performs a manual handoff into a new clean session. Give the worker only the approved card, worker envelope, and authorized source references. Do not transfer the advisor history or permit nested agents.
 - Use the `economy` profile first. Any retry, repair, or proposed move to `balanced` requires a new card and human approval.
 - Use one worker by default and no more than two for separate approved cards.
 - Run deterministic tools directly when another model opinion adds no evidence.

@@ -1,0 +1,50 @@
+{
+  "schema_version": "clutch-v2-public-preregistration.v1",
+  "study_id": "clutch-v2-confirmatory-001",
+  "status": "PUBLIC_EXTRACT_BOUND_TO_FROZEN_OWNER_APPROVED_PACKET",
+  "research_question": "Across a frozen fifteen-task busy-session benchmark with five cumulative changes, does an exact approved card preserve quality through a Terra-to-Luna handoff while reducing raw input and end-to-end provider cost relative to full accumulated history?",
+  "population": {
+    "task_count": 15,
+    "strata": [
+      "POLICY_ROUTING",
+      "ATOMIC_ALLOCATION",
+      "EVENT_RECONCILIATION"
+    ],
+    "variants_per_stratum": 5,
+    "random_sample_of_production_work": false
+  },
+  "design": {
+    "phases": ["P1", "P2", "P3", "P4", "P5"],
+    "trajectories": ["STABLE_TERRA", "TERRA_TO_LUNA"],
+    "carriages": ["FULL_HISTORY", "APPROVED_CARD"],
+    "terra_shared_prefix_phases": ["P1", "P2"],
+    "post_handoff_phases": ["P3", "P4", "P5"],
+    "p2_source_cloned_before_branch": true,
+    "one_attempt_per_cell": true,
+    "automatic_retry": false,
+    "same_hidden_probes": true,
+    "full_history_prompt_caching_enabled": true,
+    "advisor_charge_allocation": "ONE_COMPLETE_ADVISOR_CHARGE_DIVIDED_EQUALLY_ACROSS_FIFTEEN_APPROVED_CARD_TASKS_IN_EACH_TRAJECTORY_ESTIMAND"
+  },
+  "analysis": {
+    "bootstrap_iterations": 100000,
+    "bootstrap_seed": 2026082301,
+    "resampling": "TASK_STRATIFIED_BY_TEMPLATE",
+    "quality_noninferiority_margin": 0.1,
+    "quality_lower_quantile": 0.05,
+    "cost_interval_quantiles": [0.025, 0.975],
+    "minimum_input_reduction_fraction": 0.5,
+    "switch_resilience_supportive_threshold": 0.1,
+    "no_posthoc_task_or_probe_exclusion": true
+  },
+  "release_rules": {
+    "quality": "For both trajectories, the approved-card minus full-history one-sided lower bound must be at least -0.10 for the P3-P5 mean and separately at P3, P4, and P5.",
+    "critical": "Approved-card boundary violations must be zero and card collapses may not exceed full-history collapses.",
+    "input": "Approved-card input, including advisor allocation, must be at least 50 percent below full-history input in both trajectories.",
+    "cost": "The upper endpoint of the paired 95 percent cost-difference interval must be below zero in both trajectories.",
+    "all_required": true
+  },
+  "switch_resilience_rule": "Support requires a card-protection point estimate of at least 0.10 and a one-sided 95 percent lower bound above zero. This endpoint does not change the release gate.",
+  "frozen_packet_sha256": "sha256:58475dedf6afdd68ae33697b2c0d43956336cdf5bd01f1a4dd96f623386eb01e",
+  "claim_ceiling": "FIXED_SYNTHETIC_LONG_CONTEXT_SESSION_SINGLE_ADVISOR_REALIZATION_NO_POPULATION_OR_PRODUCTION_CLAIM"
+}
