@@ -6,63 +6,108 @@
   "files": [
     {
       "path": "AGENTS.example.md",
-      "bytes": 1628,
-      "sha256": "9aec380194160cdcbd0b3658036d82c9f77e0f43a706b9237fa45caf2c202146"
+      "bytes": 2604,
+      "sha256": "5ca0eeea230ba8f0eda93552744e1b79919cc2cadd99fa8284c2f5e7aa9e800e"
     },
     {
       "path": "Clutch-Skill.md",
-      "bytes": 6939,
-      "sha256": "1b0481e793e0054b797782c77054c5388a026a1970cf81d1eaa2056f7dc5cb41"
+      "bytes": 12145,
+      "sha256": "a3cf2eeebbc740e79441d1ccbbc9eb380201533080a0179fbb0929bca396b050"
     },
     {
-      "path": "clutch/agents/openai.yaml",
-      "bytes": 271,
-      "sha256": "41441a938f1bf43db5d7b5111a479b34ade0a3802814f0c8898bdaf0d2206469"
-    },
-    {
-      "path": "clutch/references/card-contract.md",
-      "bytes": 4814,
-      "sha256": "85db47deb539809a0a316297be3e76d4e7b42d67ccb8d17fe813c1f0042ff443"
-    },
-    {
-      "path": "clutch/references/model-profiles.md",
-      "bytes": 2096,
-      "sha256": "47c5a280a9aeb33e20f3a94c52c392da728e743bae580cd24d07a7caef8b1f7f"
-    },
-    {
-      "path": "clutch/references/protocol.md",
-      "bytes": 5954,
-      "sha256": "3fde9e6203d139567042551544ca3bd1572f821b1b6102b158445ee11440e983"
-    },
-    {
-      "path": "clutch/scripts/card-gate.mjs",
-      "bytes": 22657,
-      "sha256": "43a7ed0e96ac778c4305b6d1df4ef677cdfc0700bb1c35e0e1635633d0f1cc40"
-    },
-    {
-      "path": "clutch/scripts/fixtures/conformance-cases.json",
-      "bytes": 85685,
-      "sha256": "f45c0fb3bf614238df70a3d08d69643ca51058517b71a1f9420a8878f8d2794b"
-    },
-    {
-      "path": "clutch/scripts/release-reference.mjs",
-      "bytes": 18305,
-      "sha256": "cf6a13dd0155c7b6c668440d0cdd2380977986ee1e84e7eea8488ce7845941e4"
-    },
-    {
-      "path": "clutch/scripts/validate-skill.mjs",
-      "bytes": 7865,
-      "sha256": "a9b7369dee58774766d8f0735ca9da41222a6b0e7ffd4a9d1e9c46576db03e9c"
-    },
-    {
-      "path": "clutch/scripts/verify.mjs",
-      "bytes": 13162,
-      "sha256": "1ae25978ab461399dcccce6e2960afc4ac7c3a495730d64f46431c2c43c8756b"
+      "path": "adapters/harness-targets.json",
+      "bytes": 809,
+      "sha256": "ac2876ceec0e032358379348aae5a3d44095209d790e8714312f47a1e86c361a"
     },
     {
       "path": "clutch/SKILL.md",
-      "bytes": 6918,
-      "sha256": "2f2a211eabe9b9a2b4a04bb2edbd79cb86973c76858c9cec861bf5f6adb71df6"
+      "bytes": 12075,
+      "sha256": "bb237eab10f79bd7461dc2b5abc3500fe66cc5de42b249ccb6aeb3d817dc2156"
+    },
+    {
+      "path": "clutch/agents/openai.yaml",
+      "bytes": 315,
+      "sha256": "5d265c01e7304ee43e8c83bf10838b0db0aac20e1eb16e666dfddbc34457e0fe"
+    },
+    {
+      "path": "clutch/references/card-contract.md",
+      "bytes": 5872,
+      "sha256": "016fd32c9af6cd2e08b633cc596387c1d86b15f3dcd74e0584944835119edc58"
+    },
+    {
+      "path": "clutch/references/context-fit.md",
+      "bytes": 5430,
+      "sha256": "82e39b2b3976fb170932877d1d3daa446d0bd741fedf6e55ac29411248bf9bc9"
+    },
+    {
+      "path": "clutch/references/evaluation.md",
+      "bytes": 4488,
+      "sha256": "bc70a30d7341f6e64c8e007fa5586e14a8f6bc877969b3623c4a099eadaace9a"
+    },
+    {
+      "path": "clutch/references/fuse-protocol.md",
+      "bytes": 7284,
+      "sha256": "a79662ef24ed4069d3b19d5cf98b5046b6eb74f017c546abdea416bf8c14707a"
+    },
+    {
+      "path": "clutch/references/host-integration.md",
+      "bytes": 5204,
+      "sha256": "7198e1ae30820c1632f485903d3ed54817dbdbe9d196d40c9a89a6ecffa31635"
+    },
+    {
+      "path": "clutch/references/model-profiles.md",
+      "bytes": 2247,
+      "sha256": "abd6e9ebee2dd168d518ca1f863cfa523bfa12849691b00fd54c33417a2fee95"
+    },
+    {
+      "path": "clutch/references/protocol.md",
+      "bytes": 10404,
+      "sha256": "a25679b22e6a58b94d7089912755b10e7e913a256a0675e47fe62d2929b090e1"
+    },
+    {
+      "path": "clutch/scripts/card-gate.mjs",
+      "bytes": 24477,
+      "sha256": "3936179b4b706aab564838ac20596a49c7d3835ce95ebe706c807c2f1c5eb178"
+    },
+    {
+      "path": "clutch/scripts/fixtures/conformance-cases.json",
+      "bytes": 169595,
+      "sha256": "97c138995bec91f7e63a3ecb586196e4814f3347749e8231c30afe32674542c2"
+    },
+    {
+      "path": "clutch/scripts/fixtures/fuse-cases.mjs",
+      "bytes": 26242,
+      "sha256": "8ad72659fbed8b199fef026e2faf5c93f9f00d9f71417aa450285fc7e80f213f"
+    },
+    {
+      "path": "clutch/scripts/fuse-gate.mjs",
+      "bytes": 27056,
+      "sha256": "fc9ad5e5310c719a2bf6f6b25ddfbf9c6b057ca6c70d905037c2874385379cba"
+    },
+    {
+      "path": "clutch/scripts/fuse-reference.mjs",
+      "bytes": 23324,
+      "sha256": "4d3f6815616756992370f70b7a157cd938c20effae32526781c7f8503d3dfd23"
+    },
+    {
+      "path": "clutch/scripts/release-reference.mjs",
+      "bytes": 19847,
+      "sha256": "bc4e29e464c83eceffae2dc1232dfc0cb1806ce1cc04cf8f0ac269fdd1ad3b30"
+    },
+    {
+      "path": "clutch/scripts/validate-skill.mjs",
+      "bytes": 8219,
+      "sha256": "ad7d2b56bbb2a4b120ff7e3007c5350ec4b9430f4de7a13ec434ec24bacda2cd"
+    },
+    {
+      "path": "clutch/scripts/verify-fuses.mjs",
+      "bytes": 8377,
+      "sha256": "1eb2b83de9e1037ca63f118845c33cc83b012f4c2a1655ffd33ac6a5eb9fea60"
+    },
+    {
+      "path": "clutch/scripts/verify.mjs",
+      "bytes": 18852,
+      "sha256": "4424c3dbc7708592451f260e82500ccebb3d350d5130e91aeba9f6acac16e62e"
     },
     {
       "path": "model-map.example.json",
@@ -71,13 +116,28 @@
     },
     {
       "path": "scripts/generate-manifests.mjs",
-      "bytes": 3219,
-      "sha256": "625bdf0eda5d37573d1259f1d722fa03e04b286ac40b260d726be36944ae5f18"
+      "bytes": 5093,
+      "sha256": "66306edd56f681da930da69730e65dc4a88b85ca344b1f82ce32d9f0ad2e7b41"
+    },
+    {
+      "path": "scripts/install-skill.mjs",
+      "bytes": 10896,
+      "sha256": "2807c06f22b85b8ccf3450c4985134a2d0c6a175d3dce481bb4275a57024b7e1"
+    },
+    {
+      "path": "scripts/verify-portability.mjs",
+      "bytes": 4690,
+      "sha256": "2ac0938a08f5426bb0e6d0e8438126641e34245f005eacc7eb24a3aa9d62fb07"
+    },
+    {
+      "path": "scripts/verify-release-boundary.mjs",
+      "bytes": 2545,
+      "sha256": "9fade59a71224f23ae3930c785a851e8238daf240988757df5cac05e1b37f689"
     },
     {
       "path": "scripts/verify-release.mjs",
-      "bytes": 8183,
-      "sha256": "aaf78b7eccd675b4a2d6367e17852cee2685d87f28bddc96ee6f64ad91e501a1"
+      "bytes": 16649,
+      "sha256": "4e57a11f2558bddc0ae548094c98b833e8daa522721a7d0ddc3450df71247853"
     }
   ]
 }

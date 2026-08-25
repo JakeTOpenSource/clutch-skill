@@ -1,0 +1,71 @@
+{
+  "schema_version": "clutch-claim-ledger.v1",
+  "release": "0.4.0-rc.1",
+  "status": "PREPARE_ONLY",
+  "claims": [
+    {
+      "claim_id": "CLM-001",
+      "status": "SUPPORTED_LOCAL",
+      "public_statement": "The packaged reducers agree on the released synthetic lifecycle fixtures.",
+      "evidence_refs": ["protocol-conformance-suite"],
+      "claim_ceiling": "LOCAL_SYNTHETIC_CONFORMANCE_ONLY",
+      "prohibited_expansions": ["production safe", "formally verified", "independently audited"]
+    },
+    {
+      "claim_id": "CLM-002",
+      "status": "SUPPORTED_LOCAL",
+      "public_statement": "The installer projects identical packaged skill bytes to the documented local project paths in its fixtures.",
+      "evidence_refs": ["portability-fixture-suite"],
+      "claim_ceiling": "LOCAL_BYTE_PROJECTION_ONLY",
+      "prohibited_expansions": ["works on every harness", "vendor certified", "runtime enforced"]
+    },
+    {
+      "claim_id": "CLM-003",
+      "status": "PRELIMINARY",
+      "public_statement": "One preregistered six-round local pilot observed six accepted Clutch artifacts and five accepted direct artifacts while recording substantially fewer Clutch-route prompt bytes and raw tokens.",
+      "evidence_refs": ["E-PILOT-V21"],
+      "claim_ceiling": "ONE_LOCAL_LOW_POWER_PILOT_DESCRIPTIVE_ONLY",
+      "prohibited_expansions": ["Clutch is cheaper", "Clutch is more accurate", "Clutch preserves coherence"]
+    },
+    {
+      "claim_id": "CLM-004",
+      "status": "SUPPORTED_LOCAL",
+      "public_statement": "Within one frozen nine-field projection domain, exhaustive search selected a three-digest host manifest and every selected digest was necessary for at least one registered counterexample.",
+      "evidence_refs": ["E-PROJECTION-V5-FAIL", "E-PROJECTION-V6"],
+      "claim_ceiling": "LOCAL_REGISTERED_DOMAIN_MINIMUM_ONLY",
+      "prohibited_expansions": ["globally minimal", "semantically complete", "secure"]
+    },
+    {
+      "claim_id": "CLM-005",
+      "status": "UNPROVEN",
+      "public_statement": null,
+      "evidence_refs": [],
+      "claim_ceiling": "GENERAL_TOKEN_OR_COST_SAVINGS_NOT_ESTABLISHED",
+      "prohibited_expansions": ["guaranteed savings", "always cheaper", "reduces cost by construction"]
+    },
+    {
+      "claim_id": "CLM-006",
+      "status": "UNPROVEN",
+      "public_statement": null,
+      "evidence_refs": [],
+      "claim_ceiling": "SEMANTIC_CONTEXT_COMPLETENESS_NOT_ESTABLISHED",
+      "prohibited_expansions": ["preserves long-context coherence", "retains full context", "prevents drift"]
+    },
+    {
+      "claim_id": "CLM-007",
+      "status": "UNCLAIMED",
+      "public_statement": null,
+      "evidence_refs": [],
+      "claim_ceiling": "NO_SECURITY_AUTHENTICATION_OR_CONFIDENTIALITY_CLAIM",
+      "prohibited_expansions": ["security boundary", "authenticates approval", "confidential between agents"]
+    },
+    {
+      "claim_id": "CLM-008",
+      "status": "UNTESTED",
+      "public_statement": null,
+      "evidence_refs": [],
+      "claim_ceiling": "HUMAN_APPROVAL_EFFECTIVENESS_NOT_STUDIED",
+      "prohibited_expansions": ["human approval ensures safety", "reviewers catch errors", "calibrated human oversight"]
+    }
+  ]
+}

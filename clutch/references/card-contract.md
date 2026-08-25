@@ -2,12 +2,14 @@
 
 A context card is an immutable transfer object from the advisor to one bounded worker. Its full canonical JSON is hashed. Human approval binds that exact hash.
 
+For long work, the card may be paired with the exact `fuse-plan.v1` object defined in [fuse-protocol.md](fuse-protocol.md). The approval must bind both digests. The phase plan does not modify the card; it declares how distinct bounded phases may follow one another.
+
 ## Required fields
 
 | Field | Purpose |
 |---|---|
 | `schema_version` | Exact card contract version |
-| `card_id` and `card_version` | Stable identity and immutable revision |
+| `card_id` and `card_version` | Opaque nonsemantic identity and immutable revision |
 | `objective` | One plain-language outcome |
 | `task_class` | `ADVISORY_ONLY` or `EXECUTION_REQUIRED` |
 | `source_refs` | Authorized source IDs, locators, digests when available, and access class |
@@ -64,6 +66,7 @@ A context card is an immutable transfer object from the advisor to one bounded w
 ## Validation rules
 
 - Object keys use the portable canonical domain defined by the checker.
+- Keep `card_id`, actor IDs, result references, and verification references opaque. Do not place task text, names, secrets, or source content in identifiers.
 - Integers stay within the portable JSON safe range. Floating-point values are rejected.
 - Required text and list fields cannot be empty.
 - `task_class` must be `EXECUTION_REQUIRED` before a worker may receive the card.
@@ -84,6 +87,7 @@ policy_digest: <exact digest>
 card_id: <exact ID>
 card_digest: <exact digest>
 approval_event_hash: <event reference or UNKNOWN>
+projection_manifest_digest: <host-side fit-manifest digest or UNKNOWN>
 worker_id: <assigned worker>
 worker_profile: economy | balanced
 workspace_root: <authorized root>
@@ -101,6 +105,7 @@ The worker returns one plain-text receipt followed by the declared artifacts:
 ```text
 WORK RECEIPT v1
 status: PASS | FAIL | STOPPED | UNKNOWN
+result_receipt_hash: <exact canonical receipt hash>
 changed_files: <exact paths or NONE>
 commands_run: <exact commands or NONE>
 check_results: <check and result pairs>
@@ -111,6 +116,8 @@ claim_ceiling: <what this work does not establish>
 
 The receipt records work. It cannot accept the result or authorize another attempt.
 
+The routing ledger must record both `result_status` and `result_receipt_hash`. A later verification event must record `verification_status` and `verification_receipt_hash`. A verification `PASS` cannot promote a worker-declared `FAIL`, `STOPPED`, or `UNKNOWN` result. In a Fuse run, the host also binds those observations into the current `phase-receipt.v1` before any transition.
+
 ## What the digest means
 
-The digest establishes exact content identity under the declared canonicalization rules. It does not establish completeness, truth, good judgment, human identity, or the correctness of the requested work.
+The digest establishes exact content identity under the declared canonicalization rules. It does not establish completeness, truth, good judgment, human identity, or the correctness of the requested work. Hashes can reveal equality and may be guessable for small input spaces, so they are not confidentiality protection.

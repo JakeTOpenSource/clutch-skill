@@ -14,8 +14,8 @@
     },
     {
       "path": ".github/workflows/verify.yml",
-      "bytes": 378,
-      "sha256": "42d5e747d16b58301b31feadb9486aafb26de0bc7a5e7bd58b1012a75c4b6d2d"
+      "bytes": 555,
+      "sha256": "1790edaa8c43fc8f888ef29900db1231e0155c559fe60abda8167129cca17921"
     },
     {
       "path": ".gitignore",
@@ -24,83 +24,248 @@
     },
     {
       "path": "AGENTS.example.md",
-      "bytes": 1628,
-      "sha256": "9aec380194160cdcbd0b3658036d82c9f77e0f43a706b9237fa45caf2c202146"
-    },
-    {
-      "path": "Clutch-Skill.md",
-      "bytes": 6939,
-      "sha256": "1b0481e793e0054b797782c77054c5388a026a1970cf81d1eaa2056f7dc5cb41"
-    },
-    {
-      "path": "clutch/agents/openai.yaml",
-      "bytes": 271,
-      "sha256": "41441a938f1bf43db5d7b5111a479b34ade0a3802814f0c8898bdaf0d2206469"
-    },
-    {
-      "path": "clutch/references/card-contract.md",
-      "bytes": 4814,
-      "sha256": "85db47deb539809a0a316297be3e76d4e7b42d67ccb8d17fe813c1f0042ff443"
-    },
-    {
-      "path": "clutch/references/model-profiles.md",
-      "bytes": 2096,
-      "sha256": "47c5a280a9aeb33e20f3a94c52c392da728e743bae580cd24d07a7caef8b1f7f"
-    },
-    {
-      "path": "clutch/references/protocol.md",
-      "bytes": 5954,
-      "sha256": "3fde9e6203d139567042551544ca3bd1572f821b1b6102b158445ee11440e983"
-    },
-    {
-      "path": "clutch/scripts/card-gate.mjs",
-      "bytes": 22657,
-      "sha256": "43a7ed0e96ac778c4305b6d1df4ef677cdfc0700bb1c35e0e1635633d0f1cc40"
-    },
-    {
-      "path": "clutch/scripts/fixtures/conformance-cases.json",
-      "bytes": 85685,
-      "sha256": "f45c0fb3bf614238df70a3d08d69643ca51058517b71a1f9420a8878f8d2794b"
-    },
-    {
-      "path": "clutch/scripts/release-reference.mjs",
-      "bytes": 18305,
-      "sha256": "cf6a13dd0155c7b6c668440d0cdd2380977986ee1e84e7eea8488ce7845941e4"
-    },
-    {
-      "path": "clutch/scripts/validate-skill.mjs",
-      "bytes": 7865,
-      "sha256": "a9b7369dee58774766d8f0735ca9da41222a6b0e7ffd4a9d1e9c46576db03e9c"
-    },
-    {
-      "path": "clutch/scripts/verify.mjs",
-      "bytes": 13162,
-      "sha256": "1ae25978ab461399dcccce6e2960afc4ac7c3a495730d64f46431c2c43c8756b"
-    },
-    {
-      "path": "clutch/SKILL.md",
-      "bytes": 6918,
-      "sha256": "2f2a211eabe9b9a2b4a04bb2edbd79cb86973c76858c9cec861bf5f6adb71df6"
+      "bytes": 2604,
+      "sha256": "5ca0eeea230ba8f0eda93552744e1b79919cc2cadd99fa8284c2f5e7aa9e800e"
     },
     {
       "path": "CONTRIBUTING.md",
-      "bytes": 776,
-      "sha256": "61b93b951c25c6166b02156a95200f2fee262215da1e0c5001bdcda573135bfe"
+      "bytes": 905,
+      "sha256": "0735959e0f09bdfc57d469ba5209a29bdf28a18e0cb88240e31dfaa601b8c9c9"
     },
     {
-      "path": "docs/architecture.md",
-      "bytes": 2929,
-      "sha256": "08e993b3fe5ba8ee3ea3105a2a0b0c7aa3f31fead4eab174119f94522c60acdc"
-    },
-    {
-      "path": "implementation-manifest.json",
-      "bytes": 2603,
-      "sha256": "2c4ef6d21746e2f3f407be1fd11925a01aa8af04a83551a7c99a44595158e2a8"
+      "path": "Clutch-Skill.md",
+      "bytes": 12145,
+      "sha256": "a3cf2eeebbc740e79441d1ccbbc9eb380201533080a0179fbb0929bca396b050"
     },
     {
       "path": "LICENSE",
       "bytes": 11357,
       "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "README.md",
+      "bytes": 12182,
+      "sha256": "fdf233e230d01823110b8bec8f9256dde5c4f90f6d75838b79d929edf5becd1b"
+    },
+    {
+      "path": "adapters/harness-targets.json",
+      "bytes": 809,
+      "sha256": "ac2876ceec0e032358379348aae5a3d44095209d790e8714312f47a1e86c361a"
+    },
+    {
+      "path": "clutch/SKILL.md",
+      "bytes": 12075,
+      "sha256": "bb237eab10f79bd7461dc2b5abc3500fe66cc5de42b249ccb6aeb3d817dc2156"
+    },
+    {
+      "path": "clutch/agents/openai.yaml",
+      "bytes": 315,
+      "sha256": "5d265c01e7304ee43e8c83bf10838b0db0aac20e1eb16e666dfddbc34457e0fe"
+    },
+    {
+      "path": "clutch/references/card-contract.md",
+      "bytes": 5872,
+      "sha256": "016fd32c9af6cd2e08b633cc596387c1d86b15f3dcd74e0584944835119edc58"
+    },
+    {
+      "path": "clutch/references/context-fit.md",
+      "bytes": 5430,
+      "sha256": "82e39b2b3976fb170932877d1d3daa446d0bd741fedf6e55ac29411248bf9bc9"
+    },
+    {
+      "path": "clutch/references/evaluation.md",
+      "bytes": 4488,
+      "sha256": "bc70a30d7341f6e64c8e007fa5586e14a8f6bc877969b3623c4a099eadaace9a"
+    },
+    {
+      "path": "clutch/references/fuse-protocol.md",
+      "bytes": 7284,
+      "sha256": "a79662ef24ed4069d3b19d5cf98b5046b6eb74f017c546abdea416bf8c14707a"
+    },
+    {
+      "path": "clutch/references/host-integration.md",
+      "bytes": 5204,
+      "sha256": "7198e1ae30820c1632f485903d3ed54817dbdbe9d196d40c9a89a6ecffa31635"
+    },
+    {
+      "path": "clutch/references/model-profiles.md",
+      "bytes": 2247,
+      "sha256": "abd6e9ebee2dd168d518ca1f863cfa523bfa12849691b00fd54c33417a2fee95"
+    },
+    {
+      "path": "clutch/references/protocol.md",
+      "bytes": 10404,
+      "sha256": "a25679b22e6a58b94d7089912755b10e7e913a256a0675e47fe62d2929b090e1"
+    },
+    {
+      "path": "clutch/scripts/card-gate.mjs",
+      "bytes": 24477,
+      "sha256": "3936179b4b706aab564838ac20596a49c7d3835ce95ebe706c807c2f1c5eb178"
+    },
+    {
+      "path": "clutch/scripts/fixtures/conformance-cases.json",
+      "bytes": 169595,
+      "sha256": "97c138995bec91f7e63a3ecb586196e4814f3347749e8231c30afe32674542c2"
+    },
+    {
+      "path": "clutch/scripts/fixtures/fuse-cases.mjs",
+      "bytes": 26242,
+      "sha256": "8ad72659fbed8b199fef026e2faf5c93f9f00d9f71417aa450285fc7e80f213f"
+    },
+    {
+      "path": "clutch/scripts/fuse-gate.mjs",
+      "bytes": 27056,
+      "sha256": "fc9ad5e5310c719a2bf6f6b25ddfbf9c6b057ca6c70d905037c2874385379cba"
+    },
+    {
+      "path": "clutch/scripts/fuse-reference.mjs",
+      "bytes": 23324,
+      "sha256": "4d3f6815616756992370f70b7a157cd938c20effae32526781c7f8503d3dfd23"
+    },
+    {
+      "path": "clutch/scripts/release-reference.mjs",
+      "bytes": 19847,
+      "sha256": "bc4e29e464c83eceffae2dc1232dfc0cb1806ce1cc04cf8f0ac269fdd1ad3b30"
+    },
+    {
+      "path": "clutch/scripts/validate-skill.mjs",
+      "bytes": 8219,
+      "sha256": "ad7d2b56bbb2a4b120ff7e3007c5350ec4b9430f4de7a13ec434ec24bacda2cd"
+    },
+    {
+      "path": "clutch/scripts/verify-fuses.mjs",
+      "bytes": 8377,
+      "sha256": "1eb2b83de9e1037ca63f118845c33cc83b012f4c2a1655ffd33ac6a5eb9fea60"
+    },
+    {
+      "path": "clutch/scripts/verify.mjs",
+      "bytes": 18852,
+      "sha256": "4424c3dbc7708592451f260e82500ccebb3d350d5130e91aeba9f6acac16e62e"
+    },
+    {
+      "path": "docs/architecture.md",
+      "bytes": 7196,
+      "sha256": "c32639242998b51e4a9a750538ea84b0e3806670d0c365073933a4767358f345"
+    },
+    {
+      "path": "docs/portability.md",
+      "bytes": 3185,
+      "sha256": "a8e4f9cb0179df4589f0054181a48a748df2d7b3c2c3e3dc6fd264a6e1b8d710"
+    },
+    {
+      "path": "docs/release-gate.md",
+      "bytes": 4962,
+      "sha256": "acc6b5c13c158df50a0a797b45ab129c658beb09827ee00c698b31e296541b75"
+    },
+    {
+      "path": "evaluation/OWNER-DECISION-PACKET.md",
+      "bytes": 7902,
+      "sha256": "e4daf99743547f860149ef3f2fe8b9ad70733c254fcd1b7100438319b92c32dc"
+    },
+    {
+      "path": "evaluation/README.md",
+      "bytes": 9488,
+      "sha256": "6e76c9816c53e999c95cff209b26b080868be539abd8f9a4a1cc05b810432c4c"
+    },
+    {
+      "path": "evaluation/SOURCES.md",
+      "bytes": 3655,
+      "sha256": "235141014fe3387910061cec27bd63dfa1781b1e6f554fb0ee1898f62fdc6587"
+    },
+    {
+      "path": "evaluation/claims.json",
+      "bytes": 3209,
+      "sha256": "618e5b18340db8d00e020856503d52b46b62a5c68458f5c525fd67837a0d4e9d"
+    },
+    {
+      "path": "evaluation/evidence/pilot-v21.json",
+      "bytes": 2222,
+      "sha256": "88d81366fb256e6630a19cca08c8db94c62aeac0e670590884bab836a9af375f"
+    },
+    {
+      "path": "evaluation/evidence/projection-v5-failure.json",
+      "bytes": 656,
+      "sha256": "ca8165521f7816d1c706b0359af91663699b8271ca924f4ccefb3c7567faf1d1"
+    },
+    {
+      "path": "evaluation/evidence/projection-v6.json",
+      "bytes": 846,
+      "sha256": "12f0905e614554fb49fbcde51f00c54a97e57c47f43fcde077c3a16d413b4743"
+    },
+    {
+      "path": "evaluation/fixtures/analysis-cases.json",
+      "bytes": 3172,
+      "sha256": "ed2f8ce852b858a6ed384e94fcd9ba1f6347ce54443d9a8b018b4a0738ee9942"
+    },
+    {
+      "path": "evaluation/owner-acceptance-stage-0.json",
+      "bytes": 2627,
+      "sha256": "3b736c7333dc18a4cd02f084709430b45bb1f936a96c3b922e183d69a4213448"
+    },
+    {
+      "path": "evaluation/owner-authorization-live-telemetry.json",
+      "bytes": 2023,
+      "sha256": "037d059e684c0af33d68f5c205a79463bcc5fef2c90a1aa7c95ef7b1c9743397"
+    },
+    {
+      "path": "evaluation/preregistration.example.json",
+      "bytes": 4837,
+      "sha256": "481db993e4c7c6572497915d726281b17c3c1bc1de3be50f8b3d66244c90c232"
+    },
+    {
+      "path": "evaluation/scripts/analyze-study.mjs",
+      "bytes": 33956,
+      "sha256": "497895b2074b691be01156bce404e462b96680f434442bdfaeee2c0360673658"
+    },
+    {
+      "path": "evaluation/scripts/verify-analysis.mjs",
+      "bytes": 20849,
+      "sha256": "bf26bbfa517a112bcc818cfc326a043032f96965bdfdbfe71dc2e34dc2a5a331"
+    },
+    {
+      "path": "evaluation/scripts/verify-evaluation.mjs",
+      "bytes": 10652,
+      "sha256": "49665d3266f09caebe16b8833fe34d715e847b41fea5357a2fc1ee7c7efdb88b"
+    },
+    {
+      "path": "evaluation/scripts/verify-live-telemetry-authorization.mjs",
+      "bytes": 3178,
+      "sha256": "b2456145e67b1b9ae37d43f000ce63a62e6031c37a02c0c2fa77153e42936462"
+    },
+    {
+      "path": "evaluation/scripts/verify-stage0-acceptance.mjs",
+      "bytes": 4400,
+      "sha256": "667e64c1d776e632c7a1eeceb7267ba3d7476a8c660cb702cb13529a4288fc3a"
+    },
+    {
+      "path": "evaluation/scripts/verify-stage0-preparation.mjs",
+      "bytes": 4397,
+      "sha256": "5b20f5d42040457994ae2a38fb71f0d1d00ab1f6c9431bb3a6b97b0e4701cc79"
+    },
+    {
+      "path": "evaluation/scripts/verify-study-proposal.mjs",
+      "bytes": 7717,
+      "sha256": "010e5a5701ba55b03e8ca6ecaabacf60d73a2ee0c9a40ed51604bc418062dc0b"
+    },
+    {
+      "path": "evaluation/stage-0-preparation-receipt.json",
+      "bytes": 5031,
+      "sha256": "3dc9074cb5fa114e7fb7645842da331b0079a4ffd73e8188a5da9e9e294b227f"
+    },
+    {
+      "path": "evaluation/study-proposal.json",
+      "bytes": 12834,
+      "sha256": "563f4253f4fafae77b2a2102124e079ed31d5131be37c6eb0872bd7ade1426f8"
+    },
+    {
+      "path": "examples/fuse-input.example.json",
+      "bytes": 9712,
+      "sha256": "75a1fdda11107908cd16ea5ad5667528be2c0b6e7becee7e13178dfbb742c827"
+    },
+    {
+      "path": "implementation-manifest.json",
+      "bytes": 4614,
+      "sha256": "72ba5bef7508295a4039af0c0caaf2de7bb413f58aac7838cbb0ec1f1cbb3f46"
     },
     {
       "path": "model-map.example.json",
@@ -109,28 +274,43 @@
     },
     {
       "path": "package.json",
-      "bytes": 452,
-      "sha256": "12f618712284cd6b9ace68cc112989393253b2b64373bc30b820ed657f88139b"
+      "bytes": 1200,
+      "sha256": "6b01b2d296a7a90238eb5b10c2ee39bd4fd2af14946055b79c1cd2e3e3115900"
     },
     {
       "path": "policy.example.json",
-      "bytes": 499,
-      "sha256": "eb38158c0f7cc6efb2cb2d7590e6eb29cb53fd48dca639566d449ad434570417"
+      "bytes": 658,
+      "sha256": "44cf19f643d6510d853e0d6197b99cb47445d60e7d8ca318de3e13d1dd46bb89"
     },
     {
-      "path": "README.md",
-      "bytes": 4889,
-      "sha256": "3267f8e573d7fb208b57eaeedc17753941878d34c1d4abd57f342ca18aded166"
+      "path": "release-files.json",
+      "bytes": 3815,
+      "sha256": "3f91ac5cfa3961b58aef6ef125d988f397075d89cf59a46583840bea31c05270"
     },
     {
       "path": "scripts/generate-manifests.mjs",
-      "bytes": 3219,
-      "sha256": "625bdf0eda5d37573d1259f1d722fa03e04b286ac40b260d726be36944ae5f18"
+      "bytes": 5093,
+      "sha256": "66306edd56f681da930da69730e65dc4a88b85ca344b1f82ce32d9f0ad2e7b41"
+    },
+    {
+      "path": "scripts/install-skill.mjs",
+      "bytes": 10896,
+      "sha256": "2807c06f22b85b8ccf3450c4985134a2d0c6a175d3dce481bb4275a57024b7e1"
+    },
+    {
+      "path": "scripts/verify-portability.mjs",
+      "bytes": 4690,
+      "sha256": "2ac0938a08f5426bb0e6d0e8438126641e34245f005eacc7eb24a3aa9d62fb07"
+    },
+    {
+      "path": "scripts/verify-release-boundary.mjs",
+      "bytes": 2545,
+      "sha256": "9fade59a71224f23ae3930c785a851e8238daf240988757df5cac05e1b37f689"
     },
     {
       "path": "scripts/verify-release.mjs",
-      "bytes": 8183,
-      "sha256": "aaf78b7eccd675b4a2d6367e17852cee2685d87f28bddc96ee6f64ad91e501a1"
+      "bytes": 16649,
+      "sha256": "4e57a11f2558bddc0ae548094c98b833e8daa522721a7d0ddc3450df71247853"
     },
     {
       "path": "visuals/manual-transmission-diagram.mjs",
@@ -164,8 +344,8 @@
     },
     {
       "path": "visuals/verify-manual-transmission.mjs",
-      "bytes": 6085,
-      "sha256": "78ebc201c8ec5e28042e43fc2b4ef0cfa28b2d7392acf47b8b6be5ab0b39e0c0"
+      "bytes": 6067,
+      "sha256": "b53cf06f9dba0df2cf1a8556232c5bb7e4318585365a97d6eb820f41643b607d"
     }
   ]
 }

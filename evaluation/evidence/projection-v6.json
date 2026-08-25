@@ -1,0 +1,21 @@
+{
+  "schema_version": "clutch-minimized-evidence.v1",
+  "evidence_id": "E-PROJECTION-V6",
+  "source": {
+    "availability": "LOCAL_PRIVATE_NOT_BUNDLED",
+    "summary_sha256": "fc8c9946fc84382c7448eec4241c6945747c7b55b49d091c3451cd688c224cd4"
+  },
+  "status": "PASS",
+  "checks": "21/21",
+  "candidate_fields": 9,
+  "candidate_subsets_evaluated": 512,
+  "frozen_counterexamples": 9,
+  "passing_subsets": 142,
+  "selected_fields": ["compiler_bundle_digest", "receipt_digest", "task_digest"],
+  "selected_manifest_bytes": 431,
+  "all_fields_manifest_bytes": 864,
+  "worker_context_bytes_before": 867,
+  "worker_context_bytes_after": 867,
+  "v5_shortcut_failures": ["TASK_ID_CHANGE", "ALLOWED_ACTION_CHANGE", "FORBIDDEN_ACTION_CHANGE"],
+  "claim_ceiling": "ONE_LOCAL_EXHAUSTIVE_REGISTERED_FIELD_DOMAIN_NO_GLOBAL_SEMANTIC_SECURITY_OR_SAVINGS_CLAIM"
+}

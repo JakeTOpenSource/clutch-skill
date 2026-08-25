@@ -1,13 +1,17 @@
 {
-  "schema_version": "routing-policy.v1",
-  "policy_id": "clutch-policy-v1@sha256:6d077e9d572fe93e241856bbf39666236639ad8f7dfc314bf98712deca6aab3c",
+  "schema_version": "routing-policy.v3",
+  "policy_id": "clutch-policy-v3@sha256:061734db67c3474536b6e7e9d5781726f5a37ec02d13abb234c3bd3da400345c",
+  "implementation_digest": "sha256:061734db67c3474536b6e7e9d5781726f5a37ec02d13abb234c3bd3da400345c",
   "stream_id": "clutch-stream-v1",
   "phase": "PREPARE_ONLY",
   "human_actor_ids": [
     "owner"
   ],
   "advisor_actor_ids": [
-    "advisor"
+    "role-model"
+  ],
+  "orchestrator_actor_ids": [
+    "orchestrator"
   ],
   "advisor_profile": "advisor",
   "worker_profiles": [

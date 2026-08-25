@@ -1,6 +1,6 @@
 interface:
   display_name: "Clutch"
-  short_description: "Gate approved work to lower-cost models"
-  default_prompt: "Use $clutch to create an exact context card and route one approved attempt to the least-cost qualified model."
+  short_description: "Gate one approved bounded worker attempt"
+  default_prompt: "Use $clutch to prepare an exact context card, wait for human approval, and route one bounded attempt only when the host supports a clean worker context."
 policy:
   allow_implicit_invocation: true

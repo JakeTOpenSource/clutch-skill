@@ -1,8 +1,8 @@
 {
   "name": "clutch-skill",
-  "version": "0.1.0",
+  "version": "0.4.0-rc.1",
   "private": true,
-  "description": "Human-approved model routing through compact context cards",
+  "description": "Cross-harness human-approved model routing through bounded cards and recoverable phases",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -13,6 +13,15 @@
   },
   "scripts": {
     "refresh-manifests": "node scripts/generate-manifests.mjs",
+    "verify:analysis": "node evaluation/scripts/verify-analysis.mjs",
+    "verify:evaluation": "node evaluation/scripts/verify-evaluation.mjs",
+    "verify:fuses": "node clutch/scripts/verify-fuses.mjs",
+    "verify:live-telemetry-authorization": "node evaluation/scripts/verify-live-telemetry-authorization.mjs",
+    "verify:stage0-acceptance": "node evaluation/scripts/verify-stage0-acceptance.mjs",
+    "verify:stage0-preparation": "node evaluation/scripts/verify-stage0-preparation.mjs",
+    "verify:study-proposal": "node evaluation/scripts/verify-study-proposal.mjs",
+    "verify:portability": "node scripts/verify-portability.mjs",
+    "verify:release-boundary": "node scripts/verify-release-boundary.mjs",
     "test": "node scripts/verify-release.mjs"
   }
 }

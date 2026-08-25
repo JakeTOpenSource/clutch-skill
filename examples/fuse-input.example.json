@@ -1,0 +1,274 @@
+{
+  "schema_version": "fuse-gate-input.v1",
+  "plan": {
+    "schema_version": "fuse-plan.v1",
+    "plan_id": "fixture-plan",
+    "card_hash": "sha256:8367cd66fdd136bba8ba23f8805bb050dd6289401c8ec3b0be44a3c233eef90d",
+    "policy_hash": "sha256:823412d1eacb67956220e532959f0104603057c88704863ca38e7cd188fda812",
+    "source_freeze_hash": "sha256:a6a85c4de5a06bc69d003e642e802b746b7f8d767a6bbcc7d98bf2b4aa23e258",
+    "approval_mode": "EXACT_UPFRONT",
+    "initial_artifact_hash": "sha256:a3aabcd69e445eb7e2b2208c601f21b8ce7c91dd0894e22f7f27cd714cd455b3",
+    "initial_phase_id": "P0",
+    "final_phase_id": "P2",
+    "max_fuse_uses": 2,
+    "max_platform_transfers": 2,
+    "worker_profiles": [
+      "worker-basic",
+      "worker-deep",
+      "worker-repair"
+    ],
+    "phases": [
+      {
+        "phase_id": "P0",
+        "ordinal": 0,
+        "contract_hash": "sha256:4670a3b59c1412afdf89646fcea74c9d36358f38bb9175919a5056d11972114a",
+        "requirement_ids": [
+          "REQ-A",
+          "REQ-B"
+        ],
+        "worker_profile": "worker-basic",
+        "platform_id": "local-a",
+        "transfer_level": "CARD",
+        "next_phase_id": "P1"
+      },
+      {
+        "phase_id": "P1",
+        "ordinal": 1,
+        "contract_hash": "sha256:e7f02baaa8e63576080439d1c6c74b1a222b53b53a3ec72a62498e60f41cc041",
+        "requirement_ids": [
+          "REQ-A",
+          "REQ-B"
+        ],
+        "worker_profile": "worker-repair",
+        "platform_id": "local-a",
+        "transfer_level": "EXPANDED",
+        "next_phase_id": "P2"
+      },
+      {
+        "phase_id": "P2",
+        "ordinal": 2,
+        "contract_hash": "sha256:df791801cb24674c9c804449c323b7abd6f86372f716890dc07347c5321bc300",
+        "requirement_ids": [
+          "REQ-A",
+          "REQ-B"
+        ],
+        "worker_profile": "worker-deep",
+        "platform_id": "local-b",
+        "transfer_level": "FULL_CONTEXT",
+        "next_phase_id": null
+      }
+    ],
+    "routes": [
+      {
+        "route_id": "R01",
+        "from_phase_id": "P0",
+        "reason_code": "CONTEXT_OMISSION",
+        "action": "TRANSFER",
+        "to_phase_id": "P1",
+        "max_uses": 1
+      },
+      {
+        "route_id": "R02",
+        "from_phase_id": "P0",
+        "reason_code": "CONTRACT_DEFECT",
+        "action": "EVACUATE",
+        "to_phase_id": null,
+        "max_uses": 1
+      },
+      {
+        "route_id": "R03",
+        "from_phase_id": "P0",
+        "reason_code": "EXECUTION_DEFECT",
+        "action": "REPAIR",
+        "to_phase_id": "P1",
+        "max_uses": 1
+      },
+      {
+        "route_id": "R04",
+        "from_phase_id": "P0",
+        "reason_code": "OBSERVATION_GAP",
+        "action": "EVACUATE",
+        "to_phase_id": null,
+        "max_uses": 1
+      },
+      {
+        "route_id": "R05",
+        "from_phase_id": "P0",
+        "reason_code": "PHASE_MISMATCH",
+        "action": "REPAIR",
+        "to_phase_id": "P2",
+        "max_uses": 1
+      },
+      {
+        "route_id": "R06",
+        "from_phase_id": "P1",
+        "reason_code": "CAPABILITY_MISMATCH",
+        "action": "TRANSFER",
+        "to_phase_id": "P2",
+        "max_uses": 1
+      },
+      {
+        "route_id": "R07",
+        "from_phase_id": "P1",
+        "reason_code": "EXECUTION_DEFECT",
+        "action": "REPAIR",
+        "to_phase_id": "P2",
+        "max_uses": 1
+      },
+      {
+        "route_id": "R08",
+        "from_phase_id": "P1",
+        "reason_code": "OBSERVATION_GAP",
+        "action": "EVACUATE",
+        "to_phase_id": null,
+        "max_uses": 1
+      },
+      {
+        "route_id": "R09",
+        "from_phase_id": "P2",
+        "reason_code": "SAFETY_HOLD",
+        "action": "EVACUATE",
+        "to_phase_id": null,
+        "max_uses": 1
+      }
+    ],
+    "claim_ceiling": "Local deterministic phase routing only. No model quality, security isolation, or savings claim."
+  },
+  "approval_binding": {
+    "plan_hash": "sha256:8e46aa67b5e9a60ff48f209a323147f65946915e054abd94c8a3b270126bb63e",
+    "card_hash": "sha256:8367cd66fdd136bba8ba23f8805bb050dd6289401c8ec3b0be44a3c233eef90d",
+    "approval_event_hash": "sha256:3c5ffd7975639bcea89b7d7a071714aec05b6f2a9bfae99c88910be538218347",
+    "observation": "DIRECT_HOST_OBSERVATION_DECLARED"
+  },
+  "receipts": [
+    {
+      "schema_version": "phase-receipt.v1",
+      "sequence": 1,
+      "previous_receipt_hash": "ROOT",
+      "plan_hash": "sha256:8e46aa67b5e9a60ff48f209a323147f65946915e054abd94c8a3b270126bb63e",
+      "phase_id": "P0",
+      "attempt_id": "attempt-1",
+      "worker_id": "worker-1",
+      "worker_profile": "worker-basic",
+      "worker_status": "FAIL",
+      "platform_id": "local-a",
+      "transfer_level": "CARD",
+      "input_artifact_hash": "sha256:a3aabcd69e445eb7e2b2208c601f21b8ce7c91dd0894e22f7f27cd714cd455b3",
+      "output_artifact_hash": "sha256:0f999e56f33c4faf4ec203125b67e4a137256b5e46bbbeddcfae618f3f48501a",
+      "contract_hash": "sha256:4670a3b59c1412afdf89646fcea74c9d36358f38bb9175919a5056d11972114a",
+      "provider_attempt_hash": "sha256:686fa5991e82f1c57843e851ddfe2b759b9438ee3a42a3c7f85565d5884db058",
+      "fuse_context_hash": "NONE",
+      "evaluation": {
+        "classification": "EXECUTION_DEFECT",
+        "verification_status": "FAIL",
+        "check_results": [
+          {
+            "requirement_id": "REQ-A",
+            "status": "PASS",
+            "evidence_hash": "sha256:64479fddee73cf12c28e083b0256902d752d1516503aa1278fd9324b9f226947"
+          },
+          {
+            "requirement_id": "REQ-B",
+            "status": "FAIL",
+            "evidence_hash": "sha256:d5b363300fac01e2d3b00e51b413171dcc732fc19a6e0e795bad89dcfcf8210b"
+          }
+        ],
+        "fix_log_hash": "sha256:c89e31a93ce9efe940583a34355d1473a4a077e07c969fff66a0b2263d04519e"
+      },
+      "usage": {
+        "input_tokens": 101,
+        "cached_input_tokens": 10,
+        "output_tokens": 20,
+        "elapsed_ms": 500,
+        "cost_microusd": 2000
+      },
+      "receipt_hash": "sha256:5a3a9765ede72a9f95eaf9151921ab936244dc747fcc20a8ca7993e6fa9174f5"
+    },
+    {
+      "schema_version": "phase-receipt.v1",
+      "sequence": 2,
+      "previous_receipt_hash": "sha256:5a3a9765ede72a9f95eaf9151921ab936244dc747fcc20a8ca7993e6fa9174f5",
+      "plan_hash": "sha256:8e46aa67b5e9a60ff48f209a323147f65946915e054abd94c8a3b270126bb63e",
+      "phase_id": "P1",
+      "attempt_id": "attempt-2",
+      "worker_id": "worker-2",
+      "worker_profile": "worker-repair",
+      "worker_status": "PASS",
+      "platform_id": "local-a",
+      "transfer_level": "EXPANDED",
+      "input_artifact_hash": "sha256:a3aabcd69e445eb7e2b2208c601f21b8ce7c91dd0894e22f7f27cd714cd455b3",
+      "output_artifact_hash": "sha256:cbe003e8b391f0a854e4f9158be14b7c5a48d010c490bc2437cd79eecf1d0bc3",
+      "contract_hash": "sha256:e7f02baaa8e63576080439d1c6c74b1a222b53b53a3ec72a62498e60f41cc041",
+      "provider_attempt_hash": "sha256:1e01b3d05318924692ff39553252548c7cf4c2b67e7f704769ded4f9eb312d4e",
+      "fuse_context_hash": "sha256:0f2a2f96077ca84ef4a7f8e515ba28031f560adf5ebc9cae525a732c776fd616",
+      "evaluation": {
+        "classification": "NONE",
+        "verification_status": "PASS",
+        "check_results": [
+          {
+            "requirement_id": "REQ-A",
+            "status": "PASS",
+            "evidence_hash": "sha256:81a33f8271bfa5c14cd81178860f7dd5a3c8c027bf47830311d178a783bc28bf"
+          },
+          {
+            "requirement_id": "REQ-B",
+            "status": "PASS",
+            "evidence_hash": "sha256:8b711b993a5817755dc54e700d24bf8ec135cc462053b21d6ace5f4baa643de8"
+          }
+        ],
+        "fix_log_hash": "NONE"
+      },
+      "usage": {
+        "input_tokens": 102,
+        "cached_input_tokens": 10,
+        "output_tokens": 20,
+        "elapsed_ms": 500,
+        "cost_microusd": 3000
+      },
+      "receipt_hash": "sha256:fe938a64be61cab37225e50655b7d20ead00d918aa2712544f891c6d03be3b5c"
+    },
+    {
+      "schema_version": "phase-receipt.v1",
+      "sequence": 3,
+      "previous_receipt_hash": "sha256:fe938a64be61cab37225e50655b7d20ead00d918aa2712544f891c6d03be3b5c",
+      "plan_hash": "sha256:8e46aa67b5e9a60ff48f209a323147f65946915e054abd94c8a3b270126bb63e",
+      "phase_id": "P2",
+      "attempt_id": "attempt-3",
+      "worker_id": "worker-3",
+      "worker_profile": "worker-deep",
+      "worker_status": "PASS",
+      "platform_id": "local-b",
+      "transfer_level": "FULL_CONTEXT",
+      "input_artifact_hash": "sha256:cbe003e8b391f0a854e4f9158be14b7c5a48d010c490bc2437cd79eecf1d0bc3",
+      "output_artifact_hash": "sha256:f8072e6b55482f91c724c43140cb7d72d3a9036f99aca7e3bc4fada69a08b9f0",
+      "contract_hash": "sha256:df791801cb24674c9c804449c323b7abd6f86372f716890dc07347c5321bc300",
+      "provider_attempt_hash": "sha256:33b2aca1a26fde0621aff034ebd9fd2683cb01d87c771b51da8be816f5ff3635",
+      "fuse_context_hash": "NONE",
+      "evaluation": {
+        "classification": "NONE",
+        "verification_status": "PASS",
+        "check_results": [
+          {
+            "requirement_id": "REQ-A",
+            "status": "PASS",
+            "evidence_hash": "sha256:e11fd2a79001f01fbbdad2b206e8da163dee2aefbb63058e7944ac7cdecdac21"
+          },
+          {
+            "requirement_id": "REQ-B",
+            "status": "PASS",
+            "evidence_hash": "sha256:60b0ba0bfbd3cfd88e9abe77e03da222911202bc97e3934c36f3def378aaa438"
+          }
+        ],
+        "fix_log_hash": "NONE"
+      },
+      "usage": {
+        "input_tokens": 103,
+        "cached_input_tokens": 10,
+        "output_tokens": 20,
+        "elapsed_ms": 500,
+        "cost_microusd": 4000
+      },
+      "receipt_hash": "sha256:04fac41fe684bdfe6200f968a37196dc720173910408c73eff43df64e36eeed5"
+    }
+  ]
+}

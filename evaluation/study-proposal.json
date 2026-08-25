@@ -1,0 +1,232 @@
+{
+  "schema_version": "clutch-study-proposal.v1",
+  "status": "PROPOSED_OWNER_REVIEW",
+  "run_authorized": false,
+  "github_publication_authorized": false,
+  "owner_acceptance": null,
+  "objective": "Measure whether an approved compact handoff changes quality, total route cost, and resistance to context stress when a busy user begins with frontier planning and then changes model tiers.",
+  "evidence_basis": [
+    {
+      "evidence_id": "E-PILOT-V21",
+      "use": "DESIGN_INPUT_ONLY",
+      "limitation": "Six paired rounds are too few to fix a confirmatory sample size or claim an efficiency winner."
+    }
+  ],
+  "measurement_model": {
+    "independent_unit": "THIRTY_MINUTE_BUILD_SESSION",
+    "condition_runs_per_task": 4,
+    "frontier_preflight_minutes_per_condition": 2,
+    "state_transitions_per_session": 6,
+    "minutes_per_transition": 5,
+    "transitions_are_independent_samples": false,
+    "all_conditions_start_with_same_frontier_preflight": true,
+    "recommended_primary_comparison": "WORKER_APPROVED_CARD_MINUS_WORKER_FULL_CONTEXT",
+    "diagnostic_frontier_comparison": "WORKER_APPROVED_CARD_MINUS_FRONTIER_FULL_CONTEXT",
+    "automatic_card_interpretation": "AUTOMATIC_CARD_TRANSFORMATION_NOT_PURE_COMPRESSION",
+    "required_route_cost_scope": "ALL_PROVIDER_CALLS_PLUS_HUMAN_REVIEW"
+  },
+  "model_configuration": {
+    "official_guidance_url": "https://developers.openai.com/api/docs/guides/latest-model",
+    "guidance_retrieved_date": "2026-08-23",
+    "frontier_and_advisor": {
+      "requested_model": "gpt-5.6-sol",
+      "reasoning_effort": "xhigh",
+      "mutation_mode_during_preflight": "READ_ONLY"
+    },
+    "primary_worker_block": {
+      "requested_model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "analysis": "SEPARATE_PRIMARY_STUDY"
+    },
+    "replication_worker_block": {
+      "requested_model": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "analysis": "SEPARATE_REPLICATION_DO_NOT_POOL"
+    },
+    "freeze_requirements": [
+      "Record the requested alias and any provider-exposed resolved model identity.",
+      "Freeze harness build, reasoning settings, persistence behavior, tools, permissions, and safety configuration.",
+      "Record unavailable identity or usage fields as UNKNOWN rather than inferring them."
+    ]
+  },
+  "control_plane": {
+    "implemented_current_path": {
+      "allowed_clutch_control_roles": [
+        "ROLE_MODEL_ADVISOR",
+        "TRUSTED_ORCHESTRATOR",
+        "HUMAN_OWNER"
+      ],
+      "worker_clutch_control": false,
+      "verifier_clutch_control": false,
+      "human_approval_before_worker_assignment": true,
+      "actor_ids_must_be_policy_allowlisted": true
+    },
+    "delegated_agency_principle": "PRIOR_EXPLICIT_DELEGATION_CAN_REMAIN_OPERATIVE_DURING_HUMAN_ABSENCE_BUT_HUMAN_ABSENCE_CREATES_NO_NEW_AUTHORITY",
+    "two_key_extension": {
+      "status": "PROPOSED_DEFAULT_OFF_NOT_IMPLEMENTED_NOT_IN_CURRENT_STUDY",
+      "eligible_scope": "ONE_REVERSIBLE_LOCAL_ATTEMPT_INSIDE_A_PRIOR_OWNER_DELEGATION_ENVELOPE",
+      "agreement_rule": "ROLE_MODEL_AND_ORCHESTRATOR_MUST_INDEPENDENTLY_MATCH_THE_EXACT_CARD_STATE_TESTS_AND_RISK_ENVELOPE",
+      "deadlock_rule": "RETURN_TO_NEUTRAL_AND_REQUIRE_HUMAN_TIE_BREAK",
+      "human_absence_rule": "ABSENCE_IS_NEITHER_APPROVAL_NOR_REVOCATION_OF_PRIOR_EXPLICIT_DELEGATION",
+      "provisional_result_only": true,
+      "forbidden_consequences": [
+        "PUBLISH",
+        "DEPLOY",
+        "SPEND",
+        "DELETE_OR_IRREVERSIBLY_OVERWRITE",
+        "WIDEN_PERMISSIONS",
+        "HANDLE_UNDELEGATED_SECRETS",
+        "EXTERNAL_MESSAGE",
+        "HUMAN_ACCEPTANCE"
+      ]
+    }
+  },
+  "pedal_protocol": {
+    "status": "PROPOSED_SHADOW_MEASUREMENT_NOT_ADAPTIVE_ROUTING",
+    "objective": "SELECT_MINIMUM_SUFFICIENT_CONTEXT_UNDER_FROZEN_FIT_AND_QUALITY_GATES",
+    "candidate_transfer_levels": [
+      "CARD",
+      "EXPANDED",
+      "FULL_CONTEXT"
+    ],
+    "selection_rule": "FIRST_LEVEL_WITH_FIT_FOR_ALL_REGISTERED_REQUIREMENTS_OTHERWISE_HOLD",
+    "feedback_cycle": "INTAKE_CURRENT_STATE_THEN_COMPRESS_TO_SMALLEST_FIT_THEN_ONE_ATTEMPT_THEN_RECEIPT_THEN_NEW_CARD_WITH_OBSERVED_ERROR",
+    "failure_retention_rule": "CONTEXT_RELATED_FAILURE_BECOMES_MANDATORY_NEXT_CYCLE_INPUT_AND_BLOCKS_A_SMALLER_TRANSFER_UNLESS_NEW_REGISTERED_EVIDENCE_RESOLVES_IT",
+    "stage_0_rule": "RECORD_WHAT_THE_SELECTOR_WOULD_CHOOSE_BUT_DO_NOT_CHANGE_THE_ASSIGNED_EXPERIMENTAL_CONDITION",
+    "full_context_rule": "VALID_COHERENCE_ROUTE_WITH_NO_COMPRESSION_CLAIM",
+    "required_measurements": [
+      "SOURCE_BYTES_OR_TOKENS",
+      "TRANSFERRED_BYTES_OR_TOKENS",
+      "SELECTED_LEVEL",
+      "OMITTED_REGISTERED_FIELDS",
+      "FIT_STATUS"
+    ]
+  },
+  "stage_0": {
+    "stage_id": "INSTRUMENTATION_SHAKEDOWN",
+    "status": "PROPOSED_NOT_AUTHORIZED",
+    "purpose": "Prove that task reset, telemetry, model transition, cost aggregation, scoring, human review records, and clutch-control actor checks work before spending on a powered study.",
+    "independent_tasks": 5,
+    "required_strata": [
+      "SHORT_CONTROL_EXPECTED_TO_LOSE",
+      "LONG_BOUNDED_BUILD",
+      "CONTRADICTORY_CONTEXT",
+      "STATE_CHANGED_AFTER_APPROVAL",
+      "BOUNDARY_OR_INJECTION_STRESS"
+    ],
+    "condition_runs": 20,
+    "maximum_condition_run_minutes": 30,
+    "maximum_agent_hours": 10,
+    "analysis": "DESCRIPTIVE_INSTRUMENTATION_ONLY_NOT_REFERENCE_ANALYZER",
+    "outcome_claims_authorized": []
+  },
+  "stage_1": {
+    "stage_id": "CONFIRMATORY_PRIMARY_WORKER",
+    "status": "BLOCKED_PENDING_STAGE_0_AND_OWNER_FREEZE",
+    "recommended_claim_scope": "LONG_CONTEXT_BOUNDED_BUILDS_ONLY",
+    "recommended_primary_worker": "gpt-5.6-terra",
+    "recommended_replication_worker": "gpt-5.6-luna",
+    "replication_rule": "RUN_AND_ANALYZE_SEPARATELY_AFTER_PRIMARY_DISPOSITION",
+    "sample_size": null,
+    "sample_size_rule": "SELECT_AFTER_STAGE_0_ESTIMATES_PAIRED_DISCORDANCE_AND_OWNER_ACCEPTS_A_QUALITY_MARGIN",
+    "recommended_power": 0.8,
+    "fixed_one_sided_alpha": 0.05,
+    "quality_margin_options_basis_points": [
+      500,
+      1000,
+      1500
+    ],
+    "quality_margin_recommendation": "OWNER_DECISION_REQUIRED_500_IS_STRONGER_AND_MUCH_MORE_EXPENSIVE",
+    "short_and_stress_controls": "REPORT_SEPARATELY_UNTIL_EACH_CLASS_IS_ADEQUATELY_POWERED"
+  },
+  "power_sensitivity": {
+    "status": "PLANNING_APPROXIMATION_ONLY",
+    "expected_true_paired_difference": 0,
+    "method": "NORMAL_APPROXIMATION_FOR_PAIRED_DIFFERENCE_WITH_VARIANCE_EQUAL_TO_DISCORDANCE",
+    "formula": "ceil(((z_0.95 + z_power)^2 * paired_discordance) / margin^2)",
+    "z_one_sided_95": 1.6448536269514722,
+    "z_power_80": 0.8416212335729143,
+    "z_power_90": 1.2815515655446004,
+    "rows": [
+      {"margin_basis_points": 500, "paired_discordance_basis_points": 500, "tasks_80_power": 124, "counterbalanced_tasks_80_power": 124, "tasks_90_power": 172, "counterbalanced_tasks_90_power": 172},
+      {"margin_basis_points": 500, "paired_discordance_basis_points": 1000, "tasks_80_power": 248, "counterbalanced_tasks_80_power": 248, "tasks_90_power": 343, "counterbalanced_tasks_90_power": 344},
+      {"margin_basis_points": 500, "paired_discordance_basis_points": 2000, "tasks_80_power": 495, "counterbalanced_tasks_80_power": 496, "tasks_90_power": 686, "counterbalanced_tasks_90_power": 688},
+      {"margin_basis_points": 500, "paired_discordance_basis_points": 3000, "tasks_80_power": 742, "counterbalanced_tasks_80_power": 744, "tasks_90_power": 1028, "counterbalanced_tasks_90_power": 1028},
+      {"margin_basis_points": 500, "paired_discordance_basis_points": 5000, "tasks_80_power": 1237, "counterbalanced_tasks_80_power": 1240, "tasks_90_power": 1713, "counterbalanced_tasks_90_power": 1716},
+      {"margin_basis_points": 1000, "paired_discordance_basis_points": 500, "tasks_80_power": 31, "counterbalanced_tasks_80_power": 32, "tasks_90_power": 43, "counterbalanced_tasks_90_power": 44},
+      {"margin_basis_points": 1000, "paired_discordance_basis_points": 1000, "tasks_80_power": 62, "counterbalanced_tasks_80_power": 64, "tasks_90_power": 86, "counterbalanced_tasks_90_power": 88},
+      {"margin_basis_points": 1000, "paired_discordance_basis_points": 2000, "tasks_80_power": 124, "counterbalanced_tasks_80_power": 124, "tasks_90_power": 172, "counterbalanced_tasks_90_power": 172},
+      {"margin_basis_points": 1000, "paired_discordance_basis_points": 3000, "tasks_80_power": 186, "counterbalanced_tasks_80_power": 188, "tasks_90_power": 257, "counterbalanced_tasks_90_power": 260},
+      {"margin_basis_points": 1000, "paired_discordance_basis_points": 5000, "tasks_80_power": 310, "counterbalanced_tasks_80_power": 312, "tasks_90_power": 429, "counterbalanced_tasks_90_power": 432},
+      {"margin_basis_points": 1500, "paired_discordance_basis_points": 500, "tasks_80_power": 14, "counterbalanced_tasks_80_power": 16, "tasks_90_power": 20, "counterbalanced_tasks_90_power": 20},
+      {"margin_basis_points": 1500, "paired_discordance_basis_points": 1000, "tasks_80_power": 28, "counterbalanced_tasks_80_power": 28, "tasks_90_power": 39, "counterbalanced_tasks_90_power": 40},
+      {"margin_basis_points": 1500, "paired_discordance_basis_points": 2000, "tasks_80_power": 55, "counterbalanced_tasks_80_power": 56, "tasks_90_power": 77, "counterbalanced_tasks_90_power": 80},
+      {"margin_basis_points": 1500, "paired_discordance_basis_points": 3000, "tasks_80_power": 83, "counterbalanced_tasks_80_power": 84, "tasks_90_power": 115, "counterbalanced_tasks_90_power": 116},
+      {"margin_basis_points": 1500, "paired_discordance_basis_points": 5000, "tasks_80_power": 138, "counterbalanced_tasks_80_power": 140, "tasks_90_power": 191, "counterbalanced_tasks_90_power": 192}
+    ],
+    "limitations": [
+      "This approximation does not replace a frozen simulation using the final task distribution and analyzer.",
+      "Power must be established for the actual primary contrast and any release-critical stratum.",
+      "Repeated five-minute transitions and repeated random seeds do not increase the independent task count.",
+      "A five-task shakedown can validate instrumentation but cannot support a general outcome claim."
+    ]
+  },
+  "human_review_accounting": {
+    "stage_0_reviewers_per_card": 1,
+    "stage_0_human_effectiveness_claim": "NOT_AUTHORIZED",
+    "confirmatory_reviewers_per_card_if_human_effectiveness_is_claimed": 2,
+    "review_time_value_options_usd_per_hour": [
+      25,
+      50,
+      100
+    ],
+    "primary_time_value": null,
+    "rule": "Always report raw review seconds and show sensitivity to the other frozen values."
+  },
+  "owner_decisions_required": [
+    {
+      "decision_id": "OD-001",
+      "question": "Use the full-context worker as the primary economic baseline, with frontier-full as a diagnostic quality anchor?",
+      "recommendation": "YES",
+      "accepted_value": null
+    },
+    {
+      "decision_id": "OD-002",
+      "question": "Authorize only the five-task instrumentation shakedown before choosing a confirmatory sample size?",
+      "recommendation": "YES",
+      "accepted_value": null
+    },
+    {
+      "decision_id": "OD-003",
+      "question": "Which quality-loss margin is acceptable for the scoped consequence: 500, 1000, or 1500 basis points?",
+      "recommendation": "500_FOR_STRONG_CLAIM_OR_1000_FOR_RESOURCE_LIMITED_EXPLORATION",
+      "accepted_value": null
+    },
+    {
+      "decision_id": "OD-004",
+      "question": "What hourly value should be used for human review time?",
+      "recommendation": "REPORT_25_50_100_SENSITIVITY_AND_CHOOSE_ONE_PRIMARY",
+      "accepted_value": null
+    },
+    {
+      "decision_id": "OD-005",
+      "question": "Publish an evaluation-ready research candidate before confirmatory results, or wait?",
+      "recommendation": "WAIT_UNTIL_STAGE_0_INSTRUMENTATION_PASSES",
+      "accepted_value": null
+    },
+    {
+      "decision_id": "OD-006",
+      "question": "Develop the proposed default-off two-key fallback as a separate experiment after the human-approved path is stable?",
+      "recommendation": "YES_BUT_REQUIRE_PRIOR_OWNER_DELEGATION_MATCHING_ROLE_MODEL_AND_ORCHESTRATOR_CONCURRENCE_REVERSIBLE_LOCAL_SCOPE_PROVISIONAL_OUTPUT_AND_HUMAN_TIE_BREAK",
+      "accepted_value": null
+    }
+  ],
+  "stop_conditions": [
+    "No model call until OD-001 through OD-004 are explicitly accepted for the proposed stage.",
+    "No confirmatory run until Stage 0 is disposed and a final simulation digest and task manifest are frozen.",
+    "No two-key autonomy run until OD-006 and an exact delegation envelope are separately approved and implemented.",
+    "No GitHub mutation until a separate publication approval is recorded.",
+    "No outcome claim from Stage 0."
+  ],
+  "claim_ceiling": "OWNER_REVIEW_PROPOSAL_AND_POWER_SENSITIVITY_ONLY_NO_RUN_NO_PUBLICATION_NO_OUTCOME_CLAIM"
+}
