@@ -1,30 +1,61 @@
 # Clutch
 
-Clutch is a human-approved model-routing skill for long-context agent work. A frontier advisor keeps the full conversation and performs high-value judgment. A human approves one compact task card. A lower-cost worker receives that card for one bounded attempt.
+Clutch is a human-approved model-phase routing skill for long-context agent work. A capable advisor keeps the full conversation and performs high-value judgment. A human approves an exact compact task card. A qualified worker receives that card for one bounded attempt.
 
-![Three-state Clutch workflow](visuals/manual-transmission-human-loop.png)
+The canonical skill follows the open Agent Skills folder format. The same source can now be installed for OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI, Claude Code, or another compatible harness without maintaining separate protocol copies.
+
+![Three-state Clutch workflow](visuals/manual-transmission-human-loop.svg)
 
 ## Current status
 
-This repository is a `PREPARE_ONLY` reference implementation. Its files do not activate routing, make the advisor read-only, or authorize a worker. Activation requires a separate human decision in a trusted host that binds an exact policy and implementation digest.
+This repository remains a `PREPARE_ONLY` reference implementation. Installing the skill makes its instructions discoverable. It does not activate routing, make an advisor read-only, authenticate a human, isolate a filesystem, select a model, or authorize a worker.
 
-The included checker is deliberately modest. It validates canonical hashes, event order, declared roles, limits, and lifecycle eligibility over caller-supplied JSON. It does not authenticate a human, secure a shared filesystem, create durable append-only storage, or decide that work is correct.
+Activation requires a separate human decision in a trusted host that binds an exact policy and implementation digest. The included checker validates canonical hashes, event order, declared roles, limits, and lifecycle eligibility over caller-supplied JSON. Its output is metadata only.
 
-## Why it exists
+## How it works
 
-Long sessions become expensive and noisy when every worker receives the full history. Clutch keeps that history with the advisor and transfers the smallest human-approved context that can support a testable task. This can reduce worker-context volume and move routine execution to a cheaper model. It guarantees no savings. Short tasks, retries, card omissions, or routing overhead can erase the benefit.
-
-The workflow has three visible states:
+Clutch has three visible states:
 
 1. `NEUTRAL`: the advisor holds full context and no worker runs.
-2. `APPROVE CARD`: a human reviews the exact scope, constraints, sources, checks, and model profile.
-3. `ENGAGED`: the trusted host sends that exact card to one qualified worker for one attempt.
+2. `APPROVE CARD`: a human reviews the exact scope, constraints, sources, checks, model profile, and incoming-state identity.
+3. `ENGAGED`: the approved card moves to one qualified worker for one attempt in one declared model phase.
 
-A failed check returns the workflow to neutral. Repair, retry, or model escalation requires a new card and new human approval. Worker success still requires verification and human acceptance.
+A failed check returns the workflow to neutral. Every model upgrade or downgrade is a new phase boundary. It binds the outgoing state, incoming state, model profiles, and exact approved phase card before work resumes. Repair, retry, or an unapproved model change requires a new card and human decision. Worker success still requires verification and human acceptance.
+
+Clutch supports three operating modes:
+
+- `NATIVE_ROUTING`: the host creates a clean worker context and passes only the approved worker package.
+- `MANUAL_HANDOFF`: the human opens a clean qualified-worker session and transfers the approved package.
+- `CARD_ONLY`: the advisor prepares a card and stops because no clean worker boundary is available.
+
+Read [`host-integration.md`](clutch/references/host-integration.md) for the capability check and exact boundaries.
+
+For the next falsifiable checkpoint, read the [repeatability program](docs/repeatability.md). It freezes one finish line: verified delivery must survive every declared model phase change. Economic analysis is external to Clutch.
+
+## Install for a project
+
+Requirements: Node.js 20 or newer for the installer and local checks. The skill itself is plain Markdown and supporting files.
+
+Codex, GitHub Copilot, Cursor, and Gemini CLI use the shared Agent Skills project path:
+
+```text
+node scripts/install-skill.mjs --harness codex --project path/to/project
+node scripts/install-skill.mjs --harness github-copilot --project path/to/project
+node scripts/install-skill.mjs --harness cursor --project path/to/project
+node scripts/install-skill.mjs --harness gemini-cli --project path/to/project
+```
+
+Claude Code uses its project skill path:
+
+```text
+node scripts/install-skill.mjs --harness claude-code --project path/to/project
+```
+
+The installer verifies every copied byte. Serialized local installs use an exclusive sibling lock and refuse known drift. Use `--dry-run` to preview or `--check` to compare an existing installation. See [`docs/portability.md`](docs/portability.md) for custom targets and the verification ceiling.
 
 ## Verify the repository
 
-Requirements: Git and Node.js 20 or newer. There are no package dependencies and no install step.
+There are no package dependencies and no package-install step.
 
 ```text
 npm test
@@ -32,37 +63,57 @@ npm test
 
 The command verifies:
 
-- the required Codex skill structure and UI metadata;
-- content equivalence between `Clutch-Skill.md` and `clutch/SKILL.md`, allowing only the relative link prefix needed at each location;
+- the Agent Skills structure and optional Codex UI metadata;
+- exact equivalence between `Clutch-Skill.md` and the canonical `clutch/SKILL.md`, apart from path-aware links;
+- both project installation layouts across five documented harnesses;
+- idempotent installation plus rejection of drift and path escape attempts;
+- rejection of a second compliant installer while the destination is locked;
 - the `PREPARE_ONLY` phase and zero released cards;
 - the policy binding to the implementation manifest;
-- 26 positive and adversarial lifecycle fixtures against two independently written reducers;
+- 26 positive and adversarial lifecycle fixtures, plus six model-phase contract mutations, against two independently written reducers;
 - metadata-only release output with no card-content leakage in the tested projections;
+- the public preregistration extract, minimized outcome table, statistical replay, study receipt, and claim ceiling;
 - the deterministic visual state sequence and pinned image hashes; and
 - every release file against `release-manifest.json`.
 
-A passing result establishes local synthetic conformance for the exact checked bytes. It does not establish secure identity, trusted persistence, model quality, completeness of a context card, actual token savings, or production readiness.
+A passing result establishes local synthetic conformance and exact package projection for the checked bytes. It does not establish vendor runtime behavior, secure identity, trusted persistence, model quality, card completeness, actual token savings, or production readiness.
 
-## Use the skill
+## External economic evaluation
 
-The installable skill lives in [`clutch/`](clutch/). Codex requires the canonical entry point to remain named [`SKILL.md`](clutch/SKILL.md). [`Clutch-Skill.md`](Clutch-Skill.md) is the human-facing copy requested for sharing. It is generated from the canonical skill with only the relative link prefix changed so both locations work on GitHub.
+Clutch decides whether authorized work remained coherent and reached verified delivery across model phases. Its protocol does not calculate savings and economic measurements cannot create, rescue, or reverse a pass.
 
-Copying the folder into a supported skills directory makes the skill discoverable. It does not activate the example policy. Read [`clutch/references/protocol.md`](clutch/references/protocol.md) before adapting the framework to a real host.
+An external governance system may analyze provider charges, tokens, caching, latency, and human review time after collecting raw receipts. Those measurements remain separate from Clutch’s decision surface.
+
+## Measured v2 result
+
+An earlier preregistered fixed synthetic long-context benchmark completed 241 provider requests with no retries. Its external analysis allocated advisor charges and measured raw input and provider cost alongside quality. Those historical economic fields are retained as evidence from that study. They are not inputs to the current Clutch protocol decision.
+
+Stable-Terra cards averaged 4.44 percentage points below full history after handoff, and only 9 of 15 card-routed tasks were fully correct at the final phase versus 15 of 15 with full history. Terra-to-Luna cards averaged 2.30 points above full history, with 13 of 15 fully correct versus 10 of 15. The separate model-switch protection endpoint remained neutral or unresolved.
+
+This is evidence from fifteen synthetic tasks and one advisor realization. It is not a production benchmark. Human review time was not monetized. The public package can recompute the reported historical statistics, but it cannot rescore the withheld raw model responses or reestablish private execution integrity. Read the [plain-English evaluation](docs/evaluation-v2.md) and inspect the [machine-readable evidence](evidence/clutch-v2-confirmatory-001/research-summary.json).
 
 ## Repository map
 
 ```text
-Clutch-Skill.md              Human-facing skill specification
-clutch/SKILL.md              Canonical installable skill entry point
-clutch/references/           Protocol, card contract, and model profiles
-clutch/scripts/              Node-only checker, reference reducer, and tests
-AGENTS.example.md            Example project policy, inactive by default
-policy.example.json          Manifest-bound PREPARE_ONLY policy
-model-map.example.json       Symbolic model-profile adapter
-implementation-manifest.json Exact executable decision-surface receipts
-release-manifest.json        Exact repository release receipts
-scripts/                     Manifest maintenance and repository verifier
-visuals/                     Deterministic metaphor, source assets, and checks
+Clutch-Skill.md               Human-facing mirror of the canonical skill
+clutch/                       Canonical Agent Skills-compatible source
+clutch/references/            Protocol, card, model, and host integration rules
+clutch/scripts/               Node-only checker, reference reducer, and fixtures
+adapters/harness-targets.json Two deterministic project installation layouts
+scripts/install-skill.mjs     Non-overwriting cross-harness installer
+scripts/verify-portability.mjs Installer and projection adversarial checks
+scripts/verify-evaluation.mjs  Public evidence and claim-boundary checks
+scripts/recompute-evaluation.mjs Public statistical replay from minimized outcomes
+scripts/repeatability-core.mjs Frozen repeatability decision engine
+scripts/verify-repeatability.mjs Adversarial local fixtures for the decision engine
+external-governance/plan-repeatability.mjs External study optimizer; excluded from the Clutch decision surface
+evidence/                      Preregistration extract, outcomes, summary, and receipt
+AGENTS.example.md             Example project policy, inactive by default
+policy.example.json           Manifest-bound PREPARE_ONLY policy
+model-map.example.json        One symbolic model-profile adapter example
+implementation-manifest.json  Exact executable decision-surface receipts
+release-manifest.json         Exact repository release receipts
+visuals/                      Deterministic metaphor, source assets, and checks
 ```
 
 ## License

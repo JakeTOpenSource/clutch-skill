@@ -20,14 +20,14 @@ A context card is an immutable transfer object from the advisor to one bounded w
 | `required_outputs` | Deliverables the worker must return |
 | `acceptance_checks` | Observable tests, not aesthetic preferences |
 | `stop_conditions` | Conditions that end work or return control |
-| `routing` | Symbolic profiles, effort, context turns, attempt limit, and concurrency |
+| `routing` | Current phase, prior and next symbolic profiles, transition direction, effort, context turns, attempt limit, and concurrency |
 | `claim_ceiling` | What a successful result still does not establish |
 
 ## Card example
 
 ```json
 {
-  "schema_version": "context-card.v1",
+  "schema_version": "context-card.v2",
   "card_id": "card-example-001",
   "card_version": 1,
   "objective": "Add one deterministic parser and its tests.",
@@ -42,16 +42,26 @@ A context card is an immutable transfer object from the advisor to one bounded w
   ],
   "facts": ["The parser input grammar is defined by spec-1."],
   "advisor_findings": ["Malformed input must fail closed."],
-  "constraints": ["Do not add dependencies."],
-  "unknowns": ["Runtime cost telemetry is unavailable."],
+  "constraints": [
+    "C1: Do not add dependencies.",
+    "C2: Reject malformed input; continue parsing valid input."
+  ],
+  "unknowns": ["The host has not established whether the target model is available."],
   "allowed_actions": ["Edit parser and test files in the declared project."],
   "forbidden_actions": ["Do not publish, deploy, or change unrelated files."],
   "required_outputs": ["Parser implementation", "Passing negative tests"],
-  "acceptance_checks": ["Valid fixture parses", "Malformed fixture is rejected"],
+  "acceptance_checks": [
+    "C1-CHECK: The dependency manifest is byte-identical.",
+    "C2-ALLOW: A valid fixture parses.",
+    "C2-DENY: A malformed fixture is rejected."
+  ],
   "stop_conditions": ["Stop after one attempt, a failed check, or any scope conflict."],
   "routing": {
-    "worker_profile": "economy",
-    "fallback_profile": "balanced",
+    "phase_id": "phase-parser-implementation",
+    "from_profile": "advisor",
+    "worker_profile": "worker_rank_1",
+    "transition": "DOWNGRADE",
+    "state_in_binding": "PREVIOUS_PHASE_OUTPUT",
     "reasoning_effort": "low",
     "max_attempts": 1,
     "max_concurrent_workers": 1,
@@ -67,9 +77,13 @@ A context card is an immutable transfer object from the advisor to one bounded w
 - Integers stay within the portable JSON safe range. Floating-point values are rejected.
 - Required text and list fields cannot be empty.
 - `task_class` must be `EXECUTION_REQUIRED` before a worker may receive the card.
-- The worker and proposed next-card profiles must exist in the active policy and may not equal the advisor profile. The `fallback_profile` field never authorizes automatic fallback.
+- The worker profile must exist in the active policy and may not equal the advisor profile. A different target profile requires a new exact phase card.
+- Every model change creates a new `phase_id`. Its card binds `from_profile`, `worker_profile`, `transition`, and the rule `state_in_binding: PREVIOUS_PHASE_OUTPUT`. The runtime receipt supplies the actual digests and must prove exact continuity before the phase can engage.
 - `context_turns` may be zero through the policy maximum. Full-history propagation is forbidden.
 - Card size must stay below the policy limit. Prefer source locators over copied source bodies.
+- Give every material constraint a stable tag and at least one acceptance check with the same tag.
+- When a condition changes behavior, include the smallest contrasting allowed and disallowed case needed to prevent the worker from applying the rule too broadly.
+- State copy, replay, mutation, and identity behavior explicitly when those semantics affect correctness.
 - Every material scope change creates a new card version and digest.
 
 ## Worker envelope
@@ -79,13 +93,17 @@ The trusted host adds this compact envelope when assigning the exact approved ca
 ```text
 WORKER ENVELOPE v1
 phase: ACTIVE
+model_phase_id: <exact phase ID>
+transition: UPGRADE | DOWNGRADE | STABLE
+from_profile: <exact prior profile>
 workflow_state: WORK_ASSIGNED
 policy_digest: <exact digest>
 card_id: <exact ID>
 card_digest: <exact digest>
 approval_event_hash: <event reference or UNKNOWN>
 worker_id: <assigned worker>
-worker_profile: economy | balanced
+worker_profile: <exact profile from the active model map>
+state_in_digest: <exact incoming-state digest>
 workspace_root: <authorized root>
 read_targets: <explicit paths or source IDs>
 write_targets: <explicit paths>
@@ -93,6 +111,8 @@ do_not_read: <explicit paths or categories>
 ```
 
 The worker must confirm that the envelope, card, and assignment agree before acting. Any mismatch stops work.
+
+At completion, the host appends the `MODEL PHASE RECEIPT v1` defined in [protocol.md](protocol.md). Its outgoing digest becomes the next phase's incoming digest. The next model may not engage until those values match.
 
 ## Worker receipt
 

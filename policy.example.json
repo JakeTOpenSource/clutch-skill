@@ -1,6 +1,6 @@
 {
-  "schema_version": "routing-policy.v1",
-  "policy_id": "clutch-policy-v1@sha256:6d077e9d572fe93e241856bbf39666236639ad8f7dfc314bf98712deca6aab3c",
+  "schema_version": "routing-policy.v2",
+  "policy_id": "clutch-policy-v2@sha256:82585e449d830f131aa1025038b1b222a9c378898cf83ae17461c121a58dcf1f",
   "stream_id": "clutch-stream-v1",
   "phase": "PREPARE_ONLY",
   "human_actor_ids": [
@@ -11,9 +11,14 @@
   ],
   "advisor_profile": "advisor",
   "worker_profiles": [
-    "economy",
-    "balanced"
+    "worker_rank_1",
+    "worker_rank_2"
   ],
+  "profile_ranks": {
+    "advisor": 3,
+    "worker_rank_1": 1,
+    "worker_rank_2": 2
+  },
   "max_worker_attempts": 1,
   "max_concurrent_workers": 2,
   "max_context_turns": 3,

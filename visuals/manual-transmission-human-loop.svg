@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2048" height="1166" viewBox="0 0 2048 1166" role="img" aria-labelledby="title description">
-  <title id="title">Human-in-the-loop manual routing</title>
-  <desc id="description">The same transmission shop progresses from neutral, to human approval of one compact task card, to one engaged lower-cost worker attempt. The laptop remains fixed while its screen compresses full context into one bounded card. Only the third transmission is mechanically engaged.</desc>
+  <title id="title">Human-approved model-phase routing</title>
+  <desc id="description">The same transmission shop progresses from neutral, to human approval of one exact phase card, to one engaged bounded worker attempt. The laptop remains fixed while its screen binds the approved card to the incoming state. Only the third transmission is mechanically engaged.</desc>
   <defs>
     <filter id="engagement-feather" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5"/></filter>
     <mask id="engagement-only" maskUnits="userSpaceOnUse" x="0" y="0" width="2048" height="918">
@@ -70,9 +70,9 @@
       <text class="state-label" x="721" y="62">APPROVE CARD</text>
       <text class="state-copy" x="721" y="91">Human scopes one compact task.</text>
     </g>
-    <g id="state-engaged" role="group" aria-label="ENGAGED: One card. One lower-cost attempt.">
+    <g id="state-engaged" role="group" aria-label="ENGAGED: One phase. One bounded attempt.">
       <text class="state-label" x="1403" y="62">ENGAGED</text>
-      <text class="state-copy" x="1403" y="91">One card. One lower-cost attempt.</text>
+      <text class="state-copy" x="1403" y="91">One phase. One bounded attempt.</text>
     </g>
   </g>
   <g id="thesis">
@@ -80,7 +80,7 @@
     <line x1="0" y1="918" x2="2048" y2="918" stroke="#4A6B56" stroke-width="2"/>
     <text class="loop-title" x="58" y="955">HUMAN IN THE LOOP</text>
     <text class="thesis-headline" x="58" y="997">FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.</text>
-    <text class="loop-copy" x="58" y="1045">That limits worker context and moves routine labor to a lower-cost model. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.</text>
-    <text class="fit-copy" x="58" y="1127"><tspan fill="#A8794F" font-weight="600" letter-spacing="1.5px">CALIBRATION</tspan><tspan dx="16">Savings vary; short tasks may not offset routing overhead.</tspan></text>
+    <text class="loop-copy" x="58" y="1045">Every model change binds one approved phase card to one exact state handoff. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.</text>
+    <text class="fit-copy" x="58" y="1127"><tspan fill="#A8794F" font-weight="600" letter-spacing="1.5px">BOUNDARY</tspan><tspan dx="16">Coherent transfer does not prove correct judgment or accepted output.</tspan></text>
   </g>
 </svg>

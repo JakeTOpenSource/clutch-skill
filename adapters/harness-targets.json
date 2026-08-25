@@ -1,0 +1,33 @@
+{
+  "schema_version": "clutch-harness-targets.v1",
+  "status": "REFERENCE_NOT_ACTIVATED",
+  "skill_name": "clutch",
+  "targets": {
+    "agent-skills-shared": {
+      "project_path": ".agents/skills/clutch",
+      "harnesses": [
+        "codex",
+        "github-copilot",
+        "cursor",
+        "gemini-cli"
+      ]
+    },
+    "claude-code": {
+      "project_path": ".claude/skills/clutch",
+      "harnesses": [
+        "claude-code"
+      ]
+    }
+  },
+  "aliases": {
+    "claude": "claude-code",
+    "claude-code": "claude-code",
+    "codex": "agent-skills-shared",
+    "copilot": "agent-skills-shared",
+    "cursor": "agent-skills-shared",
+    "gemini": "agent-skills-shared",
+    "gemini-cli": "agent-skills-shared",
+    "github-copilot": "agent-skills-shared",
+    "shared": "agent-skills-shared"
+  }
+}

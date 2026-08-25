@@ -1,0 +1,155 @@
+{
+  "schema_version": "clutch-v2-research-summary.v1",
+  "study_id": "clutch-v2-confirmatory-001",
+  "decision": "PASS_RELEASE_CANDIDATE_ALLOWED",
+  "release_pass": true,
+  "claim_ceiling": "FIXED_SYNTHETIC_LONG_CONTEXT_SESSION_SINGLE_ADVISOR_REALIZATION_NO_POPULATION_OR_PRODUCTION_CLAIM",
+  "integrity": {
+    "runtime_complete": true,
+    "provider_requests": 241,
+    "expected_provider_requests": 241,
+    "advisor_calls": 1,
+    "worker_calls": 240,
+    "completed_cells": 240,
+    "unique_response_ids": true,
+    "budget_within_cap": true,
+    "card_set_bound": true,
+    "human_card_approval_bound": true,
+    "freeze_packet_bound": true,
+    "cell_model_card_timeline_bindings": true,
+    "source_digest_chain": true,
+    "provider_event_reconciliation": true,
+    "all_provider_responses_completed": true,
+    "cell_charge_recalculation": true,
+    "advisor_charge_recalculation": true,
+    "observed_charge_reconciles": true,
+    "pass": true
+  },
+  "quality_noninferiority": {
+    "STABLE_TERRA": {
+      "estimand": "P3_P5_POST_SWITCH_AND_EACH_PHASE_APPROVED_CARD_MINUS_FULL_HISTORY",
+      "post_switch_point_delta": -0.04444444444444444,
+      "post_switch_one_sided_95_lower": -0.051851851851851836,
+      "margin": -0.1,
+      "by_phase": {
+        "P3": {
+          "point_delta": 0,
+          "one_sided_95_lower": 0,
+          "margin": -0.1,
+          "pass": true
+        },
+        "P4": {
+          "point_delta": -0.06666666666666665,
+          "one_sided_95_lower": -0.06666666666666665,
+          "margin": -0.1,
+          "pass": true
+        },
+        "P5": {
+          "point_delta": -0.06666666666666665,
+          "one_sided_95_lower": -0.08888888888888885,
+          "margin": -0.1,
+          "pass": true
+        }
+      },
+      "pass": true
+    },
+    "TERRA_TO_LUNA": {
+      "estimand": "P3_P5_POST_SWITCH_AND_EACH_PHASE_APPROVED_CARD_MINUS_FULL_HISTORY",
+      "post_switch_point_delta": 0.02296296296296297,
+      "post_switch_one_sided_95_lower": -0.0007407407407407381,
+      "margin": -0.1,
+      "by_phase": {
+        "P3": {
+          "point_delta": 0,
+          "one_sided_95_lower": 0,
+          "margin": -0.1,
+          "pass": true
+        },
+        "P4": {
+          "point_delta": 0.01333333333333333,
+          "one_sided_95_lower": -0.02666666666666666,
+          "margin": -0.1,
+          "pass": true
+        },
+        "P5": {
+          "point_delta": 0.05555555555555556,
+          "one_sided_95_lower": 0.011111111111111106,
+          "margin": -0.1,
+          "pass": true
+        }
+      },
+      "pass": true
+    }
+  },
+  "critical_safety_and_collapse": {
+    "STABLE_TERRA": {
+      "approved_card_boundary_violations": 0,
+      "full_history_boundary_violations": 0,
+      "approved_card_collapses": 0,
+      "full_history_collapses": 0,
+      "pass": true
+    },
+    "TERRA_TO_LUNA": {
+      "approved_card_boundary_violations": 0,
+      "full_history_boundary_violations": 0,
+      "approved_card_collapses": 0,
+      "full_history_collapses": 0,
+      "pass": true
+    }
+  },
+  "input_efficiency": {
+    "STABLE_TERRA": {
+      "full_history_tokens": 5049824,
+      "approved_card_tokens_including_advisor": 205300.99999999997,
+      "reduction_fraction": 0.9593449197437376,
+      "pass": true
+    },
+    "TERRA_TO_LUNA": {
+      "full_history_tokens": 5049433,
+      "approved_card_tokens_including_advisor": 204891.99999999997,
+      "reduction_fraction": 0.9594227708338738,
+      "pass": true
+    }
+  },
+  "provider_cost_efficiency": {
+    "STABLE_TERRA": {
+      "paired_mean_delta_nanousd": -776677600,
+      "interval_95_nanousd": [
+        -779927978.3333334,
+        -773767265.8333333
+      ],
+      "pass": true
+    },
+    "TERRA_TO_LUNA": {
+      "paired_mean_delta_nanousd": -186450190,
+      "interval_95_nanousd": [
+        -187706022.25000003,
+        -185222313.33333334
+      ],
+      "pass": true
+    }
+  },
+  "switch_resilience": {
+    "point_estimate": 0.0674074074074074,
+    "one_sided_95_lower": 0.04444444444444444,
+    "supportive_threshold": 0.1,
+    "classification": "NEUTRAL_OR_UNRESOLVED"
+  },
+  "experiment_actuals": {
+    "provider_charge_nanousd": 16075761050,
+    "provider_charge_usd": 16.07576105,
+    "provider_requests": 241,
+    "advisor_calls": 1,
+    "worker_calls": 240,
+    "human_review_seconds": null
+  },
+  "limitations": [
+    "The fifteen tasks are fixed synthetic variants of three templates, not a random sample of production work.",
+    "One Sol advisor realization audits final cumulative cards; advisor reliability is not estimated.",
+    "Task-stratified bootstrap intervals describe stability across this frozen set and do not establish population coverage.",
+    "Human approval time is not monetized, so provider-cost results are not total economic cost.",
+    "The card is a combined exact-selection and context-reduction treatment, not pure compression.",
+    "Model-produced JavaScript is scored in a stripped child-process VM with imports and runtime string code generation disabled and no API credential in its environment. Node VM remains defense in depth, not an operating-system security boundary."
+  ],
+  "private_analysis_sha256": "sha256:31b774d96da4909bb70ca9d3c799fe0b2c1e8206bcc95db1d4535935ca8f501b"
+}

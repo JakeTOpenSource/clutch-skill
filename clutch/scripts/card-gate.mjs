@@ -23,12 +23,14 @@ const CARD_KEYS = new Set([
   "acceptance_checks", "stop_conditions", "routing", "claim_ceiling",
 ]);
 const ROUTING_KEYS = new Set([
-  "worker_profile", "fallback_profile", "reasoning_effort", "max_attempts",
+  "phase_id", "from_profile", "transition", "state_in_binding",
+  "worker_profile", "reasoning_effort", "max_attempts",
   "max_concurrent_workers", "context_turns",
 ]);
 const POLICY_KEYS = new Set([
   "schema_version", "policy_id", "stream_id", "phase", "human_actor_ids",
   "advisor_actor_ids", "advisor_profile", "worker_profiles",
+  "profile_ranks",
   "max_worker_attempts", "max_concurrent_workers", "max_context_turns",
   "max_card_bytes",
 ]);
@@ -129,7 +131,7 @@ function validatePolicy(policy, errors) {
   }
   let valid = true;
   const checks = [
-    [policy.schema_version === "routing-policy.v1", "INVALID_POLICY_VERSION"],
+    [policy.schema_version === "routing-policy.v2", "INVALID_POLICY_VERSION"],
     [nonemptyString(policy.policy_id), "INVALID_POLICY_ID"],
     [nonemptyString(policy.stream_id), "INVALID_STREAM_ID"],
     [["PREPARE_ONLY", "ACTIVE"].includes(policy.phase), "INVALID_POLICY_PHASE"],
@@ -157,6 +159,14 @@ function validatePolicy(policy, errors) {
     }
   }
   if (valid) {
+    const profiles = [policy.advisor_profile, ...policy.worker_profiles];
+    if (!policy.profile_ranks || typeof policy.profile_ranks !== "object" || Array.isArray(policy.profile_ranks) ||
+        !sameKeys(policy.profile_ranks, new Set(profiles)) ||
+        profiles.some((profile) => !Number.isSafeInteger(policy.profile_ranks[profile]) || policy.profile_ranks[profile] < 1) ||
+        new Set(profiles.map((profile) => policy.profile_ranks[profile])).size !== profiles.length) {
+      addError(errors, "INVALID_PROFILE_RANKS", "policy.profile_ranks");
+      valid = false;
+    }
     if (policy.worker_profiles.includes(policy.advisor_profile)) {
       addError(errors, "ADVISOR_IS_WORKER_PROFILE", "policy.worker_profiles");
       valid = false;
@@ -194,7 +204,7 @@ function validateCard(card, policy, errors, index) {
       valid = false;
     }
   }
-  if (card.schema_version !== "context-card.v1") {
+  if (card.schema_version !== "context-card.v2") {
     addError(errors, "INVALID_CARD_VERSION", locator);
     valid = false;
   }
@@ -237,12 +247,36 @@ function validateCard(card, policy, errors, index) {
     valid = false;
   } else {
     const worker = routing.worker_profile;
-    const fallback = routing.fallback_profile;
-    if (!policy.worker_profiles.includes(worker) || !policy.worker_profiles.includes(fallback)) {
+    if (!nonemptyString(routing.phase_id)) {
+      addError(errors, "INVALID_MODEL_PHASE_ID", `${locator}.routing.phase_id`);
+      valid = false;
+    }
+    if (![policy.advisor_profile, ...policy.worker_profiles].includes(routing.from_profile)) {
+      addError(errors, "UNKNOWN_FROM_MODEL_PROFILE", `${locator}.routing.from_profile`);
+      valid = false;
+    }
+    if (!["UPGRADE", "DOWNGRADE", "STABLE"].includes(routing.transition)) {
+      addError(errors, "INVALID_MODEL_TRANSITION", `${locator}.routing.transition`);
+      valid = false;
+    }
+    if (routing.state_in_binding !== "PREVIOUS_PHASE_OUTPUT") {
+      addError(errors, "INVALID_STATE_BINDING", `${locator}.routing.state_in_binding`);
+      valid = false;
+    }
+    if ([policy.advisor_profile, ...policy.worker_profiles].includes(routing.from_profile) && policy.worker_profiles.includes(worker)) {
+      const fromRank = policy.profile_ranks[routing.from_profile];
+      const toRank = policy.profile_ranks[worker];
+      const expectedTransition = toRank > fromRank ? "UPGRADE" : toRank < fromRank ? "DOWNGRADE" : "STABLE";
+      if (routing.transition !== expectedTransition) {
+        addError(errors, "MODEL_TRANSITION_RANK_MISMATCH", `${locator}.routing.transition`);
+        valid = false;
+      }
+    }
+    if (!policy.worker_profiles.includes(worker)) {
       addError(errors, "UNKNOWN_MODEL_PROFILE", `${locator}.routing`);
       valid = false;
     }
-    if (worker === policy.advisor_profile || fallback === policy.advisor_profile) {
+    if (worker === policy.advisor_profile) {
       addError(errors, "ADVISOR_ASSIGNED_AS_WORKER", `${locator}.routing`);
       valid = false;
     }

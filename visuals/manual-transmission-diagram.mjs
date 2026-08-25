@@ -13,9 +13,9 @@ const svgName = "manual-transmission-human-loop.svg";
 const legendName = "manual-transmission-legend.json";
 
 export const diagramSpec = Object.freeze({
-  schema_version: "manual-transmission-metaphor.v4",
-  title: "Human-in-the-loop manual routing",
-  core_meaning: "The advisor retains full context, a human approves one compact task card, and one lower-cost worker executes one bounded attempt.",
+  schema_version: "manual-transmission-metaphor.v5",
+  title: "Human-approved model-phase routing",
+  core_meaning: "The advisor retains full context, a human approves one exact phase card, and one qualified worker executes one bounded model phase.",
   canvas: { width: 2048, image_height: 918, legend_height: 248, total_height: 1166 },
   palette: {
     forest: "#16301F",
@@ -69,8 +69,8 @@ export const diagramSpec = Object.freeze({
       width: 683,
       image: "base_plus_engagement",
       label: "ENGAGED",
-      descriptor: "One card. One lower-cost attempt.",
-      plain_english: "The trusted host sends the exact approved card to one qualified lower-cost worker for one bounded attempt.",
+      descriptor: "One phase. One bounded attempt.",
+      plain_english: "The trusted host sends the exact approved phase card and incoming state to one qualified worker for one bounded attempt.",
       text: { x: 1403, y: 62 },
     },
   ],
@@ -104,10 +104,10 @@ export const diagramSpec = Object.freeze({
   thesis: {
     kicker: "HUMAN IN THE LOOP",
     headline: "FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.",
-    body: "That limits worker context and moves routine labor to a lower-cost model. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.",
-    caveat_label: "CALIBRATION",
-    caveat: "Savings vary; short tasks may not offset routing overhead.",
-    efficiency_mechanism: "The worker receives a compact approved card rather than the full conversation, reducing worker-context volume while routine execution moves to a lower-cost model.",
+    body: "Every model change binds one approved phase card to one exact state handoff. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.",
+    caveat_label: "BOUNDARY",
+    caveat: "Coherent transfer does not prove correct judgment or accepted output.",
+    phase_mechanism: "The outgoing state of one model phase must match the incoming state of the next phase before work resumes.",
     neutral_definition: "No worker is engaged while scope, approval, or retry is unresolved.",
     retry_rule: "One card authorizes one attempt. A failed check returns to neutral and every retry requires a new card and human approval.",
     acceptance_rule: "Verification informs later human acceptance; successful worker execution does not accept itself.",
@@ -127,11 +127,12 @@ export const diagramSpec = Object.freeze({
     "One approved card authorizes one worker attempt.",
     "A retry requires a new card and new human approval.",
     "The worker receives the compact card, not the full conversation.",
-    "Lower context volume and lower model price are distinct possible cost benefits.",
+    "Every model upgrade or downgrade creates an explicit phase boundary.",
+    "The next phase must receive the exact state released by the prior phase.",
     "Verification and human acceptance occur after the depicted engagement state.",
-    "Savings are workload-dependent and are not established by this visual.",
+    "Economic telemetry is outside the protocol decision shown by this visual.",
   ],
-  claim_ceiling: "This is a control and cost-routing metaphor. It does not prove authenticated identity, secure isolation, correct model judgment, measured savings, or accepted output.",
+  claim_ceiling: "This is a control and state-transition metaphor. It does not prove authenticated identity, secure isolation, semantic completeness, correct model judgment, or accepted output.",
 });
 
 function xml(value) {
@@ -152,14 +153,14 @@ function pngDimensions(bytes) {
 }
 
 function validateSpec(spec) {
-  assert.equal(spec.schema_version, "manual-transmission-metaphor.v4");
+  assert.equal(spec.schema_version, "manual-transmission-metaphor.v5");
   assert.equal(spec.panels.length, 3, "Exactly three states are required");
   assert.deepEqual(spec.panels.map(({ id }) => id), ["neutral", "approve_card", "engaged"]);
   assert.deepEqual(spec.panels.map(({ label }) => label), ["NEUTRAL", "APPROVE CARD", "ENGAGED"]);
   assert.deepEqual(spec.panels.map(({ descriptor }) => descriptor), [
     "Full context held. No worker runs.",
     "Human scopes one compact task.",
-    "One card. One lower-cost attempt.",
+    "One phase. One bounded attempt.",
   ]);
   assert.equal(spec.panels[0].image, "base");
   assert.equal(spec.panels[1].image, "base");
@@ -188,11 +189,11 @@ function validateSpec(spec) {
   assert.ok(spec.thesis.kicker.includes("HUMAN IN THE LOOP"));
   assert.ok(spec.thesis.headline.includes("FULL HISTORY STAYS"));
   assert.ok(spec.thesis.headline.includes("ONLY THE APPROVED TASK MOVES"));
-  assert.ok(spec.thesis.body.includes("lower-cost model"));
+  assert.ok(spec.thesis.body.includes("Every model change"));
   assert.ok(spec.thesis.body.includes("retries need new approval"));
   assert.ok(spec.invariants.some((text) => text.includes("human-in-the-loop")), "Human-in-the-loop invariant is required");
-  assert.ok(spec.invariants.some((text) => text.includes("distinct possible cost benefits")), "Cost mechanism separation is required");
-  assert.ok(spec.invariants.some((text) => text.includes("not established by this visual")), "Savings caveat is required");
+  assert.ok(spec.invariants.some((text) => text.includes("explicit phase boundary")), "Model-phase invariant is required");
+  assert.ok(spec.invariants.some((text) => text.includes("exact state released")), "State-continuity invariant is required");
 }
 
 function validateImages(spec) {
@@ -268,8 +269,8 @@ function renderSvg(spec) {
   const p = spec.palette;
   const engagementEllipses = spec.engagement_overlay.ellipses.map((ellipse) => `<ellipse cx="${ellipse.cx}" cy="${ellipse.cy}" rx="${ellipse.rx}" ry="${ellipse.ry}"/>`).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${spec.canvas.width}" height="${spec.canvas.total_height}" viewBox="0 0 ${spec.canvas.width} ${spec.canvas.total_height}" role="img" aria-labelledby="title description">
-  <title id="title">Human-in-the-loop manual routing</title>
-  <desc id="description">The same transmission shop progresses from neutral, to human approval of one compact task card, to one engaged lower-cost worker attempt. The laptop remains fixed while its screen compresses full context into one bounded card. Only the third transmission is mechanically engaged.</desc>
+  <title id="title">Human-approved model-phase routing</title>
+  <desc id="description">The same transmission shop progresses from neutral, to human approval of one exact phase card, to one engaged bounded worker attempt. The laptop remains fixed while its screen binds the approved card to the incoming state. Only the third transmission is mechanically engaged.</desc>
   <defs>
     <filter id="engagement-feather" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="${spec.engagement_overlay.feather}"/></filter>
     <mask id="engagement-only" maskUnits="userSpaceOnUse" x="0" y="0" width="${spec.canvas.width}" height="${spec.canvas.image_height}">

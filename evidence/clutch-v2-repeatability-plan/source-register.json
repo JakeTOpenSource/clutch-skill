@@ -1,0 +1,48 @@
+{
+  "schema_version": "clutch-repeatability-source-register.v1",
+  "study_id": "clutch-v2-repeatability-001",
+  "retrieved_on": "2026-08-24",
+  "sources": [
+    {
+      "source_id": "PRIOR_MINIMIZED_OUTCOMES",
+      "locator": "evidence/clutch-v2-confirmatory-001/outcome-table.json",
+      "sha256": "5e27738e595cd31b6249eb16c00b2e3bf7cd527234a3ed219203c868abf46ff2",
+      "access": "PUBLIC_REPOSITORY",
+      "verification": "LOCAL_BYTES_VERIFIED",
+      "use": "Discovery-only delivery baseline; economic fields are historical external telemetry"
+    },
+    {
+      "source_id": "PRIOR_RESEARCH_SUMMARY",
+      "locator": "evidence/clutch-v2-confirmatory-001/research-summary.json",
+      "sha256": "a8aa4fe74d4a472d27b2b5228c0c0da039dbab8b3937ce4d773e784e8b9a1d7b",
+      "access": "PUBLIC_REPOSITORY",
+      "verification": "LOCAL_BYTES_VERIFIED",
+      "use": "Prior claim ceiling and study limitations"
+    },
+    {
+      "source_id": "OPENAI_MODEL_CATALOG",
+      "locator": "https://developers.openai.com/api/docs/models",
+      "sha256": "UNKNOWN_REMOTE_DYNAMIC_PAGE",
+      "access": "PUBLIC_WEB",
+      "verification": "OFFICIAL_PAGE_FETCHED_2026-08-24",
+      "use": "Current Sol, Terra, and Luna model pricing and context limits"
+    },
+    {
+      "source_id": "OPENAI_GPT55_MODEL",
+      "locator": "https://developers.openai.com/api/docs/models/gpt-5.5",
+      "sha256": "UNKNOWN_REMOTE_DYNAMIC_PAGE",
+      "access": "PUBLIC_WEB",
+      "verification": "OFFICIAL_PAGE_FETCHED_2026-08-24",
+      "use": "Pinned GPT-5.5 snapshot identity and pricing"
+    },
+    {
+      "source_id": "OPENAI_RESPONSES_CREATE",
+      "locator": "https://developers.openai.com/api/reference/cli/resources/responses/methods/create",
+      "sha256": "UNKNOWN_REMOTE_DYNAMIC_PAGE",
+      "access": "PUBLIC_WEB",
+      "verification": "OFFICIAL_PAGE_FETCHED_2026-08-24",
+      "use": "Prompt cache key, cache retention, usage, and truncation controls"
+    }
+  ],
+  "planning_gap": "Clutch's repeatability decision excludes economic fields. The separate external planner currently estimates about $51.31 expected provider spend and a $61.57 provisional funding envelope under the owner's $64 external ceiling. That estimate is not construction-bound. A payable cap still requires frozen request bytes, model snapshots, output ceilings, exact input counts, rate assumptions, and retry reserve."
+}

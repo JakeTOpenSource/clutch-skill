@@ -1,0 +1,43 @@
+{
+  "schema_version": "clutch-v2-public-study-receipt.v1",
+  "study_id": "clutch-v2-confirmatory-001",
+  "status": "COMPLETE_PASS_RELEASE_CANDIDATE_ALLOWED",
+  "completed_at_metadata": "2026-08-24",
+  "frozen_bindings": {
+    "preregistration_packet_sha256": "sha256:58475dedf6afdd68ae33697b2c0d43956336cdf5bd01f1a4dd96f623386eb01e",
+    "source_freeze_receipt_file_sha256": "sha256:44dac263156e48276fbdf77df9a03af4d60031ca80efc888989f3ce7936eb191",
+    "owner_preregistration_approval_file_sha256": "sha256:27f62dc843300f11c4559a087de7a5c516c8b7e5b10d3329782b652957f95129",
+    "approved_card_set_sha256": "sha256:6e313da7c2a266b152bee8902cba8821422882345f9a76b0dfefe27ca60d7200",
+    "advisor_gate_receipt_file_sha256": "sha256:39358842adbce4d58a7bf0ff0097d6fdbfd8ef3b5f024411f3f678294c836ad1",
+    "owner_card_approval_file_sha256": "sha256:61fbdfc72390d21624e2cff4791ccee2b8092780cbe5840d50a1d5be8fbbebfd"
+  },
+  "execution": {
+    "provider_requests": 241,
+    "advisor_calls": 1,
+    "worker_calls": 240,
+    "completed_cells": 240,
+    "automatic_retries": 0,
+    "incomplete_responses": 0,
+    "observed_provider_spend_usd": 16.07576105,
+    "hard_provider_spend_cap_usd": 26.75,
+    "human_review_seconds": null
+  },
+  "verification": {
+    "frozen_analysis": "PASS_RELEASE_CANDIDATE_ALLOWED",
+    "packet_integrity": "PASS",
+    "post_run_harness": "PASS",
+    "separate_read_only_reconciliation": "GO_NO_P0_P1_P2_FINDINGS",
+    "public_statistical_replay": "PASS",
+    "raw_execution_integrity_publicly_replayable": false
+  },
+  "public_artifacts": {
+    "research_summary_sha256": "sha256:a8aa4fe74d4a472d27b2b5228c0c0da039dbab8b3937ce4d773e784e8b9a1d7b",
+    "outcome_table_sha256": "sha256:5e27738e595cd31b6249eb16c00b2e3bf7cd527234a3ed219203c868abf46ff2",
+    "public_preregistration_sha256": "sha256:058e5792d8c671f5e62bd1e839ac1ca7d9a5d5e7421605bdb60f125d18aecda1",
+    "private_analysis_sha256": "sha256:31b774d96da4909bb70ca9d3c799fe0b2c1e8206bcc95db1d4535935ca8f501b",
+    "raw_provider_responses_published": false,
+    "public_outcome_statistics_replayable": true,
+    "full_private_packet_retained_locally": true
+  },
+  "claim_ceiling": "FIXED_SYNTHETIC_LONG_CONTEXT_SESSION_SINGLE_ADVISOR_REALIZATION_NO_POPULATION_OR_PRODUCTION_CLAIM"
+}

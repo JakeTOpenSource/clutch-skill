@@ -1,0 +1,922 @@
+{
+  "schema_version": "clutch-repeatability-preregistration.v3",
+  "study_id": "clutch-v2-repeatability-001",
+  "status": "DRAFT_LOCAL_NO_PROVIDER_AUTHORITY",
+  "research_question": "Across fresh independent advisor waves at three predeclared context depths, does a human-approved sequence of Clutch model phases repeatedly carry every task through verified delivery?",
+  "design": {
+    "total_waves": 43,
+    "primary_sol_waves": 42,
+    "primary_waves_per_context_interval": 14,
+    "alternate_advisor_stress_waves": 1,
+    "tasks_per_wave": 2,
+    "task_families_per_wave": 2,
+    "variants_per_family_across_waves": 3,
+    "context_intervals": [
+      {
+        "context_interval_id": "CTX_NEAR",
+        "primary_waves": 14,
+        "pre_handoff_history_bytes": 180000
+      },
+      {
+        "context_interval_id": "CTX_MIDDLE",
+        "primary_waves": 14,
+        "pre_handoff_history_bytes": 360000
+      },
+      {
+        "context_interval_id": "CTX_DEEP",
+        "primary_waves": 14,
+        "pre_handoff_history_bytes": 660000
+      }
+    ],
+    "wave_schedule": [
+      {
+        "replication_id": "A01",
+        "sequence_index": 1,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082401,
+        "task_family_ids": [
+          "F01",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B01",
+        "sequence_index": 2,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082402,
+        "task_family_ids": [
+          "F02",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "C01",
+        "sequence_index": 3,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082403,
+        "task_family_ids": [
+          "F03",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B02",
+        "sequence_index": 4,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082404,
+        "task_family_ids": [
+          "F01",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C02",
+        "sequence_index": 5,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082405,
+        "task_family_ids": [
+          "F06",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "A02",
+        "sequence_index": 6,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082406,
+        "task_family_ids": [
+          "F02",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C03",
+        "sequence_index": 7,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082407,
+        "task_family_ids": [
+          "F01",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A03",
+        "sequence_index": 8,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082408,
+        "task_family_ids": [
+          "F05",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "B03",
+        "sequence_index": 9,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082409,
+        "task_family_ids": [
+          "F06",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A04",
+        "sequence_index": 10,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082410,
+        "task_family_ids": [
+          "F01",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B04",
+        "sequence_index": 11,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082411,
+        "task_family_ids": [
+          "F04",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "C04",
+        "sequence_index": 12,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082412,
+        "task_family_ids": [
+          "F05",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B05",
+        "sequence_index": 13,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082413,
+        "task_family_ids": [
+          "F01",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C05",
+        "sequence_index": 14,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082414,
+        "task_family_ids": [
+          "F03",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "A05",
+        "sequence_index": 15,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082415,
+        "task_family_ids": [
+          "F04",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C06",
+        "sequence_index": 16,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082416,
+        "task_family_ids": [
+          "F01",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A06",
+        "sequence_index": 17,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082417,
+        "task_family_ids": [
+          "F02",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "B06",
+        "sequence_index": 18,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082418,
+        "task_family_ids": [
+          "F03",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A07",
+        "sequence_index": 19,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082419,
+        "task_family_ids": [
+          "F01",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B07",
+        "sequence_index": 20,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082420,
+        "task_family_ids": [
+          "F06",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "C07",
+        "sequence_index": 21,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082421,
+        "task_family_ids": [
+          "F02",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B-ALT-GPT55",
+        "sequence_index": 22,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "GPT55_ADVISOR",
+        "advisor_model": "gpt-5.5-2026-04-23",
+        "primary_for_repeatability": false,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082422,
+        "task_family_ids": [
+          "F01",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "B08",
+        "sequence_index": 23,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082423,
+        "task_family_ids": [
+          "F01",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "C08",
+        "sequence_index": 24,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082424,
+        "task_family_ids": [
+          "F05",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "A08",
+        "sequence_index": 25,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082425,
+        "task_family_ids": [
+          "F06",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C09",
+        "sequence_index": 26,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082426,
+        "task_family_ids": [
+          "F01",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A09",
+        "sequence_index": 27,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082427,
+        "task_family_ids": [
+          "F04",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "B09",
+        "sequence_index": 28,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082428,
+        "task_family_ids": [
+          "F05",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A10",
+        "sequence_index": 29,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082429,
+        "task_family_ids": [
+          "F01",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B10",
+        "sequence_index": 30,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082430,
+        "task_family_ids": [
+          "F03",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "C10",
+        "sequence_index": 31,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082431,
+        "task_family_ids": [
+          "F04",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B11",
+        "sequence_index": 32,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082432,
+        "task_family_ids": [
+          "F01",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C11",
+        "sequence_index": 33,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082433,
+        "task_family_ids": [
+          "F02",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "A11",
+        "sequence_index": 34,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082434,
+        "task_family_ids": [
+          "F03",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "C12",
+        "sequence_index": 35,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082435,
+        "task_family_ids": [
+          "F01",
+          "F05"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A12",
+        "sequence_index": 36,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082436,
+        "task_family_ids": [
+          "F06",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B12",
+        "sequence_index": 37,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082437,
+        "task_family_ids": [
+          "F02",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V03"
+        ]
+      },
+      {
+        "replication_id": "A13",
+        "sequence_index": 38,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082438,
+        "task_family_ids": [
+          "F01",
+          "F04"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "B13",
+        "sequence_index": 39,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082439,
+        "task_family_ids": [
+          "F05",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "C13",
+        "sequence_index": 40,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082440,
+        "task_family_ids": [
+          "F06",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V01",
+          "V01"
+        ]
+      },
+      {
+        "replication_id": "B14",
+        "sequence_index": 41,
+        "context_interval_id": "CTX_MIDDLE",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 360000,
+        "arm_order_seed": 2026082441,
+        "task_family_ids": [
+          "F01",
+          "F03"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "C14",
+        "sequence_index": 42,
+        "context_interval_id": "CTX_DEEP",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 660000,
+        "arm_order_seed": 2026082442,
+        "task_family_ids": [
+          "F04",
+          "F02"
+        ],
+        "task_variant_ids": [
+          "V03",
+          "V02"
+        ]
+      },
+      {
+        "replication_id": "A14",
+        "sequence_index": 43,
+        "context_interval_id": "CTX_NEAR",
+        "advisor_profile": "SOL_ADVISOR",
+        "advisor_model": "gpt-5.6-sol",
+        "primary_for_repeatability": true,
+        "pre_handoff_history_bytes": 180000,
+        "arm_order_seed": 2026082443,
+        "task_family_ids": [
+          "F05",
+          "F06"
+        ],
+        "task_variant_ids": [
+          "V02",
+          "V02"
+        ]
+      }
+    ],
+    "pre_handoff_session": "Each wave has a fresh deterministic busy-session source, unique task variants, and one source freeze before any provider call.",
+    "advisor": "Every primary wave uses one independent gpt-5.6-sol read-only card-set generation. One additional middle-depth wave replaces Sol with the pinned gpt-5.5-2026-04-23 snapshot as a separate stress test. It is excluded from the Sol repeatability bound and cannot establish advisor-model equivalence.",
+    "model_phases": [
+      {
+        "phase_id": "PHASE_0_ADVISOR",
+        "profile_source": "wave_schedule.advisor_profile",
+        "mode": "READ_ONLY",
+        "worker_steps": [
+          "SCOPE"
+        ]
+      },
+      {
+        "phase_id": "PHASE_1_TERRA",
+        "from_profile_source": "wave_schedule.advisor_profile",
+        "to_profile": "TERRA_WORKER",
+        "worker_steps": [
+          "BUILD"
+        ]
+      },
+      {
+        "phase_id": "PHASE_2_LUNA",
+        "from_profile": "TERRA_WORKER",
+        "to_profile": "LUNA_WORKER",
+        "worker_steps": [
+          "INTEGRATE",
+          "VERIFY"
+        ]
+      }
+    ],
+    "arms": [
+      "FULL_HISTORY",
+      "CLUTCH"
+    ],
+    "worker_generation_calls_per_task": 6,
+    "advisor_generation_calls_per_wave": 1,
+    "exact_count_calls_per_generation": 1,
+    "automatic_generation_retries": 0,
+    "maximum_count_only_transport_retries_total": 43,
+    "call_order": "The explicit wave_schedule interleaves near, middle, and deep context intervals. Primary waves use a frozen round-robin pair design: every block of three waves covers all six task families once, every family appears in exactly fourteen primary waves, each family appears four or five times at each context interval, and each family's three variants appear four or five times overall. Within each wave, the first arm alternates by arm_order_seed, and each arm completes Terra build, Luna integration, and Luna verification before the other arm begins.",
+    "human_approval": "After all advisor generations, one immutable batch subject binds the complete preregistered model and rank program, the exact forty-three waves, and all phase-card digests. One human approval receipt binds that subject digest and is then included in the frozen execution manifest. Unknown future card bytes, models, ranks, and routes remain unapproved.",
+    "study_model_profiles": {
+      "SOL_ADVISOR": {
+        "model": "gpt-5.6-sol",
+        "capability_rank": 4,
+        "role": "ADVISOR"
+      },
+      "GPT55_ADVISOR": {
+        "model": "gpt-5.5-2026-04-23",
+        "capability_rank": 3,
+        "role": "ADVISOR"
+      },
+      "TERRA_WORKER": {
+        "model": "gpt-5.6-terra",
+        "capability_rank": 2,
+        "role": "WORKER"
+      },
+      "LUNA_WORKER": {
+        "model": "gpt-5.6-luna",
+        "capability_rank": 1,
+        "role": "WORKER"
+      }
+    },
+    "total_task_families": 6
+  },
+  "execution_binding": {
+    "manifest_required": true,
+    "record_derivation": "Verified delivery is derived from unique, globally ordered, batch-approved model-phase, request, response, call, record, and hidden-test receipts. Call and record evidence forms one digest chain ending in bound stream tips and a final outcome digest. Caller-supplied aggregate booleans are rejected. Economic and performance telemetry is neither required nor read by the Clutch decision engine.",
+    "required_bindings": [
+      "exact wave order, unique source freeze, and unique advisor request and response digests",
+      "task family, variant, unique source, and unique hidden-test digests",
+      "one batch approval receipt bound to the full preregistered model and rank program, manifest subject, and every per-transition phase card",
+      "declared capability map, computed transition direction, and exact model phase",
+      "advisor release state, phase state-out/state-in continuity, and final verified state",
+      "unique generation request, response, and provider response identities bound to exact call, state, model, phase card, and status fields",
+      "global call and record sequences with previous-receipt links, stream tips, and a final outcome digest",
+      "self-digested hidden-test receipt and boundary-violation count"
+    ]
+  },
+  "verified_delivery": "The authorized Terra build, Luna integration, and Luna verification steps all complete; the output state of each step is the input state of the next step; every hidden assertion passes after the final phase; and no boundary violation occurs. Every other outcome is a failed delivery.",
+  "primary_rule": {
+    "name": "ALL_CLUTCH_TASKS_VERIFIED_DELIVERED_ACROSS_EVERY_MODEL_PHASE",
+    "target_repeat_probability": 0.8,
+    "alpha": 0.05,
+    "primary_wave_rule": "Within each primary Sol wave, both declared Clutch tasks must reach verified delivery across the frozen model-phase route. The full-history arm is a diagnostic control and cannot create or rescue a Clutch pass.",
+    "context_interval_rule": "All fourteen primary Sol waves in each context interval must pass the ordered wave rule.",
+    "exact_bound": "With fourteen successes in fourteen independent waves, the one-sided exact 95 percent lower bound on the context-interval repeat probability is alpha^(1/14), which exceeds 0.80. Tasks and variants within a wave are not counted as independent evidence.",
+    "alternate_advisor_rule": "Both Clutch tasks in the one GPT-5.5 stress wave must reach verified delivery for the overall REPEATED_PASS decision, but that wave contributes no observation to the Sol context-interval bounds.",
+    "decision": "REPEATED_PASS requires verified delivery for both Clutch tasks in all 42 primary Sol waves and the GPT-5.5 stress wave. Any primary Clutch delivery failure is REPEATED_FAIL_DELIVERY. An isolated alternate-advisor Clutch delivery failure is REPEATED_FAIL_ALTERNATE_ADVISOR. Missing, replayed, reordered, or invalid bound receipts, a resource stop, or source drift is INCOMPLETE_OR_INVALID."
+  },
+  "external_governance_cache_plan": {
+    "baseline_is_allowed_to_win": true,
+    "cold_starts_per_wave_arm_model": 1,
+    "prompt_cache_key_fields": [
+      "study_id",
+      "replication_id",
+      "arm",
+      "model"
+    ],
+    "prompt_cache_key_excludes": [
+      "task_id"
+    ],
+    "policy": "The external telemetry collector may begin both arms cold once per wave and observe natural warming across that wave's tasks. Its sidecar receipts bind cache keys and breakpoints without entering the Clutch quality record.",
+    "interpretation": "Cache, raw tokens, price, and latency are outside the Clutch decision record. An external governance system may collect them without changing this result."
+  },
+  "card_quality_rule": "Each material invariant has a stable C-tag and at least one matching acceptance check. Conditional invariants include a contrasting allowed and disallowed case. Copy, replay, mutation, and identity semantics are explicit when material. The batch fails before human review if tags are missing, future requirements leak, source digests drift, or a card exceeds its frozen byte ceiling.",
+  "external_governance_telemetry": [
+    "provider charge receipts",
+    "raw input and output tokens",
+    "provider-reported cache reads and cache writes",
+    "provider elapsed time",
+    "human batch-review time"
+  ],
+  "power_basis": "The advisor wave, not an individual task, is the independent repeatability unit. Fourteen all-success waves are the smallest integer n for which alpha^(1/n) is at least 0.80 at one-sided alpha 0.05. Two task families are assigned to each wave through a frozen round-robin pair design. Across the forty-two primary waves, every one of the six families appears exactly fourteen times, four or five times per context interval, and each of its three variants appears four or five times. This preserves family and variant coverage while fitting the owner's external study ceiling. Independence still requires fresh session histories, task variants, card generations, source freezes, execution namespaces, and provider response identities.",
+  "stopping_rule": "Run exactly the frozen forty-three-wave schedule. Do not add tasks, exclusions, thresholds, generation retries, or another wave after seeing results. A failed model output is preserved as an outcome and unrelated planned cells continue. An external controller may stop future calls for its separately declared resource ceiling. Clutch itself stops for credential exposure risk, source drift, or an unsafe execution boundary.",
+  "claim_ceiling": "FORTY_TWO_FRESH_SOL_ADVISOR_WAVES_ACROSS_THREE_SYNTHETIC_CONTEXT_INTERVALS_WITH_TWO_BALANCED_TASK_FAMILIES_PER_WAVE_PLUS_ONE_GPT55_STRESS_WAVE_FOR_ONE_SOL_TO_TERRA_TO_LUNA_ROUTE;_NO_ADVISOR_MODEL_EQUIVALENCE_REPOSITORY_POPULATION_PRODUCTION_SECURITY_COST_OR_SAVINGS_CLAIM"
+}
