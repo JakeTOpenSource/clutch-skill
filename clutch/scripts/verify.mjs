@@ -12,7 +12,7 @@ import { canonicalJson, reduceInput } from "./card-gate.mjs";
 import { projectInput } from "./release-reference.mjs";
 import { validateSkill } from "./validate-skill.mjs";
 
-const FIXTURE_SHA256 = "f45c0fb3bf614238df70a3d08d69643ca51058517b71a1f9420a8878f8d2794b";
+const FIXTURE_SHA256 = "6ee353a338e49f74d4cbedde2774d185efa9c26156e969de9a1c1e721caf018b";
 
 function firstError(report) {
   return report.validation.errors.length === 0 ? null : report.validation.errors[0].code;
@@ -214,6 +214,27 @@ function verify() {
     }
   }
 
+  const validPhaseCase = suite.cases.find((entry) => entry.case_id === "active-approved-released");
+  assert.ok(validPhaseCase, "Required phase-contract case missing");
+  const phaseContractMutations = [
+    ["empty-phase-id", (input) => { input.cards[0].routing.phase_id = ""; }, "INVALID_MODEL_PHASE_ID"],
+    ["unknown-from-profile", (input) => { input.cards[0].routing.from_profile = "ghost"; }, "UNKNOWN_FROM_MODEL_PROFILE"],
+    ["inverted-transition", (input) => { input.cards[0].routing.transition = "UPGRADE"; }, "MODEL_TRANSITION_RANK_MISMATCH"],
+    ["bad-state-binding", (input) => { input.cards[0].routing.state_in_binding = "ANY_STATE"; }, "INVALID_STATE_BINDING"],
+    ["duplicate-capability-rank", (input) => { input.policy.profile_ranks.worker_rank_2 = 1; }, "INVALID_PROFILE_RANKS"],
+    ["legacy-fallback-field", (input) => { input.cards[0].routing.fallback_profile = "worker_rank_2"; }, "INVALID_ROUTING_FIELDS"],
+  ];
+  for (const [caseId, mutate, expectedError] of phaseContractMutations) {
+    const input = structuredClone(validPhaseCase.input);
+    mutate(input);
+    const [primary, exitCode] = reduceInput(input);
+    const reference = projectInput(input);
+    assert.equal(exitCode, 2, `${caseId}: primary exit code`);
+    assert.equal(firstError(primary), expectedError, `${caseId}: primary error`);
+    assert.equal(reference.error_code, expectedError, `${caseId}: reference error`);
+    assert.equal(reference.validation, primary.validation.status, `${caseId}: projection validation parity`);
+  }
+
   assert.equal(primaryContentLeaks, 0, "Card content appeared in metadata-only primary output");
   assert.equal(referenceContentLeaks, 0, "Card content appeared in metadata-only reference output");
 
@@ -239,6 +260,7 @@ function verify() {
     `valid_cases=${validCases}`,
     `invalid_cases=${invalidCases}`,
     `primary_reference_projection_parity=${parityCases}/${suite.cases.length}`,
+    `phase_contract_adversarial_cases=${phaseContractMutations.length}`,
     `skill_validator_cases=${skillValidatorCases}`,
     `released_positive_cases=${releasedPositiveCases}`,
     `primary_content_leaks=${primaryContentLeaks}`,

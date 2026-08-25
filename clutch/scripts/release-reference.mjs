@@ -11,7 +11,7 @@ const INPUT_FIELDS = ["cards", "events", "policy", "schema_version"];
 const POLICY_FIELDS = [
   "advisor_actor_ids", "advisor_profile", "human_actor_ids", "max_card_bytes",
   "max_concurrent_workers", "max_context_turns", "max_worker_attempts", "phase",
-  "policy_id", "schema_version", "stream_id", "worker_profiles",
+  "policy_id", "profile_ranks", "schema_version", "stream_id", "worker_profiles",
 ];
 const CARD_FIELDS = [
   "acceptance_checks", "advisor_findings", "allowed_actions", "card_id",
@@ -20,8 +20,9 @@ const CARD_FIELDS = [
   "stop_conditions", "task_class", "unknowns",
 ];
 const ROUTING_FIELDS = [
-  "context_turns", "fallback_profile", "max_attempts", "max_concurrent_workers",
-  "reasoning_effort", "worker_profile",
+  "context_turns", "max_attempts", "max_concurrent_workers",
+  "phase_id", "from_profile", "reasoning_effort", "state_in_binding", "transition",
+  "worker_profile",
 ];
 const REQUIRED_EVENT_FIELDS = [
   "actor_id", "actor_type", "event_hash", "event_type", "previous_hash",
@@ -133,7 +134,7 @@ function invalid(errorCode, activated = false, cardIds = []) {
 function firstCardProblem(card, policy) {
   if (!exactFields(card, CARD_FIELDS)) return "INVALID_CARD_FIELDS";
   if (!scalarText(card.card_id) || !scalarText(card.objective) || !scalarText(card.claim_ceiling)) return "INVALID_CARD_TEXT";
-  if (card.schema_version !== "context-card.v1") return "INVALID_CARD_VERSION";
+  if (card.schema_version !== "context-card.v2") return "INVALID_CARD_VERSION";
   if (!Number.isInteger(card.card_version) || card.card_version < 1) return "INVALID_CARD_REVISION";
   if (!["ADVISORY_ONLY", "EXECUTION_REQUIRED"].includes(card.task_class)) return "INVALID_TASK_CLASS";
   if (!listOfText(card.facts) || !listOfText(card.unknowns)) return "INVALID_CARD_LIST";
@@ -147,12 +148,20 @@ function firstCardProblem(card, policy) {
   }
   if (!exactFields(card.routing, ROUTING_FIELDS)) return "INVALID_ROUTING_FIELDS";
   const route = card.routing;
-  if (!policy.worker_profiles.includes(route.worker_profile) || !policy.worker_profiles.includes(route.fallback_profile)) {
+  if (!scalarText(route.phase_id)) return "INVALID_MODEL_PHASE_ID";
+  if (![policy.advisor_profile, ...policy.worker_profiles].includes(route.from_profile)) return "UNKNOWN_FROM_MODEL_PROFILE";
+  if (!["UPGRADE", "DOWNGRADE", "STABLE"].includes(route.transition)) return "INVALID_MODEL_TRANSITION";
+  if (route.state_in_binding !== "PREVIOUS_PHASE_OUTPUT") return "INVALID_STATE_BINDING";
+  if (!policy.worker_profiles.includes(route.worker_profile)) {
     return "UNKNOWN_MODEL_PROFILE";
   }
-  if (route.worker_profile === policy.advisor_profile || route.fallback_profile === policy.advisor_profile) {
+  if (route.worker_profile === policy.advisor_profile) {
     return "ADVISOR_ASSIGNED_AS_WORKER";
   }
+  const fromRank = policy.profile_ranks[route.from_profile];
+  const toRank = policy.profile_ranks[route.worker_profile];
+  const expectedTransition = toRank > fromRank ? "UPGRADE" : toRank < fromRank ? "DOWNGRADE" : "STABLE";
+  if (route.transition !== expectedTransition) return "MODEL_TRANSITION_RANK_MISMATCH";
   if (!["none", "low", "medium", "high", "xhigh", "max"].includes(route.reasoning_effort)) {
     return "INVALID_REASONING_EFFORT";
   }
@@ -173,7 +182,7 @@ function firstCardProblem(card, policy) {
 
 function firstPolicyProblem(policy) {
   if (!exactFields(policy, POLICY_FIELDS)) return policy && typeof policy === "object" ? "INVALID_POLICY_FIELDS" : "INVALID_POLICY";
-  if (policy.schema_version !== "routing-policy.v1") return "INVALID_POLICY_VERSION";
+  if (policy.schema_version !== "routing-policy.v2") return "INVALID_POLICY_VERSION";
   if (!scalarText(policy.policy_id)) return "INVALID_POLICY_ID";
   if (!scalarText(policy.stream_id)) return "INVALID_STREAM_ID";
   if (!["PREPARE_ONLY", "ACTIVE"].includes(policy.phase)) return "INVALID_POLICY_PHASE";
@@ -181,6 +190,11 @@ function firstPolicyProblem(policy) {
   if (!listOfText(policy.advisor_actor_ids, true)) return "INVALID_ADVISOR_ACTORS";
   if (!scalarText(policy.advisor_profile)) return "INVALID_ADVISOR_PROFILE";
   if (!listOfText(policy.worker_profiles, true)) return "INVALID_WORKER_PROFILES";
+  const profiles = [policy.advisor_profile, ...policy.worker_profiles];
+  if (!policy.profile_ranks || typeof policy.profile_ranks !== "object" || Array.isArray(policy.profile_ranks) ||
+      !exactFields(policy.profile_ranks, profiles) ||
+      profiles.some((profile) => !Number.isSafeInteger(policy.profile_ranks[profile]) || policy.profile_ranks[profile] < 1) ||
+      new Set(profiles.map((profile) => policy.profile_ranks[profile])).size !== profiles.length) return "INVALID_PROFILE_RANKS";
   for (const [value, floor, ceiling] of [
     [policy.max_worker_attempts, 1, 1],
     [policy.max_concurrent_workers, 1, 10],

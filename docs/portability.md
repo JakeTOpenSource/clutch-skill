@@ -38,7 +38,7 @@ The lock coordinates Clutch installers that follow this protocol. It is not a ho
 
 ## What works everywhere
 
-The portable core defines the state machine, card contract, role boundaries, one-attempt rule, failure return, symbolic model profiles, and metadata-only consistency check. A human can also use manual handoff between a full-context advisor session and a clean lower-cost worker session.
+The portable core defines the state machine, card contract, role boundaries, one-attempt rule, failure return, symbolic model profiles, and metadata-only consistency check. A human can also use manual handoff between a full-context advisor session and a clean qualified-worker session.
 
 ## What remains host-specific
 

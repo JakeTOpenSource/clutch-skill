@@ -10,13 +10,13 @@ Use this mode only when the host can start a worker in a clean context, select t
 
 ### `MANUAL_HANDOFF`
 
-Use this mode when the harness can load the skill but cannot perform isolated model routing. After approving the exact card, the human starts a new clean session with the selected lower-cost model and transfers only the worker envelope, approved card, and authorized references. The human returns the worker receipt to the advisor session for read-only review.
+Use this mode when the harness can load the skill but cannot perform isolated model routing. After approving the exact card, the human starts a new clean session with the selected qualified model and transfers only the worker envelope, approved card, and authorized references. The human returns the worker receipt to the advisor session for read-only review.
 
 Manual handoff preserves the context boundary by human action. It adds friction and can introduce copy errors, so verify the exact card digest at both ends. It is an instruction boundary unless the host separately enforces access controls.
 
 ### `CARD_ONLY`
 
-Use this mode when neither native routing nor a clean manual worker session is available. The advisor may prepare a proposed card and stop. Do not claim routed execution or context savings.
+Use this mode when neither native routing nor a clean manual worker session is available. The advisor may prepare a proposed card and stop. Do not claim routed execution or phase continuity.
 
 ## Capability check
 
@@ -29,6 +29,7 @@ Before selecting `NATIVE_ROUTING`, confirm all of these are true:
 5. One approval authorizes exactly one attempt.
 6. The worker returns the fixed receipt from [card-contract.md](card-contract.md).
 7. Failed checks return control to neutral without automatic retry or fallback.
+8. Every model change produces a phase-transition receipt binding the prior phase, next phase, outgoing-state digest, incoming-state digest, exact approved card, and result.
 
 If a capability is enforced only by prompting, label it `INSTRUCTION_ONLY`. If its state cannot be observed, label it `UNKNOWN`. Neither label establishes a security boundary.
 

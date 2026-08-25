@@ -55,8 +55,10 @@ const implementationPaths = [
   join(root, "scripts", "generate-manifests.mjs"),
   join(root, "scripts", "install-skill.mjs"),
   join(root, "scripts", "recompute-evaluation.mjs"),
+  join(root, "scripts", "repeatability-core.mjs"),
   join(root, "scripts", "verify-evaluation.mjs"),
   join(root, "scripts", "verify-portability.mjs"),
+  join(root, "scripts", "verify-repeatability.mjs"),
   join(root, "scripts", "verify-release.mjs"),
   ...walkFiles(join(root, "adapters")),
   ...walkFiles(join(root, "clutch")),
@@ -74,7 +76,7 @@ writeJson(join(root, "implementation-manifest.json"), implementationManifest);
 const implementationDigest = digestObject(implementationManifest);
 const policyPath = join(root, "policy.example.json");
 const policy = JSON.parse(readFileSync(policyPath, "utf8"));
-policy.policy_id = `clutch-policy-v1@${implementationDigest}`;
+policy.policy_id = `clutch-policy-v2@${implementationDigest}`;
 writeJson(policyPath, policy);
 
 const excludedReleasePaths = new Set(["release-manifest.json"]);

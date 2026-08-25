@@ -1,6 +1,6 @@
 interface:
   display_name: "Clutch"
-  short_description: "Gate approved work to lower-cost models"
-  default_prompt: "Use $clutch to create an exact context card and route one approved attempt to the least-cost qualified model."
+  short_description: "Gate coherent work across model phases"
+  default_prompt: "Use $clutch to bind this task to an exact approved card, route one bounded model phase, and verify state continuity."
 policy:
   allow_implicit_invocation: true

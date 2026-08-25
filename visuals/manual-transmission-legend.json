@@ -1,7 +1,7 @@
 {
-  "schema_version": "manual-transmission-metaphor.v4",
-  "title": "Human-in-the-loop manual routing",
-  "core_meaning": "The advisor retains full context, a human approves one compact task card, and one lower-cost worker executes one bounded attempt.",
+  "schema_version": "manual-transmission-metaphor.v5",
+  "title": "Human-approved model-phase routing",
+  "core_meaning": "The advisor retains full context, a human approves one exact phase card, and one qualified worker executes one bounded model phase.",
   "states": [
     {
       "id": "neutral",
@@ -30,8 +30,8 @@
     {
       "id": "engaged",
       "label": "ENGAGED",
-      "descriptor": "One card. One lower-cost attempt.",
-      "plain_english": "The trusted host sends the exact approved card to one qualified lower-cost worker for one bounded attempt.",
+      "descriptor": "One phase. One bounded attempt.",
+      "plain_english": "The trusted host sends the exact approved phase card and incoming state to one qualified worker for one bounded attempt.",
       "image_rule": "base_plus_engagement",
       "screen_state": {
         "label": "BOUNDED WORKER",
@@ -79,10 +79,10 @@
   "thesis": {
     "kicker": "HUMAN IN THE LOOP",
     "headline": "FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.",
-    "body": "That limits worker context and moves routine labor to a lower-cost model. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.",
-    "caveat_label": "CALIBRATION",
-    "caveat": "Savings vary; short tasks may not offset routing overhead.",
-    "efficiency_mechanism": "The worker receives a compact approved card rather than the full conversation, reducing worker-context volume while routine execution moves to a lower-cost model.",
+    "body": "Every model change binds one approved phase card to one exact state handoff. Failed checks return to neutral; retries need new approval. Verification and human acceptance still follow.",
+    "caveat_label": "BOUNDARY",
+    "caveat": "Coherent transfer does not prove correct judgment or accepted output.",
+    "phase_mechanism": "The outgoing state of one model phase must match the incoming state of the next phase before work resumes.",
     "neutral_definition": "No worker is engaged while scope, approval, or retry is unresolved.",
     "retry_rule": "One card authorizes one attempt. A failed check returns to neutral and every retry requires a new card and human approval.",
     "acceptance_rule": "Verification informs later human acceptance; successful worker execution does not accept itself."
@@ -120,9 +120,10 @@
     "One approved card authorizes one worker attempt.",
     "A retry requires a new card and new human approval.",
     "The worker receives the compact card, not the full conversation.",
-    "Lower context volume and lower model price are distinct possible cost benefits.",
+    "Every model upgrade or downgrade creates an explicit phase boundary.",
+    "The next phase must receive the exact state released by the prior phase.",
     "Verification and human acceptance occur after the depicted engagement state.",
-    "Savings are workload-dependent and are not established by this visual."
+    "Economic telemetry is outside the protocol decision shown by this visual."
   ],
-  "claim_ceiling": "This is a control and cost-routing metaphor. It does not prove authenticated identity, secure isolation, correct model judgment, measured savings, or accepted output."
+  "claim_ceiling": "This is a control and state-transition metaphor. It does not prove authenticated identity, secure isolation, semantic completeness, correct model judgment, or accepted output."
 }

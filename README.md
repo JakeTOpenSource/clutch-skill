@@ -1,10 +1,10 @@
 # Clutch
 
-Clutch is a human-approved model-routing skill for long-context agent work. A capable advisor keeps the full conversation and performs high-value judgment. A human approves one compact task card. A lower-cost worker receives that card for one bounded attempt.
+Clutch is a human-approved model-phase routing skill for long-context agent work. A capable advisor keeps the full conversation and performs high-value judgment. A human approves an exact compact task card. A qualified worker receives that card for one bounded attempt.
 
 The canonical skill follows the open Agent Skills folder format. The same source can now be installed for OpenAI Codex, GitHub Copilot, Cursor, Gemini CLI, Claude Code, or another compatible harness without maintaining separate protocol copies.
 
-![Three-state Clutch workflow](visuals/manual-transmission-human-loop.png)
+![Three-state Clutch workflow](visuals/manual-transmission-human-loop.svg)
 
 ## Current status
 
@@ -17,18 +17,20 @@ Activation requires a separate human decision in a trusted host that binds an ex
 Clutch has three visible states:
 
 1. `NEUTRAL`: the advisor holds full context and no worker runs.
-2. `APPROVE CARD`: a human reviews the exact scope, constraints, sources, checks, and model profile.
-3. `ENGAGED`: the approved card moves to one qualified worker for one attempt.
+2. `APPROVE CARD`: a human reviews the exact scope, constraints, sources, checks, model profile, and incoming-state identity.
+3. `ENGAGED`: the approved card moves to one qualified worker for one attempt in one declared model phase.
 
-A failed check returns the workflow to neutral. Repair, retry, or model escalation requires a new card and new human approval. Worker success still requires verification and human acceptance.
+A failed check returns the workflow to neutral. Every model upgrade or downgrade is a new phase boundary. It binds the outgoing state, incoming state, model profiles, and exact approved phase card before work resumes. Repair, retry, or an unapproved model change requires a new card and human decision. Worker success still requires verification and human acceptance.
 
 Clutch supports three operating modes:
 
 - `NATIVE_ROUTING`: the host creates a clean worker context and passes only the approved worker package.
-- `MANUAL_HANDOFF`: the human opens a clean lower-cost worker session and transfers the approved package.
+- `MANUAL_HANDOFF`: the human opens a clean qualified-worker session and transfers the approved package.
 - `CARD_ONLY`: the advisor prepares a card and stops because no clean worker boundary is available.
 
 Read [`host-integration.md`](clutch/references/host-integration.md) for the capability check and exact boundaries.
+
+For the next falsifiable checkpoint, read the [repeatability program](docs/repeatability.md). It freezes one finish line: verified delivery must survive every declared model phase change. Economic analysis is external to Clutch.
 
 ## Install for a project
 
@@ -68,7 +70,7 @@ The command verifies:
 - rejection of a second compliant installer while the destination is locked;
 - the `PREPARE_ONLY` phase and zero released cards;
 - the policy binding to the implementation manifest;
-- 26 positive and adversarial lifecycle fixtures against two independently written reducers;
+- 26 positive and adversarial lifecycle fixtures, plus six model-phase contract mutations, against two independently written reducers;
 - metadata-only release output with no card-content leakage in the tested projections;
 - the public preregistration extract, minimized outcome table, statistical replay, study receipt, and claim ceiling;
 - the deterministic visual state sequence and pinned image hashes; and
@@ -76,19 +78,19 @@ The command verifies:
 
 A passing result establishes local synthetic conformance and exact package projection for the checked bytes. It does not establish vendor runtime behavior, secure identity, trusted persistence, model quality, card completeness, actual token savings, or production readiness.
 
-## Efficiency claim
+## External economic evaluation
 
-Clutch reduces repeated context only when the worker starts clean and receives a smaller approved package than the advisor history. A lower-priced worker can create a second source of savings. Both effects must be measured against an all-frontier baseline on representative tasks.
+Clutch decides whether authorized work remained coherent and reached verified delivery across model phases. Its protocol does not calculate savings and economic measurements cannot create, rescue, or reverse a pass.
 
-Clutch guarantees no savings. Short tasks, human review time, omitted context, retries, or host routing overhead can erase the benefit. When a harness does not expose token or cost telemetry, record savings as `UNKNOWN`.
+An external governance system may analyze provider charges, tokens, caching, latency, and human review time after collecting raw receipts. Those measurements remain separate from Clutch’s decision surface.
 
 ## Measured v2 result
 
-One preregistered fixed synthetic long-context benchmark completed 241 provider requests with no retries. After allocating the advisor charge, approved cards reduced raw input by 95.93 percent on stable Terra and 95.94 percent on a Terra-to-Luna handoff. Both routes lowered provider cost and passed the declared 10 percentage point average-quality noninferiority margin in the minimized public outcome replay.
+An earlier preregistered fixed synthetic long-context benchmark completed 241 provider requests with no retries. Its external analysis allocated advisor charges and measured raw input and provider cost alongside quality. Those historical economic fields are retained as evidence from that study. They are not inputs to the current Clutch protocol decision.
 
 Stable-Terra cards averaged 4.44 percentage points below full history after handoff, and only 9 of 15 card-routed tasks were fully correct at the final phase versus 15 of 15 with full history. Terra-to-Luna cards averaged 2.30 points above full history, with 13 of 15 fully correct versus 10 of 15. The separate model-switch protection endpoint remained neutral or unresolved.
 
-This is evidence from fifteen synthetic tasks and one advisor realization. It is neither a production benchmark nor a universal savings claim. Human review time was not monetized. The public package can recompute the reported statistics, but it cannot rescore the withheld raw model responses or reestablish private execution integrity. Read the [plain-English evaluation](docs/evaluation-v2.md) and inspect the [machine-readable evidence](evidence/clutch-v2-confirmatory-001/research-summary.json).
+This is evidence from fifteen synthetic tasks and one advisor realization. It is not a production benchmark. Human review time was not monetized. The public package can recompute the reported historical statistics, but it cannot rescore the withheld raw model responses or reestablish private execution integrity. Read the [plain-English evaluation](docs/evaluation-v2.md) and inspect the [machine-readable evidence](evidence/clutch-v2-confirmatory-001/research-summary.json).
 
 ## Repository map
 
@@ -102,6 +104,9 @@ scripts/install-skill.mjs     Non-overwriting cross-harness installer
 scripts/verify-portability.mjs Installer and projection adversarial checks
 scripts/verify-evaluation.mjs  Public evidence and claim-boundary checks
 scripts/recompute-evaluation.mjs Public statistical replay from minimized outcomes
+scripts/repeatability-core.mjs Frozen repeatability decision engine
+scripts/verify-repeatability.mjs Adversarial local fixtures for the decision engine
+external-governance/plan-repeatability.mjs External study optimizer; excluded from the Clutch decision surface
 evidence/                      Preregistration extract, outcomes, summary, and receipt
 AGENTS.example.md             Example project policy, inactive by default
 policy.example.json           Manifest-bound PREPARE_ONLY policy

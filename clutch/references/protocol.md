@@ -2,7 +2,7 @@
 
 ## Purpose and claim ceiling
 
-This protocol separates expensive judgment from lower-cost execution without treating a summary, model choice, or passing test as authority. It is a model-routing profile, not a security boundary, proof of correctness, or guarantee of savings.
+This protocol separates long-context judgment from bounded execution without treating a summary, model choice, or passing test as authority. It governs model-phase transitions. It is not a security boundary or proof of correctness.
 
 The protocol can run through native host routing, a human-mediated clean-session handoff, or card-only preparation. Select the mode through [host-integration.md](host-integration.md). Installation alone does not select or activate a mode.
 
@@ -33,7 +33,7 @@ The framework itself begins in `PREPARE_ONLY`. It enters `ACTIVE` only when the 
 | Execution state | Worker progress, output, and failure receipt | Human acceptance or retry authority |
 | Verification | Results of declared checks | External truth outside those checks |
 | Accepted projection | Human-recognized result and limits | Future correctness or external world state |
-| Cost telemetry | Tokens, latency, and price observations | Quality or savings when measurements are absent |
+| External telemetry reference | Optional pointers to provider usage, latency, and price receipts | Quality, permission, or a Clutch pass |
 
 No plane promotes itself.
 
@@ -71,7 +71,38 @@ The shortest valid human interaction is:
 2. Human approves, rejects, or edits it.
 3. The system routes or stops.
 
-Do not add ceremonial approvals between bounded worker steps that were already included in the approved card.
+Do not add ceremonial approvals between bounded steps inside one unchanged model phase that were already included in the approved card.
+
+## Model phases
+
+Each model upgrade or downgrade is a phase change. Before crossing that boundary:
+
+1. Return execution to neutral.
+2. Record the prior and next model profiles and classify the transition as `UPGRADE`, `DOWNGRADE`, or `STABLE` under the active model map. Missing or incomparable ranks fail closed before assignment.
+3. Bind the outgoing state digest, the receiving-state digest, the exact phase card, and the human approval that covers it.
+4. Engage only the model and steps named by that card.
+5. Verify that the next phase consumed the exact state released by the prior phase.
+
+An unchanged model may perform several declared steps inside one phase. A new model always requires a new exact phase card. The human may approve a frozen batch of already visible phase cards in one decision. That batch does not approve unknown future cards, and a later phase remains ineligible until its predecessor state matches.
+
+Use this receipt at every model boundary:
+
+```text
+MODEL PHASE RECEIPT v1
+transition_id: <stable ID>
+from_phase: <phase ID>
+to_phase: <phase ID>
+direction: UPGRADE | DOWNGRADE | STABLE
+from_model_profile: <exact profile>
+to_model_profile: <exact profile>
+state_out_digest: <digest from prior phase>
+state_in_digest: <digest received by next phase>
+phase_card_digest: <exact approved card>
+approval_event_hash: <exact approval reference>
+status: COMPLETE | INCOMPLETE | STOPPED | UNKNOWN
+```
+
+The transition is coherent only when `state_out_digest` equals `state_in_digest`, the card and approval match, and the declared checks pass. A digest establishes byte identity, not semantic completeness.
 
 ## Worker boundary
 
@@ -90,7 +121,7 @@ The worker returns the fixed receipt defined in [card-contract.md](card-contract
 
 ## Failure and escalation
 
-One approved card authorizes one worker attempt. A failed check, unavailable capability, context omission, desired repair, or proposed move to the balanced profile returns to the advisor for a new card and to the human for a new approval. There is no automatic retry or fallback. Ambiguous ownership, missing authority, conflicting sources, safety-critical uncertainty, or a requested scope change also returns to the human.
+One approved card authorizes one worker attempt in one model phase. A failed check, unavailable capability, context omission, desired repair, or proposed model change returns to the advisor for a new card and to the human for a new approval unless the human already approved that exact next-phase card in a frozen batch. There is no automatic retry or fallback. Ambiguous ownership, missing authority, conflicting sources, safety-critical uncertainty, or a requested scope change also returns to the human.
 
 The frontier advisor is not an escalation worker. It may diagnose and issue a new proposed card.
 
@@ -102,9 +133,11 @@ Corrections are new cards and new events. Preserve the failed card, worker recei
 
 The Node checker validates canonical hashes, ordering, declared roles, phase, limits, and lifecycle eligibility. It always returns metadata, never card contents. Its event stream is untrusted caller input. Passing checks establishes same-runtime offline consistency only. It does not establish human identity, durable append-only storage, recipient isolation, confidentiality, or permission to act. The trusted host conversation supplies approval authority and passes the approved card itself.
 
-## Cost and quality evaluation
+## External evaluation boundary
 
-Compare the routed workflow with an all-frontier baseline on representative tasks. Keep these fields separate:
+Clutch decides only whether the authorized work stayed coherent and reached its declared verification boundary. Provider economics do not participate in that decision.
+
+An external governance system may compare the routed workflow with a control on representative tasks. Keep its observations separate:
 
 - task success;
 - critical defect count;
@@ -117,4 +150,4 @@ Compare the routed workflow with an all-frontier baseline on representative task
 - latency; and
 - total cost.
 
-Adopt a cheaper route only when quality remains within a human-approved tolerance. Lower cost, fewer calls, or faster completion is not an improvement when required evidence or constraints are lost.
+These fields are telemetry, not protocol authority. Economic analysis may begin after verified delivery and may never convert failed work into success.

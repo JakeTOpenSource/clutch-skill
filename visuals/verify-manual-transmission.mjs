@@ -28,14 +28,14 @@ const finalPng = read("manual-transmission-human-loop.png");
 const readme = readFileSync(join(projectRoot, "README.md"), "utf8");
 const architecture = readFileSync(join(projectRoot, "docs", "architecture.md"), "utf8");
 
-assert.equal(legend.schema_version, "manual-transmission-metaphor.v4");
+assert.equal(legend.schema_version, "manual-transmission-metaphor.v5");
 assert.equal(legend.states.length, 3);
 assert.deepEqual(legend.states.map(({ id }) => id), ["neutral", "approve_card", "engaged"]);
 assert.deepEqual(legend.states.map(({ label }) => label), ["NEUTRAL", "APPROVE CARD", "ENGAGED"]);
 assert.deepEqual(legend.states.map(({ descriptor }) => descriptor), [
   "Full context held. No worker runs.",
   "Human scopes one compact task.",
-  "One card. One lower-cost attempt.",
+  "One phase. One bounded attempt.",
 ]);
 assert.deepEqual(legend.states.map(({ image_rule }) => image_rule), ["base", "base", "base_plus_engagement"]);
 assert.deepEqual(legend.states.map(({ screen_state }) => screen_state.label), ["FULL CONTEXT", "APPROVED CARD", "BOUNDED WORKER"]);
@@ -46,14 +46,14 @@ assert.deepEqual(legend.deterministic_reading.retry_trace, ["failed_check", "neu
 
 assert.equal(legend.thesis.kicker, "HUMAN IN THE LOOP");
 assert.equal(legend.thesis.headline, "FULL HISTORY STAYS WITH THE ADVISOR. ONLY THE APPROVED TASK MOVES.");
-assert.ok(legend.thesis.body.includes("lower-cost model"));
+assert.ok(legend.thesis.body.includes("Every model change"));
 assert.ok(legend.thesis.body.includes("Failed checks return to neutral"));
 assert.ok(legend.thesis.body.includes("Verification and human acceptance still follow"));
-assert.ok(legend.thesis.caveat.includes("short tasks may not offset routing overhead"));
+assert.ok(legend.thesis.caveat.includes("does not prove correct judgment"));
 assert.ok(legend.thesis.retry_rule.includes("every retry requires a new card and human approval"));
 assert.ok(legend.invariants.some((text) => text.includes("human-in-the-loop")));
-assert.ok(legend.invariants.some((text) => text.includes("distinct possible cost benefits")));
-assert.ok(legend.invariants.some((text) => text.includes("not established by this visual")));
+assert.ok(legend.invariants.some((text) => text.includes("explicit phase boundary")));
+assert.ok(legend.invariants.some((text) => text.includes("exact state released")));
 
 assert.equal((svg.match(/manual-transmission-shop-diagnostics\.png/g) ?? []).length, 3);
 assert.equal((svg.match(/manual-transmission-shop-engaged-source\.png/g) ?? []).length, 1);
@@ -69,7 +69,7 @@ for (const text of [
   "APPROVE CARD",
   "Human scopes one compact task.",
   "ENGAGED",
-  "One card. One lower-cost attempt.",
+  "One phase. One bounded attempt.",
   "FULL CONTEXT",
   "APPROVED CARD",
   "BOUNDED WORKER",
@@ -96,11 +96,11 @@ for (const receipt of Object.values(legend.image_receipts)) {
 assert.deepEqual(pngDimensions(finalPng), { width: 2048, height: 1166 });
 assert.ok(architecture.includes("Every panel begins with the exact same pinned laptop-and-shop image."));
 assert.ok(architecture.includes("Only panel three overlays the edited lever, selector fork, and synchronizer engagement region."));
-assert.ok(architecture.includes("Lower context volume and lower model price are separate possible benefits."));
+assert.ok(architecture.includes("Every model upgrade or downgrade creates a new phase boundary."));
 assert.ok(architecture.includes("NEUTRAL -> APPROVE CARD -> ENGAGED"));
 assert.ok(architecture.includes("the architecture is human-in-the-loop"));
 assert.ok(architecture.includes("every retry requires a new card and human approval"));
-assert.ok(readme.includes("guarantees no savings"));
+assert.ok(readme.includes("economic measurements cannot create, rescue, or reverse a pass"));
 assert.ok(readme.includes("PREPARE_ONLY"));
 
 process.stdout.write([
@@ -112,7 +112,7 @@ process.stdout.write([
   "screen_progression=full_context->approved_card->bounded_worker",
   "leader_lines=0",
   "human_in_the_loop=true",
-  "token_efficiency_copy=PASS",
+  "model_phase_copy=PASS",
   "claim_calibration=PASS",
   `final_png_sha256=${sha256(finalPng)}`,
   "final_png_dimensions=2048x1166",
