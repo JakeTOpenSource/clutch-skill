@@ -1,8 +1,10 @@
-# Release gate for 0.4.0-rc.1
+# Publication and empirical gate for 0.4.0-rc.1
 
-Status: `HOLD_BEFORE_GITHUB`
+Publication status: `GO_FOR_GITHUB_RC`
 
-This candidate is structurally testable and claim-bounded. It is not yet authorized for publication. The hold protects the distinction between a tested protocol implementation and an empirically supported model-routing result.
+Protocol activation status: `PREPARE_ONLY`
+
+The owner authorized publication of this claim-bounded research preview on 2026-08-25. GitHub publication does not activate the protocol or convert the local conformance and pilot evidence into a general model-routing result. The remaining empirical gate protects that distinction.
 
 ## Completed locally
 
@@ -38,10 +40,10 @@ The non-authorizing proposal in `evaluation/OWNER-DECISION-PACKET.md` recommends
 
 After approval, run the four matched conditions without changing the verifier, tasks, rubric, or exclusions. Preserve every run and disposition. Then run an independent clean-room replay and a final claim audit.
 
-## Release choices
+## Publication decision
 
-The safer path is to finish the preregistered behavioral study before publishing `0.4.0`. If an earlier research preview is desired, publish only an `0.4.0-rc.1` evaluation-ready release and say explicitly that general quality, coherence, savings, human-review effectiveness, security, and production readiness remain unproven.
+Publish `0.4.0-rc.1` as an evaluation-ready research preview. State explicitly that general quality, coherence, savings, human-review effectiveness, security, and production readiness remain unproven. Reserve a stable `0.4.0` release and any broader empirical claim for evidence that passes the preregistered quality-first gate.
 
 ## GitHub handoff
 
-After an owner changes this status to `GO`, apply the reviewed candidate changes to a clean branch based on the intended upstream commit. Do not copy the candidate's directory over a dirty worktree. Re-run `npm run refresh-manifests` and `npm test` from the clean branch, inspect the final diff and release manifest, then request a separate owner decision for push, pull request, tag, and release publication.
+The reviewed candidate was applied to a clean branch based on the intended upstream commit. The existing dirty worktree was not modified. Refresh the manifests, run the full repository tests, inspect the final diff, then publish through a reviewed pull request. A tag or GitHub Release remains a separate action.

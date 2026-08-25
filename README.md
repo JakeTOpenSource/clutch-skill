@@ -1,6 +1,8 @@
 # Clutch
 
-Clutch is a human-approved model-routing protocol and Agent Skill for long-context work. A capable advisor keeps the full conversation and performs high-value judgment. A human approves one bounded task card. For long work, the same approval can bind a finite phase plan with explicit emergency routes. Other model profiles receive only the context authorized for their current phase.
+Clutch is an open-source, human-governed model-routing protocol and Agent Skill for long-context work. A capable advisor keeps the full conversation and performs high-value judgment. A human approves one bounded, hash-linked task package. For longer builds, that approval can bind a finite phase plan with named repair, transfer, evacuation, and hold routes. Each worker receives only the context authorized for its current phase.
+
+The practical goal is coherent delivery across model changes. Clutch treats cost, tokens, and speed as useful efficiency measurements only after the requested artifact reaches its registered destination checks. A failed phase remains evidence: its candidate, usage, and fix log are preserved, while only a verified artifact can become the next accepted state.
 
 The capable advisor is the `Role Model`. Clutch control is restricted to three policy-allowlisted roles: the Role Model proposes, the human governs approval and acceptance, and the trusted orchestrator assigns and closes. Workers and verifiers return evidence but cannot operate the clutch.
 
@@ -10,9 +12,17 @@ The canonical skill follows the open Agent Skills folder format. The same source
 
 ## Current status
 
-Version `0.4.0-rc.1` remains a local `PREPARE_ONLY` research release candidate. Installing the skill makes its instructions discoverable. It does not activate routing, make an advisor read-only, authenticate a human, isolate a filesystem, select a model, or authorize a worker.
+Version `0.4.0-rc.1` is a public, evaluation-ready research preview. Its packaged local verification suite passes. The protocol itself remains `PREPARE_ONLY`: publication and installation do not activate routing, make an advisor read-only, authenticate a human, isolate a filesystem, select a model, or authorize a worker.
 
 Activation requires a separate human decision in a trusted host that binds an exact policy and implementation digest. The included checker validates canonical hashes, event order, declared roles, declared implementation binding, limits, and lifecycle eligibility over caller-supplied JSON. It cannot establish that the supplied implementation digest belongs to the bytes the host loaded. Its output is bounded to hashes, status, state, and profile.
+
+### What this release adds
+
+- Recoverable Fuse phase plans that replace hidden retries with finite, preapproved routes.
+- Append-only fix logs, attempted-usage accounting, and last-known-good state preservation.
+- Delivery-first efficiency eligibility: incomplete telemetry remains `UNKNOWN`, and failed delivery earns no savings claim.
+- One canonical skill with verified project installers for Codex, GitHub Copilot, Cursor, Gemini CLI, and Claude Code.
+- A deterministic evaluation kit that separates model capability, automatic card transformation, human review, full-context switching, and the complete Clutch route.
 
 ## How it works
 
@@ -100,15 +110,15 @@ Clutch guarantees no savings. Short tasks, human review time, omitted context, r
 
 One preregistered six-round local pilot observed six accepted artifacts in the Clutch arm and five in the direct growing-context arm. The Clutch route recorded 449,319 raw input-plus-output tokens versus 1,031,809 for the direct route, and 365,113 prompt bytes versus 1,581,508. It also took longer in aggregate: 492,824 milliseconds versus 428,231.
 
-Those are descriptive readings from one low-power pilot. The direct arm failed its preregistered quality bar while the Clutch arm passed, so the study's own rule prohibited naming an efficiency winner. The raw prompts and private workspaces are not bundled; the repository includes only a minimized evidence snapshot and source digests.
+Descriptively, that run recorded 56.5 percent fewer raw tokens and 76.9 percent fewer prompt bytes for the Clutch route, while elapsed time was 15.1 percent higher. Those percentages are not a validated savings result. This was one low-power pilot, the direct arm failed its preregistered quality bar while the Clutch arm passed, and the study's own rule therefore prohibited naming an efficiency winner. The raw prompts and private workspaces are not bundled; the repository includes only a minimized evidence snapshot and source digests.
 
 A separate local projection experiment exhaustively tested 512 subsets of nine registered host-manifest fields. Its first, smaller result failed corrective cases. The corrected result selected three digests at 431 bytes versus 864 bytes for all fields, with no change to the 867-byte worker board. This establishes only a minimum inside that frozen synthetic domain.
 
 Read [`evaluation/README.md`](evaluation/README.md) for the four-condition study and five reported contrasts covering model configuration, automatic card transformation, human approval, Clutch versus a full-context worker, and the complete route. The [Stage 0 acceptance record](evaluation/owner-acceptance-stage-0.json) authorizes preparation only. The [preparation receipt](evaluation/stage-0-preparation-receipt.json) binds five private synthetic task workspaces, telemetry fixtures, and hard resource stops while withholding hidden checks and model-run authority. The supplied preregistration remains visibly blocked until a live telemetry preflight and separate run authorization are recorded.
 
-The current GitHub publication gate is documented in [`docs/release-gate.md`](docs/release-gate.md). This candidate stops before any push, tag, or release.
+The publication decision and the still-open empirical gate are documented in [`docs/release-gate.md`](docs/release-gate.md). Publishing this research preview does not authorize protocol activation, model calls, deployment, or a general savings or coherence claim.
 
-The next empirical step is proposed, not authorized, in [`evaluation/OWNER-DECISION-PACKET.md`](evaluation/OWNER-DECISION-PACKET.md). Its deterministic [study proposal](evaluation/study-proposal.json) treats one 30-minute build as one independent task, exposes the sample-size tradeoff, and keeps both model execution and GitHub publication disabled.
+The next empirical step is proposed, not authorized, in [`evaluation/OWNER-DECISION-PACKET.md`](evaluation/OWNER-DECISION-PACKET.md). Its deterministic [study proposal](evaluation/study-proposal.json) treats one 30-minute build as one independent task, exposes the sample-size tradeoff, and keeps model execution and study-result publication disabled. Repository publication of this release candidate was approved separately.
 
 ## Repository map
 
@@ -126,7 +136,7 @@ policy.example.json           Manifest-bound PREPARE_ONLY policy
 model-map.example.json        One symbolic model-profile adapter example
 evaluation/                    Claim ledger, owner proposal, preregistration, minimized evidence, and checks
 release-files.json             Explicit release and implementation allowlists
-docs/release-gate.md           Remaining owner decisions and GitHub stop condition
+docs/release-gate.md           Publication decision and remaining empirical stop conditions
 implementation-manifest.json  Exact executable decision-surface receipts
 release-manifest.json         Exact repository release receipts
 visuals/                      Deterministic metaphor, source assets, and checks

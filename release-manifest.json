@@ -44,8 +44,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 12182,
-      "sha256": "fdf233e230d01823110b8bec8f9256dde5c4f90f6d75838b79d929edf5becd1b"
+      "bytes": 13652,
+      "sha256": "788b997eb5f78f001746e7380c4ddaa412e6d3bebe7f33e92c1242cb7ff772a6"
     },
     {
       "path": "adapters/harness-targets.json",
@@ -154,8 +154,8 @@
     },
     {
       "path": "docs/release-gate.md",
-      "bytes": 4962,
-      "sha256": "acc6b5c13c158df50a0a797b45ab129c658beb09827ee00c698b31e296541b75"
+      "bytes": 4998,
+      "sha256": "7eb6a2559e16698f6ff6beda4851ee5bd2beccefe67f0fa835241c5fe751d82c"
     },
     {
       "path": "evaluation/OWNER-DECISION-PACKET.md",
