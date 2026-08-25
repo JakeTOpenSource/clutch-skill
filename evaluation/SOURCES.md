@@ -1,0 +1,18 @@
+# Evaluation sources
+
+These sources shape the test design. They are not evidence that Clutch satisfies a standard or reproduces another paper's results.
+
+- [NIST AI Risk Management Framework 1.0](https://doi.org/10.6028/NIST.AI.100-1) and the [Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) support documented, repeatable testing across validity, reliability, transparency, oversight, and deployment-like conditions. Both are voluntary frameworks, not Clutch certification.
+- [NIST AI RMF Measure guidance](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/) motivates objective and repeatable TEVV, multiple trustworthiness measures, uncertainty reporting, independent review, and explicit generalization limits.
+- The [NIST TEVV-Athlon initial public draft](https://www.nist.gov/artificial-intelligence/ai-research/tevv-athlon-framework-evaluating-ai-systems), announced August 7, 2026, motivates a configurable system-level assessment. It is a draft open for comment, not a final standard.
+- [Inspect AI](https://inspect.aisi.org.uk/) provides an open evaluation architecture for agent tasks, tools, scorers, logs, and human interventions. Clutch does not claim compatibility merely because its evaluation layout is similar.
+- [OpenAI model guidance](https://developers.openai.com/api/docs/guides/latest-model) describes `gpt-5.6-sol` as the frontier-capability route, `gpt-5.6-terra` as the intelligence-and-cost balance, and `gpt-5.6-luna` as the efficient high-volume route. It also recommends representative evaluations and measuring quality, tokens, latency, and cost. These descriptions inform the proposed local model blocks; they do not establish availability, resolved model identity, or performance in a particular host.
+- [HELM](https://arxiv.org/abs/2211.09110) motivates multi-metric evaluation, standardized conditions, transparent artifacts, and explicit incompleteness.
+- [FrugalGPT](https://arxiv.org/abs/2305.05176) and [RouteLLM](https://openreview.net/pdf?id=8sSqNntaMr) show why model cascades and routing require measured cost-quality tradeoffs. Their results do not transfer to Clutch.
+- [LLMLingua](https://aclanthology.org/2023.emnlp-main.825/) and [LongLLMLingua](https://aclanthology.org/2024.acl-long.91/) motivate measuring compressed-context performance. They do not prove that a Clutch card is semantically complete.
+- [SWE-bench](https://proceedings.iclr.cc/paper_files/paper/2024/hash/edac78c3e300629acfe6cbe9ca88fb84-Abstract-Conference.html) motivates executable repository tasks. Public benchmark results still require contamination and environment caveats.
+- [Model Cards for Model Reporting](https://doi.org/10.1145/3287560.3287596) and [Datasheets for Datasets](https://doi.org/10.1145/3458723) motivate explicit intended use, provenance, limitations, and subgroup reporting. This repository adapts those habits to a routed system.
+- [W3C PROV-O](https://www.w3.org/TR/prov-o/) informs the separation of entities, activities, and agents in trace records. It does not make a local event stream authenticated.
+- [RFC 9162](https://www.rfc-editor.org/rfc/rfc9162.html) provides useful append-only log patterns. A local hash chain without independent witnessing is not a public transparency log.
+
+Standards with relevant governance framing include [ISO/IEC 42001:2023](https://www.iso.org/artificial-intelligence/ai-management-systems), [ISO/IEC 23894:2023](https://www.iso.org/standard/77304.html), and [ISO 9241-210:2019](https://www.iso.org/standard/77520.html). Referencing their public descriptions does not imply access to the full standards, conformance, or certification.

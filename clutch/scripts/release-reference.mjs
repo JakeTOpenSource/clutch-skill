@@ -9,9 +9,9 @@ import { fileURLToPath } from "node:url";
 
 const INPUT_FIELDS = ["cards", "events", "policy", "schema_version"];
 const POLICY_FIELDS = [
-  "advisor_actor_ids", "advisor_profile", "human_actor_ids", "max_card_bytes",
+  "advisor_actor_ids", "advisor_profile", "human_actor_ids", "orchestrator_actor_ids", "max_card_bytes",
   "max_concurrent_workers", "max_context_turns", "max_worker_attempts", "phase",
-  "policy_id", "schema_version", "stream_id", "worker_profiles",
+  "implementation_digest", "policy_id", "schema_version", "stream_id", "worker_profiles",
 ];
 const CARD_FIELDS = [
   "acceptance_checks", "advisor_findings", "allowed_actions", "card_id",
@@ -28,8 +28,9 @@ const REQUIRED_EVENT_FIELDS = [
   "schema_version", "sequence", "statement", "stream_id",
 ];
 const OPTIONAL_EVENT_FIELDS = new Set([
-  "card_hash", "card_id", "policy_hash", "result_ref", "verification_ref",
-  "verification_status", "worker_id", "worker_profile",
+  "card_hash", "card_id", "implementation_digest", "policy_hash", "result_ref", "verification_ref",
+  "verification_status", "worker_id", "worker_profile", "result_status", "result_receipt_hash",
+  "verification_receipt_hash",
 ]);
 const EVENT_TYPES = new Set([
   "SYSTEM_ACTIVATED", "CARD_PROPOSED", "HUMAN_APPROVED", "HUMAN_REJECTED",
@@ -105,24 +106,24 @@ function hashEvent(event) {
   return hashObject(unsigned);
 }
 
-function result(validation, errorCode, activated, cards, releasedCardIds) {
+function result(validation, errorCode, activated, cards, releasedCardHashes) {
   return {
     activated,
     cards,
     error_code: errorCode,
-    released_card_ids: releasedCardIds,
+    released_card_hashes: releasedCardHashes,
     schema_version: "routing-reference.v1",
     validation,
   };
 }
 
-function invalid(errorCode, activated = false, cardIds = []) {
+function invalid(errorCode, activated = false, cardHashes = []) {
   return result(
     "INVALID",
     errorCode,
     activated,
-    [...new Set(cardIds)].sort().map((cardId) => ({
-      card_id: cardId,
+    [...new Set(cardHashes)].sort().map((cardHash) => ({
+      card_hash: cardHash,
       release_status: "WITHHELD_INVALID",
       state: "INVALID",
     })),
@@ -173,12 +174,14 @@ function firstCardProblem(card, policy) {
 
 function firstPolicyProblem(policy) {
   if (!exactFields(policy, POLICY_FIELDS)) return policy && typeof policy === "object" ? "INVALID_POLICY_FIELDS" : "INVALID_POLICY";
-  if (policy.schema_version !== "routing-policy.v1") return "INVALID_POLICY_VERSION";
-  if (!scalarText(policy.policy_id)) return "INVALID_POLICY_ID";
+  if (policy.schema_version !== "routing-policy.v3") return "INVALID_POLICY_VERSION";
+  if (typeof policy.implementation_digest !== "string" || !HASH.test(policy.implementation_digest)) return "INVALID_IMPLEMENTATION_DIGEST";
+  if (policy.policy_id !== `clutch-policy-v3@${policy.implementation_digest}`) return "INVALID_POLICY_ID";
   if (!scalarText(policy.stream_id)) return "INVALID_STREAM_ID";
   if (!["PREPARE_ONLY", "ACTIVE"].includes(policy.phase)) return "INVALID_POLICY_PHASE";
   if (!listOfText(policy.human_actor_ids, true)) return "INVALID_HUMAN_ACTORS";
   if (!listOfText(policy.advisor_actor_ids, true)) return "INVALID_ADVISOR_ACTORS";
+  if (!listOfText(policy.orchestrator_actor_ids, true)) return "INVALID_ORCHESTRATOR_ACTORS";
   if (!scalarText(policy.advisor_profile)) return "INVALID_ADVISOR_PROFILE";
   if (!listOfText(policy.worker_profiles, true)) return "INVALID_WORKER_PROFILES";
   for (const [value, floor, ceiling] of [
@@ -192,7 +195,9 @@ function firstPolicyProblem(policy) {
   if (policy.worker_profiles.includes(policy.advisor_profile)) return "ADVISOR_IS_WORKER_PROFILE";
   if (new Set(policy.human_actor_ids).size !== policy.human_actor_ids.length) return "DUPLICATE_HUMAN_ACTOR";
   if (new Set(policy.advisor_actor_ids).size !== policy.advisor_actor_ids.length) return "DUPLICATE_ADVISOR_ACTOR";
-  if (policy.human_actor_ids.some((id) => policy.advisor_actor_ids.includes(id))) return "ACTOR_ROLE_COLLISION";
+  if (new Set(policy.orchestrator_actor_ids).size !== policy.orchestrator_actor_ids.length) return "DUPLICATE_ORCHESTRATOR_ACTOR";
+  const controlActors = [...policy.human_actor_ids, ...policy.advisor_actor_ids, ...policy.orchestrator_actor_ids];
+  if (new Set(controlActors).size !== controlActors.length) return "ACTOR_ROLE_COLLISION";
   if (new Set(policy.worker_profiles).size !== policy.worker_profiles.length) return "DUPLICATE_WORKER_PROFILE";
   return null;
 }
@@ -240,18 +245,18 @@ export function projectInput(payload) {
   for (const card of payload.cards) {
     const cardError = firstCardProblem(card, policy);
     if (cardError) return invalid(cardError);
-    if (cards.has(card.card_id)) return invalid("DUPLICATE_CARD_ID", false, [...cards.keys()]);
+    if (cards.has(card.card_id)) return invalid("DUPLICATE_CARD_ID", false, [...cardHashes.values()]);
     cards.set(card.card_id, card);
     cardHashes.set(card.card_id, hashObject(card));
   }
 
-  if (!Array.isArray(payload.events)) return invalid("INVALID_EVENTS", false, [...cards.keys()]);
+  if (!Array.isArray(payload.events)) return invalid("INVALID_EVENTS", false, [...cardHashes.values()]);
   let previousHash = null;
   const seenIds = new Set();
   for (let index = 0; index < payload.events.length; index += 1) {
     const event = payload.events[index];
     const shapeError = firstEventShapeProblem(event, policy, index, previousHash, seenIds);
-    if (shapeError) return invalid(shapeError, false, [...cards.keys()]);
+    if (shapeError) return invalid(shapeError, false, [...cardHashes.values()]);
     previousHash = event.event_hash;
   }
 
@@ -260,8 +265,9 @@ export function projectInput(payload) {
   const assigned = new Map();
   const coordinators = new Map();
   const verification = new Map();
+  const resultStatuses = new Map();
 
-  const stopInvalid = (code) => invalid(code, activated, [...cards.keys()]);
+  const stopInvalid = (code) => invalid(code, activated, [...cardHashes.values()]);
 
   for (let eventIndex = 0; eventIndex < payload.events.length; eventIndex += 1) {
     const event = payload.events[eventIndex];
@@ -269,6 +275,7 @@ export function projectInput(payload) {
       if (event.actor_type !== "HUMAN" || !policy.human_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_ACTIVATION_ACTOR");
       if (policy.phase !== "ACTIVE") return stopInvalid("ACTIVATION_IN_PREPARE_ONLY");
       if (eventIndex !== 0) return stopInvalid("ACTIVATION_NOT_GENESIS");
+      if (event.implementation_digest !== policy.implementation_digest) return stopInvalid("IMPLEMENTATION_DIGEST_MISMATCH");
       if (event.policy_hash !== policyHash) return stopInvalid("POLICY_HASH_MISMATCH");
       if (activated) return stopInvalid("DUPLICATE_ACTIVATION");
       activated = true;
@@ -295,12 +302,12 @@ export function projectInput(payload) {
         states.set(id, event.event_type === "HUMAN_APPROVED" ? "APPROVED" : "REJECTED");
         break;
       case "WORK_ASSIGNED":
-        if (event.actor_type !== "COORDINATOR" || !scalarText(event.actor_id) || policy.human_actor_ids.includes(event.actor_id) || policy.advisor_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_COORDINATOR_ACTOR");
+        if (event.actor_type !== "COORDINATOR" || !policy.orchestrator_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_COORDINATOR_ACTOR");
         if (!activated || policy.phase !== "ACTIVE") return stopInvalid("SYSTEM_NOT_ACTIVE");
         if (state !== "APPROVED") return stopInvalid("CARD_NOT_ASSIGNABLE");
         if (cards.get(id).task_class !== "EXECUTION_REQUIRED") return stopInvalid("TASK_NOT_EXECUTABLE");
         if (event.worker_profile !== cards.get(id).routing.worker_profile) return stopInvalid("WORKER_PROFILE_MISMATCH");
-        if (!scalarText(event.worker_id) || event.worker_id === event.actor_id || policy.human_actor_ids.includes(event.worker_id) || policy.advisor_actor_ids.includes(event.worker_id)) {
+        if (!scalarText(event.worker_id) || event.worker_id === event.actor_id || policy.human_actor_ids.includes(event.worker_id) || policy.advisor_actor_ids.includes(event.worker_id) || policy.orchestrator_actor_ids.includes(event.worker_id)) {
           return stopInvalid("INVALID_WORKER_ID");
         }
         assigned.set(id, event.worker_id);
@@ -311,13 +318,18 @@ export function projectInput(payload) {
         if (event.actor_type !== "WORKER" || event.actor_id !== assigned.get(id)) return stopInvalid("INVALID_WORKER_ACTOR");
         if (state !== "ASSIGNED") return stopInvalid("INVALID_CARD_TRANSITION");
         if (!scalarText(event.result_ref)) return stopInvalid("MISSING_RESULT_REF");
+        if (!["PASS", "FAIL", "STOPPED", "UNKNOWN"].includes(event.result_status)) return stopInvalid("INVALID_RESULT_STATUS");
+        if (typeof event.result_receipt_hash !== "string" || !HASH.test(event.result_receipt_hash)) return stopInvalid("MISSING_RESULT_RECEIPT_HASH");
+        resultStatuses.set(id, event.result_status);
         states.set(id, "RESULT_RECORDED");
         break;
       case "VERIFICATION_RECORDED":
-        if (event.actor_type !== "VERIFIER" || !scalarText(event.actor_id) || event.actor_id === assigned.get(id) || event.actor_id === coordinators.get(id) || policy.human_actor_ids.includes(event.actor_id) || policy.advisor_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_VERIFIER_ACTOR");
+        if (event.actor_type !== "VERIFIER" || !scalarText(event.actor_id) || event.actor_id === assigned.get(id) || event.actor_id === coordinators.get(id) || policy.human_actor_ids.includes(event.actor_id) || policy.advisor_actor_ids.includes(event.actor_id) || policy.orchestrator_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_VERIFIER_ACTOR");
         if (state !== "RESULT_RECORDED") return stopInvalid("INVALID_CARD_TRANSITION");
         if (!["PASS", "FAIL", "UNKNOWN"].includes(event.verification_status)) return stopInvalid("INVALID_VERIFICATION_STATUS");
         if (!scalarText(event.verification_ref)) return stopInvalid("MISSING_VERIFICATION_REF");
+        if (typeof event.verification_receipt_hash !== "string" || !HASH.test(event.verification_receipt_hash)) return stopInvalid("MISSING_VERIFICATION_RECEIPT_HASH");
+        if (event.verification_status === "PASS" && resultStatuses.get(id) !== "PASS") return stopInvalid("WORKER_DID_NOT_REPORT_PASS");
         verification.set(id, event.verification_status);
         states.set(id, event.verification_status === "PASS" ? "VERIFIED" : "CORRECTION_REQUIRED");
         break;
@@ -328,12 +340,12 @@ export function projectInput(payload) {
         break;
       case "HUMAN_REQUESTED_CORRECTION":
         if (event.actor_type !== "HUMAN" || !policy.human_actor_ids.includes(event.actor_id)) return stopInvalid("INVALID_HUMAN_ACTOR");
-        if (!["RESULT_RECORDED", "VERIFIED"].includes(state)) return stopInvalid("INVALID_CARD_TRANSITION");
+        if (!["RESULT_RECORDED", "VERIFIED", "CORRECTION_REQUIRED"].includes(state)) return stopInvalid("INVALID_CARD_TRANSITION");
         states.set(id, "CORRECTION_REQUIRED");
         break;
       case "CLOSED":
-        if (event.actor_type !== "COORDINATOR" || !scalarText(event.actor_id) || policy.human_actor_ids.includes(event.actor_id) || policy.advisor_actor_ids.includes(event.actor_id) || (coordinators.has(id) && event.actor_id !== coordinators.get(id))) return stopInvalid("INVALID_COORDINATOR_ACTOR");
-        if (!["ACCEPTED", "REJECTED"].includes(state)) return stopInvalid("INVALID_CARD_TRANSITION");
+        if (event.actor_type !== "COORDINATOR" || !policy.orchestrator_actor_ids.includes(event.actor_id) || (coordinators.has(id) && event.actor_id !== coordinators.get(id))) return stopInvalid("INVALID_COORDINATOR_ACTOR");
+        if (!["ACCEPTED", "REJECTED", "CORRECTION_REQUIRED"].includes(state)) return stopInvalid("INVALID_CARD_TRANSITION");
         states.set(id, "CLOSED");
         break;
       default:
@@ -350,10 +362,10 @@ export function projectInput(payload) {
     else if (!activated) releaseStatus = "WITHHELD_ACTIVATION";
     else if (state === "APPROVED" && cards.get(id).task_class === "EXECUTION_REQUIRED") {
       releaseStatus = "RELEASED";
-      released.push(id);
+      released.push(cardHashes.get(id));
     } else if (state === "WAITING_APPROVAL") releaseStatus = "WITHHELD_APPROVAL";
     else if (state === "REJECTED") releaseStatus = "WITHHELD_REJECTED";
-    summaries.push({ card_id: id, release_status: releaseStatus, state });
+    summaries.push({ card_hash: cardHashes.get(id), release_status: releaseStatus, state });
   }
   return result("VALID", null, activated, summaries, released);
 }

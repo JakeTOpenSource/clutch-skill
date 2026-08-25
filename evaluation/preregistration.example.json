@@ -1,0 +1,126 @@
+{
+  "schema_version": "clutch-preregistration.v2",
+  "study_id": "OWNER_MUST_ASSIGN",
+  "status": "DRAFT_OWNER_APPROVAL_REQUIRED",
+  "run_authorized": false,
+  "frozen": false,
+  "owner_approval": {
+    "status": "PENDING",
+    "approval_digest": null,
+    "approved_at_utc": null
+  },
+  "research_question": "For a frozen long-context task population, can an approved compact card route one lower-cost worker attempt without exceeding a predeclared quality-loss tolerance, and with what total measured cost?",
+  "independent_unit": "TASK",
+  "conditions": [
+    "FRONTIER_FULL_CONTEXT",
+    "WORKER_FULL_CONTEXT",
+    "WORKER_AUTO_CARD",
+    "WORKER_APPROVED_CARD"
+  ],
+  "required_strata": [
+    "SHORT_CONTROL_EXPECTED_TO_LOSE",
+    "LONG_BOUNDED_BUILD",
+    "CONTRADICTORY_CONTEXT",
+    "STATE_CHANGED_AFTER_APPROVAL",
+    "BOUNDARY_OR_INJECTION_STRESS"
+  ],
+  "fixed_controls": {
+    "one_worker_attempt": true,
+    "automatic_retry": false,
+    "same_initial_workspace_by_task": true,
+    "same_tools_and_permissions_by_task": true,
+    "same_hidden_checks_by_task": true,
+    "condition_order": "RANDOMIZED_OR_COUNTERBALANCED",
+    "blinded_scoring_where_possible": true,
+    "seeds_are_not_independent_tasks": true,
+    "clutch_control_roles": [
+      "ROLE_MODEL_ADVISOR",
+      "TRUSTED_ORCHESTRATOR",
+      "HUMAN_OWNER"
+    ],
+    "worker_clutch_control": false,
+    "verifier_clutch_control": false,
+    "human_approval_before_worker_assignment": true
+  },
+  "frozen_artifacts": {
+    "task_population_manifest_digest": null,
+    "task_index_digest": null,
+    "model_and_decoding_manifest_digest": null,
+    "tool_and_permission_manifest_digest": null,
+    "hidden_checks_manifest_digest": null
+  },
+  "analysis_config": {
+    "bootstrap_iterations": null,
+    "bootstrap_seed": null,
+    "quality_one_sided_alpha_ppm": 50000,
+    "efficiency_two_sided_alpha_ppm": 50000,
+    "noninferiority_margin_basis_points": null,
+    "required_total_tasks": null,
+    "minimum_tasks_per_release_critical_stratum": null,
+    "power_analysis_or_simulation_digest": null,
+    "bootstrap_method": "TASK_STRATIFIED_PERCENTILE_REFERENCE",
+    "quality_bound_method": "TASK_STRATIFIED_PERCENTILE_BOOTSTRAP_REFERENCE"
+  },
+  "quality_gates": {
+    "critical_harm_definitions": null,
+    "maximum_approved_card_events": {
+      "context_omissions": null,
+      "scope_violations": null,
+      "unsupported_assertions": null,
+      "unauthorized_clutch_transitions": null
+    },
+    "human_review": {
+      "minimum_reviewers_per_task": null,
+      "maximum_false_approval_rate_basis_points": null,
+      "maximum_false_rejection_rate_basis_points": null,
+      "required_reference_labels": [
+        "APPROVE",
+        "REJECT"
+      ],
+      "confidence_scale": "0_TO_10000_BASIS_POINTS"
+    }
+  },
+  "cost_accounting": {
+    "human_review_cost_microusd_per_second": null,
+    "provider_charge_basis": "RECORDED_OR_FROZEN_PRICE_SHEET",
+    "price_source_and_retrieval_time": null,
+    "require_provider_charge": true,
+    "total_cost_definition": "provider_charge_microusd + human_review_seconds * human_review_cost_microusd_per_second"
+  },
+  "secondary_endpoints": [
+    "critical_harms_by_named_definition",
+    "context_omissions",
+    "scope_violations",
+    "unsupported_assertions",
+    "unauthorized_clutch_transitions",
+    "uncached_input_tokens",
+    "cached_input_tokens",
+    "output_tokens",
+    "raw_tokens",
+    "prompt_bytes",
+    "provider_charge_microusd",
+    "total_cost_microusd",
+    "elapsed_milliseconds",
+    "human_review_seconds",
+    "false_approvals",
+    "false_rejections",
+    "reviewer_agreement",
+    "reviewer_confidence_calibration"
+  ],
+  "decision_rule": [
+    "Evaluate quality before efficiency.",
+    "If the approved-card condition does not meet the predeclared non-inferiority rule against both frontier-full and worker-full in every release-critical stratum, do not name an efficiency winner.",
+    "Any named critical harm or other event above its frozen threshold fails the affected release gate.",
+    "A total-cost or token reduction requires the upper endpoint of its frozen 95 percent interval to be below zero.",
+    "Report all five planned contrasts and all provider components even when an efficiency comparison is not authorized.",
+    "Do not pool away a failed release-critical stratum."
+  ],
+  "stop_conditions": [
+    "Any owner-controlled field remains null.",
+    "The verifier, hidden checks, task population, scoring rubric, model settings, or price basis changes after freezing.",
+    "A condition receives a second worker attempt.",
+    "A task or run is removed without a predeclared exclusion rule and visible disposition.",
+    "Private material cannot be separated from the public report."
+  ],
+  "claim_ceiling": "DRAFT_TEST_DESIGN_ONLY_NO_MODEL_RUN_OR_OUTCOME_CLAIM"
+}

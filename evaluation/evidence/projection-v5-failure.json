@@ -1,0 +1,15 @@
+{
+  "schema_version": "clutch-minimized-evidence.v1",
+  "evidence_id": "E-PROJECTION-V5-FAIL",
+  "source": {
+    "availability": "LOCAL_PRIVATE_NOT_BUNDLED",
+    "summary_sha256": "07fdb7a14c636b07ec0677f14cf912425dcf3c84098251432ab461b3ab3cee92"
+  },
+  "status": "FAIL",
+  "checks": "17/19",
+  "candidate_subsets_evaluated": 512,
+  "observed_manifest_bytes": 376,
+  "failure": "The frozen counterexamples did not independently vary task identity or authorization, so a smaller field set passed by exploiting a hole in the test domain.",
+  "disposition": "PRESERVED_AS_FAILED_NEGATIVE_RESULT_DO_NOT_ADOPT",
+  "claim_ceiling": "LOCAL_FAILURE_RECORD_ONLY"
+}

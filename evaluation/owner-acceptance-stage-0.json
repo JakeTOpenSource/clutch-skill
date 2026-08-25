@@ -1,0 +1,65 @@
+{
+  "schema_version": "clutch-owner-acceptance.v1",
+  "acceptance_id": "clutch-stage-0-preparation-acceptance-001",
+  "sequence": 1,
+  "previous_acceptance_digest": null,
+  "status": "ACCEPTED_STAGE_0_PREPARATION_ONLY",
+  "observation_boundary": "APPROVAL_OBSERVED_IN_CURRENT_TRUSTED_HOST_CONVERSATION_REPOSITORY_DOES_NOT_AUTHENTICATE_SPEAKER",
+  "source_statement_minimized": "Approved.",
+  "recorded_date_metadata": "2026-08-23",
+  "proposal_ref": {
+    "path": "evaluation/study-proposal.json",
+    "sha256": "sha256:563f4253f4fafae77b2a2102124e079ed31d5131be37c6eb0872bd7ade1426f8",
+    "schema_version": "clutch-study-proposal.v1",
+    "status": "PROPOSED_OWNER_REVIEW"
+  },
+  "accepted_scope": {
+    "primary_comparison": "WORKER_APPROVED_CARD_MINUS_WORKER_FULL_CONTEXT",
+    "stage_0_preparation_authorized": true,
+    "stage_0_model_run_authorized": false,
+    "stage_0_independent_tasks": 5,
+    "stage_0_condition_runs": 20,
+    "stage_0_maximum_agent_hours": 10,
+    "primary_worker": "gpt-5.6-terra",
+    "replication_worker": "gpt-5.6-luna",
+    "replication_status": "DEFERRED_SEPARATE",
+    "pedal_protocol": "SHADOW_ONLY",
+    "two_key_extension": "DESIGN_LATER_DEFAULT_OFF_NO_ACTIVATION",
+    "github_publication_authorized": false,
+    "outcome_claims_authorized": []
+  },
+  "decision_dispositions": [
+    {
+      "decision_id": "OD-001",
+      "accepted_value": "YES_FULL_CONTEXT_WORKER_PRIMARY_FRONTIER_DIAGNOSTIC"
+    },
+    {
+      "decision_id": "OD-002",
+      "accepted_value": "YES_STAGE_0_PREPARATION_ONLY"
+    },
+    {
+      "decision_id": "OD-003",
+      "accepted_value": "DEFER_UNTIL_AFTER_STAGE_0_NO_STAGE_0_OUTCOME_CLAIM"
+    },
+    {
+      "decision_id": "OD-004",
+      "accepted_value": "STAGE_0_RAW_SECONDS_PLUS_25_50_100_SENSITIVITY_NO_PRIMARY_COST_VERDICT"
+    },
+    {
+      "decision_id": "OD-005",
+      "accepted_value": "WAIT_UNTIL_STAGE_0_INSTRUMENTATION_PASSES"
+    },
+    {
+      "decision_id": "OD-006",
+      "accepted_value": "DESIGN_SEPARATELY_AFTER_HUMAN_APPROVED_PATH_STABLE_NO_ACTIVATION"
+    }
+  ],
+  "remaining_run_gates": [
+    "Freeze the exact five-task manifest and initial workspace digests.",
+    "Prove required token, provider-charge, latency, review-time, and model-identity telemetry can be captured without inference.",
+    "Bind an exact Stage 0 cost or token ceiling and stop rule.",
+    "Record a separate Stage 0 model-run authorization after those artifacts pass.",
+    "Keep the two-key path disabled and the Pedal selector in shadow mode."
+  ],
+  "claim_ceiling": "OWNER_ACCEPTED_STAGE_0_PREPARATION_ONLY_NO_MODEL_RUN_NO_PUBLICATION_NO_OUTCOME_CLAIM"
+}

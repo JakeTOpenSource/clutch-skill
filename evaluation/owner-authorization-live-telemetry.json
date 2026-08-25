@@ -1,0 +1,44 @@
+{
+  "schema_version": "clutch-owner-authorization.v1",
+  "authorization_id": "clutch-live-telemetry-probe-authorization-001",
+  "sequence": 3,
+  "previous_receipt_ref": "evaluation/stage-0-preparation-receipt.json",
+  "previous_receipt_sha256": "sha256:3dc9074cb5fa114e7fb7645842da331b0079a4ffd73e8188a5da9e9e294b227f",
+  "status": "AUTHORIZED_BOUNDED_LIVE_TELEMETRY_PROBE_ONLY",
+  "observation_boundary": "APPROVAL_OBSERVED_IN_CURRENT_TRUSTED_HOST_CONVERSATION_REPOSITORY_DOES_NOT_AUTHENTICATE_SPEAKER",
+  "source_statements_minimized": [
+    "You have my blessing.",
+    "Approved on the rest."
+  ],
+  "recorded_date_metadata": "2026-08-23",
+  "accepted_scope": {
+    "purpose": "VERIFY_LIVE_PROVIDER_MODEL_AND_USAGE_TELEMETRY_BEFORE_ANY_STAGE_0_BUILD",
+    "maximum_provider_calls": 2,
+    "call_order": [
+      "gpt-5.6-sol",
+      "gpt-5.6-terra"
+    ],
+    "maximum_observed_input_tokens_per_call": 2000,
+    "maximum_output_tokens_per_call": 64,
+    "maximum_aggregate_calculated_text_charge_nanousd": 50000000,
+    "service_tier": "default",
+    "reasoning_effort": "none",
+    "tools": "DISABLED",
+    "response_storage": false,
+    "automatic_retry": false,
+    "model_file_mutation": false,
+    "raw_provider_payload_publication": false,
+    "minimized_receipt_permitted": true,
+    "stage_0_build_or_model_run_authorized": false,
+    "github_publication_authorized": false,
+    "outcome_claims_authorized": []
+  },
+  "gates": [
+    "SOL_MUST_COMPLETE_WITH_EXACT_RESOLVED_MODEL_AND_ALL_REQUIRED_USAGE_FIELDS_BEFORE_TERRA",
+    "SOL_OUTPUT_MUST_MATCH_THE_FIXED_MARKER_AND_CONTAIN_NO_TOOL_CALL",
+    "PROJECTED_TERRA_MAXIMUM_PLUS_OBSERVED_SOL_CHARGE_MUST_REMAIN_WITHIN_THE_AGGREGATE_CAP",
+    "ANY_HTTP_FAILURE_SCHEMA_FAILURE_LIMIT_BREACH_OR_EXISTING_ATTEMPT_MARKER_RETURNS_THE_PROBE_TO_HOLD",
+    "A_FAILED_OR_INTERRUPTED_PROVIDER_ATTEMPT_IS_RECORDED_AND_IS_NOT_AUTOMATICALLY_RETRIED"
+  ],
+  "claim_ceiling": "LIVE_TELEMETRY_FEASIBILITY_ONLY_NO_STAGE_0_RUN_NO_SAVINGS_QUALITY_RESILIENCE_OR_GENERAL_MODEL_CLAIM"
+}

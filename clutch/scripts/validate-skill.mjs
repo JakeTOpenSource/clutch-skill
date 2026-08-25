@@ -4,7 +4,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ALLOWED_FRONTMATTER = new Set(["name", "description", "license", "allowed-tools", "metadata"]);
+const ALLOWED_FRONTMATTER = new Set(["name", "description", "license", "compatibility", "allowed-tools", "metadata"]);
 const NAME_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function fail(message) {
@@ -78,7 +78,7 @@ function yamlQuotedValue(source, key) {
 
 function validateOpenAiYaml(skillRoot, skillName) {
   const path = join(skillRoot, "agents", "openai.yaml");
-  if (!existsSync(path)) return fail("agents/openai.yaml not found");
+  if (!existsSync(path)) return { message: "Optional agents/openai.yaml is absent", valid: true };
   const source = readFileSync(path, "utf8");
   if (source.includes("\t")) return fail("agents/openai.yaml must use spaces, not tabs");
 
@@ -140,6 +140,11 @@ export function validateSkill(skillRoot) {
   if (description.length > 1024) return fail("Skill description exceeds 1024 characters");
   if (description.includes("<") || description.includes(">")) return fail("Skill description cannot contain angle brackets");
   if (description.startsWith("[TODO:")) return fail("Skill description contains an unfinished TODO placeholder");
+  if (Object.hasOwn(frontmatter, "compatibility")) {
+    const compatibility = String(frontmatter.compatibility).trim();
+    if (!compatibility) return fail("Skill compatibility must not be empty when present");
+    if (compatibility.length > 500) return fail("Skill compatibility exceeds 500 characters");
+  }
 
   const body = content.slice(frontmatterMatch[0].length);
   if (unfinishedTodoOutsideFences(body)) return fail("Skill instructions contain an unfinished TODO placeholder");
@@ -148,7 +153,7 @@ export function validateSkill(skillRoot) {
 
   const openAiResult = validateOpenAiYaml(root, name);
   if (!openAiResult.valid) return openAiResult;
-  return { message: "SKILL VALID: dependency-free structural checks passed", valid: true };
+  return { message: "SKILL VALID: Agent Skills structural checks passed", valid: true };
 }
 
 function main() {

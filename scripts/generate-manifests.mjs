@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { createHash } from "node:crypto";
-import { readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import assert from "node:assert/strict";
+import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { digestObject } from "../clutch/scripts/card-gate.mjs";
@@ -35,7 +36,25 @@ function receipt(path) {
 }
 
 function sortedReceipts(paths) {
-  return paths.map(receipt).sort((left, right) => left.path.localeCompare(right.path));
+  return paths.map(receipt).sort((left, right) => left.path === right.path ? 0 : left.path < right.path ? -1 : 1);
+}
+
+function sortedUnique(values, label) {
+  assert.ok(Array.isArray(values) && values.length > 0, `${label} must be a nonempty array`);
+  const sorted = [...values].sort();
+  assert.equal(new Set(sorted).size, sorted.length, `${label} contains duplicates`);
+  assert.deepEqual(values, sorted, `${label} must be sorted`);
+  return sorted;
+}
+
+function resolveAllowlistedPath(portable, label) {
+  assert.equal(typeof portable, "string", `${label} contains a non-string path`);
+  assert.ok(portable.length > 0 && !portable.includes("\\") && !isAbsolute(portable), `${label} contains a non-portable path: ${portable}`);
+  const absolute = resolve(root, portable);
+  const relation = relative(root, absolute);
+  assert.ok(relation !== "" && relation !== ".." && !relation.startsWith(`..${process.platform === "win32" ? "\\" : "/"}`) && !isAbsolute(relation), `${label} escapes the repository: ${portable}`);
+  assert.ok(statSync(absolute).isFile(), `${label} does not name a file: ${portable}`);
+  return absolute;
 }
 
 function writeJson(path, value) {
@@ -48,14 +67,21 @@ const canonicalSkill = readFileSync(canonicalSkillPath, "utf8");
 const humanSkill = canonicalSkill.replaceAll("](references/", "](clutch/references/");
 writeFileSync(humanSkillPath, humanSkill, "utf8");
 
-const implementationPaths = [
-  join(root, "AGENTS.example.md"),
-  humanSkillPath,
-  join(root, "model-map.example.json"),
-  join(root, "scripts", "generate-manifests.mjs"),
-  join(root, "scripts", "verify-release.mjs"),
-  ...walkFiles(join(root, "clutch")),
-];
+const allowlist = JSON.parse(readFileSync(join(root, "release-files.json"), "utf8"));
+assert.equal(allowlist.schema_version, "clutch-release-allowlist.v1");
+assert.equal(allowlist.status, "PREPARE_ONLY");
+const allowedReleaseFiles = sortedUnique(allowlist.release_files, "release_files");
+const allowedImplementationFiles = sortedUnique(allowlist.implementation_files, "implementation_files");
+for (const path of allowedImplementationFiles) {
+  assert.ok(allowedReleaseFiles.includes(path), `Implementation file is not release-allowlisted: ${path}`);
+}
+const actualReleaseFiles = walkFiles(root)
+  .map(portablePath)
+  .filter((path) => path !== "release-manifest.json")
+  .sort();
+assert.deepEqual(actualReleaseFiles, allowedReleaseFiles, "Repository contains a missing or unallowlisted release file");
+
+const implementationPaths = allowedImplementationFiles.map((path) => resolveAllowlistedPath(path, "implementation_files"));
 
 const implementationManifest = {
   schema_version: "implementation-manifest.v1",
@@ -69,11 +95,13 @@ writeJson(join(root, "implementation-manifest.json"), implementationManifest);
 const implementationDigest = digestObject(implementationManifest);
 const policyPath = join(root, "policy.example.json");
 const policy = JSON.parse(readFileSync(policyPath, "utf8"));
-policy.policy_id = `clutch-policy-v1@${implementationDigest}`;
+policy.schema_version = "routing-policy.v3";
+policy.implementation_digest = implementationDigest;
+policy.policy_id = `clutch-policy-v3@${implementationDigest}`;
 writeJson(policyPath, policy);
 
 const excludedReleasePaths = new Set(["release-manifest.json"]);
-const releasePaths = walkFiles(root).filter((path) => !excludedReleasePaths.has(portablePath(path)));
+const releasePaths = allowedReleaseFiles.map((path) => resolveAllowlistedPath(path, "release_files"));
 const releaseManifest = {
   schema_version: "clutch-release-manifest.v1",
   status: "PREPARE_ONLY",

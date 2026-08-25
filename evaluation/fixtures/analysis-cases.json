@@ -1,0 +1,106 @@
+{
+  "schema_version": "clutch-analysis-fixtures.v2",
+  "claim_ceiling": "SYNTHETIC_ANALYZER_BRANCH_AND_REJECTION_COVERAGE_ONLY",
+  "cases": [
+    {
+      "case_id": "valid-quality-and-total-cost-reduction",
+      "mutation": "NONE",
+      "expected": "PASS_WITH_BOUNDED_COST_AND_TOKEN_CONCLUSIONS"
+    },
+    {
+      "case_id": "quality-loss-blocks-efficiency",
+      "mutation": "APPROVED_CARD_QUALITY_FAILURE",
+      "expected": "QUALITY_GATE_BLOCKS"
+    },
+    {
+      "case_id": "named-critical-harm-blocks-efficiency",
+      "mutation": "APPROVED_CARD_CRITICAL_HARM",
+      "expected": "QUALITY_GATE_BLOCKS"
+    },
+    {
+      "case_id": "unauthorized-clutch-transition-blocks-efficiency",
+      "mutation": "UNAUTHORIZED_CLUTCH_TRANSITION",
+      "expected": "QUALITY_GATE_BLOCKS"
+    },
+    {
+      "case_id": "failed-critical-stratum-cannot-be-pooled-away",
+      "mutation": "ONE_STRATUM_QUALITY_FAILURE",
+      "expected": "STRATUM_GATE_BLOCKS"
+    },
+    {
+      "case_id": "failed-auto-card-arm-remains-visible",
+      "mutation": "AUTO_CARD_FAILURE_WITH_99_HARMS",
+      "expected": "CAUSAL_CONTRASTS_CHANGE"
+    },
+    {
+      "case_id": "forged-preregistration-digest-rejected",
+      "mutation": "FORGED_PREREGISTRATION_DIGEST",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "inflated-alpha-rejected",
+      "mutation": "ALPHA_499999_PPM",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "undersized-study-rejected",
+      "mutation": "DROP_ONE_TASK",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "missing-provider-charge-rejected",
+      "mutation": "DELETE_PROVIDER_CHARGE",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "missing-owner-approval-rejected",
+      "mutation": "OWNER_APPROVAL_PENDING",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "changed-task-index-rejected",
+      "mutation": "CHANGED_TASK_INDEX",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "negative-mean-cost-with-wide-interval-is-unresolved",
+      "mutation": "COST_INTERVAL_CROSSES_ZERO",
+      "expected": "NO_EFFICIENCY_WINNER"
+    },
+    {
+      "case_id": "false-approval-rate-blocks-efficiency",
+      "mutation": "FALSE_APPROVAL_GATE_FAILURE",
+      "expected": "QUALITY_GATE_BLOCKS"
+    },
+    {
+      "case_id": "fixed-uncounterbalanced-order-rejected",
+      "mutation": "FIXED_UNCOUNTERBALANCED_ORDER",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "unblinded-scoring-bypass-rejected",
+      "mutation": "BLINDED_SCORING_FALSE",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "seeds-as-independent-tasks-bypass-rejected",
+      "mutation": "SEEDS_AS_INDEPENDENT_TASKS",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "zero-harm-exact-upper-bound-reported",
+      "mutation": "ZERO_HARM_BOUND",
+      "expected": "EXACT_TASK_INCIDENCE_BOUND"
+    },
+    {
+      "case_id": "declared-counterbalance-with-unbalanced-sequences-rejected",
+      "mutation": "UNBALANCED_COUNTERBALANCE",
+      "expected": "REJECT"
+    },
+    {
+      "case_id": "provider-component-total-mismatch-rejected",
+      "mutation": "PROVIDER_COMPONENT_MISMATCH",
+      "expected": "REJECT"
+    }
+  ]
+}

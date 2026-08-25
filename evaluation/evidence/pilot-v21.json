@@ -1,0 +1,41 @@
+{
+  "schema_version": "clutch-minimized-evidence.v1",
+  "evidence_id": "E-PILOT-V21",
+  "source": {
+    "availability": "LOCAL_PRIVATE_NOT_BUNDLED",
+    "summary_sha256": "0df12e9512058bd2b7829cab870867fb6f7ab1a36d40526b3f0427b9ae1bb617",
+    "preregistration_sha256": "4fbc885b5e0c0697c53658160dca5011097258f0f93d00aff66eae54dc6d515b"
+  },
+  "design": {
+    "preregistered": true,
+    "paired_rounds": 6,
+    "production_window_minutes": 30,
+    "arms": ["DIRECT_GROWING_CONTEXT", "CLUTCH_COMPACT_HANDOFF"],
+    "requested_route": ["SOL_READ_ONLY", "TERRA_ROUNDS_1_TO_3", "LUNA_ROUNDS_4_TO_6"],
+    "model_identity_basis": "CLIENT_REQUEST_ONLY_NO_SERVICE_ATTESTATION",
+    "automatic_retry": false
+  },
+  "quality": {
+    "direct": {"accepted": 5, "attempted": 6, "critical_failures": 2, "integration_checks": "10/10", "quality_bar_pass": false},
+    "clutch": {"accepted": 6, "attempted": 6, "critical_failures": 0, "integration_checks": "10/10", "quality_bar_pass": true}
+  },
+  "measurements": {
+    "direct": {"raw_input_plus_output_tokens": 1031809, "uncached_input_plus_output_tokens": 500609, "prompt_bytes": 1581508, "elapsed_milliseconds": 428231},
+    "clutch": {"raw_input_plus_output_tokens": 449319, "uncached_input_plus_output_tokens": 268583, "prompt_bytes": 365113, "elapsed_milliseconds": 492824},
+    "clutch_prompt_over_direct_by_round": [0.0175, 0.0382, 0.0542, 0.0801, 0.0972, 0.1166]
+  },
+  "comparison_gate": {
+    "comparison_authorized": false,
+    "verdict": "NOT_AUTHORIZED_QUALITY_BAR",
+    "reason": "Only the Clutch arm passed the preregistered quality bar, so the study preserved descriptive measurements but did not authorize an efficiency winner."
+  },
+  "limitations": [
+    "One six-round pilot has low statistical power.",
+    "The two arms necessarily received different context representations.",
+    "Requested model identity was not independently attested.",
+    "Task difficulty changed by round, so the model transition is not a causal resilience estimate.",
+    "Human review time was not valued as labor cost.",
+    "Rate-card equivalents may not equal subscription use or an invoice."
+  ],
+  "claim_ceiling": "ONE_LOCAL_PREREGISTERED_MODEL_SWITCH_QC_PILOT_DESCRIPTIVE_ONLY"
+}

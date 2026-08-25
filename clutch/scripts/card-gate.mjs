@@ -28,17 +28,18 @@ const ROUTING_KEYS = new Set([
 ]);
 const POLICY_KEYS = new Set([
   "schema_version", "policy_id", "stream_id", "phase", "human_actor_ids",
-  "advisor_actor_ids", "advisor_profile", "worker_profiles",
+  "advisor_actor_ids", "orchestrator_actor_ids", "advisor_profile", "worker_profiles",
   "max_worker_attempts", "max_concurrent_workers", "max_context_turns",
-  "max_card_bytes",
+  "max_card_bytes", "implementation_digest",
 ]);
 const EVENT_BASE_KEYS = new Set([
   "schema_version", "stream_id", "sequence", "previous_hash", "event_type",
   "actor_type", "actor_id", "statement", "event_hash",
 ]);
 const EVENT_OPTIONAL_KEYS = new Set([
-  "policy_hash", "card_id", "card_hash", "worker_profile", "worker_id",
-  "result_ref", "verification_ref", "verification_status",
+  "policy_hash", "implementation_digest", "card_id", "card_hash", "worker_profile", "worker_id",
+  "result_ref", "result_status", "result_receipt_hash", "verification_ref", "verification_status",
+  "verification_receipt_hash",
 ]);
 const EVENT_TYPES = new Set([
   "SYSTEM_ACTIVATED", "CARD_PROPOSED", "HUMAN_APPROVED", "HUMAN_REJECTED",
@@ -129,12 +130,14 @@ function validatePolicy(policy, errors) {
   }
   let valid = true;
   const checks = [
-    [policy.schema_version === "routing-policy.v1", "INVALID_POLICY_VERSION"],
-    [nonemptyString(policy.policy_id), "INVALID_POLICY_ID"],
+    [policy.schema_version === "routing-policy.v3", "INVALID_POLICY_VERSION"],
+    [typeof policy.implementation_digest === "string" && HASH_PATTERN.test(policy.implementation_digest), "INVALID_IMPLEMENTATION_DIGEST"],
+    [policy.policy_id === `clutch-policy-v3@${policy.implementation_digest}`, "INVALID_POLICY_ID"],
     [nonemptyString(policy.stream_id), "INVALID_STREAM_ID"],
     [["PREPARE_ONLY", "ACTIVE"].includes(policy.phase), "INVALID_POLICY_PHASE"],
     [stringList(policy.human_actor_ids, true), "INVALID_HUMAN_ACTORS"],
     [stringList(policy.advisor_actor_ids, true), "INVALID_ADVISOR_ACTORS"],
+    [stringList(policy.orchestrator_actor_ids, true), "INVALID_ORCHESTRATOR_ACTORS"],
     [nonemptyString(policy.advisor_profile), "INVALID_ADVISOR_PROFILE"],
     [stringList(policy.worker_profiles, true), "INVALID_WORKER_PROFILES"],
   ];
@@ -169,7 +172,16 @@ function validatePolicy(policy, errors) {
       addError(errors, "DUPLICATE_ADVISOR_ACTOR", "policy.advisor_actor_ids");
       valid = false;
     }
-    if (policy.human_actor_ids.some((actor) => policy.advisor_actor_ids.includes(actor))) {
+    if (new Set(policy.orchestrator_actor_ids).size !== policy.orchestrator_actor_ids.length) {
+      addError(errors, "DUPLICATE_ORCHESTRATOR_ACTOR", "policy.orchestrator_actor_ids");
+      valid = false;
+    }
+    const controlActors = [
+      ...policy.human_actor_ids,
+      ...policy.advisor_actor_ids,
+      ...policy.orchestrator_actor_ids,
+    ];
+    if (new Set(controlActors).size !== controlActors.length) {
       addError(errors, "ACTOR_ROLE_COLLISION", "policy");
       valid = false;
     }
@@ -274,7 +286,7 @@ function validateCard(card, policy, errors, index) {
   return valid;
 }
 
-function report({ errors, policyHash = null, activated = false, eventCount = 0, tipHash = null, cardSummaries = [], releasedCards = [] }) {
+function report({ errors, policyHash = null, implementationDigest = null, activated = false, eventCount = 0, tipHash = null, cardSummaries = [], releasedCards = [] }) {
   const valid = errors.length === 0;
   return {
     authority: {
@@ -287,7 +299,7 @@ function report({ errors, policyHash = null, activated = false, eventCount = 0, 
     released_cards: releasedCards,
     schema_version: "routing-report.v1",
     status: valid ? "PASS" : "FAIL",
-    stream: { activated, event_count: eventCount, policy_hash: policyHash, tip_hash: tipHash },
+    stream: { activated, event_count: eventCount, implementation_digest: implementationDigest, policy_hash: policyHash, tip_hash: tipHash },
     validation: { errors, status: valid ? "VALID" : "INVALID" },
   };
 }
@@ -303,19 +315,20 @@ export function reduceInput(payload) {
   }
   const policy = payload.policy;
   if (!validatePolicy(policy, errors)) return [report({ errors }), 2];
+  const implementationDigest = policy.implementation_digest;
 
   let policyHash;
   try {
     policyHash = digestObject(policy);
   } catch (error) {
     addError(errors, String(error.message).split(":", 1)[0], "policy");
-    return [report({ errors }), 2];
+    return [report({ errors, implementationDigest }), 2];
   }
 
   const cards = payload.cards;
   if (!Array.isArray(cards)) {
     addError(errors, "INVALID_CARDS", "cards");
-    return [report({ errors, policyHash }), 2];
+    return [report({ errors, policyHash, implementationDigest }), 2];
   }
   const cardMap = new Map();
   const cardHashes = new Map();
@@ -332,7 +345,7 @@ export function reduceInput(payload) {
   const events = payload.events;
   if (!Array.isArray(events)) {
     addError(errors, "INVALID_EVENTS", "events");
-    return [report({ errors, policyHash }), 2];
+    return [report({ errors, policyHash, implementationDigest }), 2];
   }
   let previousHash = null;
   const seenEventIds = new Set();
@@ -370,16 +383,17 @@ export function reduceInput(payload) {
 
   if (errors.length > 0) {
     const cardSummaries = [...cardMap.keys()].sort().map((cardId) => ({
-      card_hash: cardHashes.get(cardId), card_id: cardId,
+      card_hash: cardHashes.get(cardId),
       release_status: "WITHHELD_INVALID", state: "INVALID",
     }));
-    return [report({ errors, policyHash, eventCount: events.length, tipHash: previousHash, cardSummaries }), 2];
+    return [report({ errors, policyHash, implementationDigest, eventCount: events.length, tipHash: previousHash, cardSummaries }), 2];
   }
 
   const states = new Map([...cardMap.keys()].map((cardId) => [cardId, "UNSEEN"]));
   const assignedWorkers = new Map();
   const assignedCoordinators = new Map();
   const verificationStatuses = new Map();
+  const resultStatuses = new Map();
   const acceptedCards = new Set();
   let activated = false;
 
@@ -393,6 +407,7 @@ export function reduceInput(payload) {
       if (actorType !== "HUMAN" || !policy.human_actor_ids.includes(actorId)) addError(errors, "INVALID_ACTIVATION_ACTOR", locator);
       else if (policy.phase !== "ACTIVE") addError(errors, "ACTIVATION_IN_PREPARE_ONLY", locator);
       else if (index !== 0) addError(errors, "ACTIVATION_NOT_GENESIS", locator);
+      else if (event.implementation_digest !== implementationDigest) addError(errors, "IMPLEMENTATION_DIGEST_MISMATCH", locator);
       else if (event.policy_hash !== policyHash) addError(errors, "POLICY_HASH_MISMATCH", locator);
       else if (activated) addError(errors, "DUPLICATE_ACTIVATION", locator);
       else activated = true;
@@ -424,12 +439,12 @@ export function reduceInput(payload) {
       else states.set(cardId, eventType === "HUMAN_APPROVED" ? "APPROVED" : "REJECTED");
     } else if (eventType === "WORK_ASSIGNED") {
       const workerId = event.worker_id;
-      if (actorType !== "COORDINATOR" || !nonemptyString(actorId) || policy.human_actor_ids.includes(actorId) || policy.advisor_actor_ids.includes(actorId)) addError(errors, "INVALID_COORDINATOR_ACTOR", locator);
+      if (actorType !== "COORDINATOR" || !policy.orchestrator_actor_ids.includes(actorId)) addError(errors, "INVALID_COORDINATOR_ACTOR", locator);
       else if (!activated || policy.phase !== "ACTIVE") addError(errors, "SYSTEM_NOT_ACTIVE", locator);
       else if (state !== "APPROVED") addError(errors, "CARD_NOT_ASSIGNABLE", locator);
       else if (cardMap.get(cardId).task_class !== "EXECUTION_REQUIRED") addError(errors, "TASK_NOT_EXECUTABLE", locator);
       else if (event.worker_profile !== cardMap.get(cardId).routing.worker_profile) addError(errors, "WORKER_PROFILE_MISMATCH", locator);
-      else if (!nonemptyString(workerId) || workerId === actorId || policy.human_actor_ids.includes(workerId) || policy.advisor_actor_ids.includes(workerId)) addError(errors, "INVALID_WORKER_ID", locator);
+      else if (!nonemptyString(workerId) || workerId === actorId || policy.human_actor_ids.includes(workerId) || policy.advisor_actor_ids.includes(workerId) || policy.orchestrator_actor_ids.includes(workerId)) addError(errors, "INVALID_WORKER_ID", locator);
       else {
         assignedWorkers.set(cardId, workerId);
         assignedCoordinators.set(cardId, actorId);
@@ -439,13 +454,20 @@ export function reduceInput(payload) {
       if (actorType !== "WORKER" || actorId !== assignedWorkers.get(cardId)) addError(errors, "INVALID_WORKER_ACTOR", locator);
       else if (state !== "ASSIGNED") addError(errors, "INVALID_CARD_TRANSITION", locator);
       else if (!nonemptyString(event.result_ref)) addError(errors, "MISSING_RESULT_REF", locator);
-      else states.set(cardId, "RESULT_RECORDED");
+      else if (!["PASS", "FAIL", "STOPPED", "UNKNOWN"].includes(event.result_status)) addError(errors, "INVALID_RESULT_STATUS", locator);
+      else if (typeof event.result_receipt_hash !== "string" || !HASH_PATTERN.test(event.result_receipt_hash)) addError(errors, "MISSING_RESULT_RECEIPT_HASH", locator);
+      else {
+        resultStatuses.set(cardId, event.result_status);
+        states.set(cardId, "RESULT_RECORDED");
+      }
     } else if (eventType === "VERIFICATION_RECORDED") {
       const verification = event.verification_status;
-      if (actorType !== "VERIFIER" || !nonemptyString(actorId) || actorId === assignedWorkers.get(cardId) || actorId === assignedCoordinators.get(cardId) || policy.human_actor_ids.includes(actorId) || policy.advisor_actor_ids.includes(actorId)) addError(errors, "INVALID_VERIFIER_ACTOR", locator);
+      if (actorType !== "VERIFIER" || !nonemptyString(actorId) || actorId === assignedWorkers.get(cardId) || actorId === assignedCoordinators.get(cardId) || policy.human_actor_ids.includes(actorId) || policy.advisor_actor_ids.includes(actorId) || policy.orchestrator_actor_ids.includes(actorId)) addError(errors, "INVALID_VERIFIER_ACTOR", locator);
       else if (state !== "RESULT_RECORDED") addError(errors, "INVALID_CARD_TRANSITION", locator);
       else if (!["PASS", "FAIL", "UNKNOWN"].includes(verification)) addError(errors, "INVALID_VERIFICATION_STATUS", locator);
       else if (!nonemptyString(event.verification_ref)) addError(errors, "MISSING_VERIFICATION_REF", locator);
+      else if (typeof event.verification_receipt_hash !== "string" || !HASH_PATTERN.test(event.verification_receipt_hash)) addError(errors, "MISSING_VERIFICATION_RECEIPT_HASH", locator);
+      else if (verification === "PASS" && resultStatuses.get(cardId) !== "PASS") addError(errors, "WORKER_DID_NOT_REPORT_PASS", locator);
       else {
         verificationStatuses.set(cardId, verification);
         states.set(cardId, verification === "PASS" ? "VERIFIED" : "CORRECTION_REQUIRED");
@@ -459,21 +481,21 @@ export function reduceInput(payload) {
       }
     } else if (eventType === "HUMAN_REQUESTED_CORRECTION") {
       if (actorType !== "HUMAN" || !policy.human_actor_ids.includes(actorId)) addError(errors, "INVALID_HUMAN_ACTOR", locator);
-      else if (!["RESULT_RECORDED", "VERIFIED"].includes(state)) addError(errors, "INVALID_CARD_TRANSITION", locator);
+      else if (!["RESULT_RECORDED", "VERIFIED", "CORRECTION_REQUIRED"].includes(state)) addError(errors, "INVALID_CARD_TRANSITION", locator);
       else states.set(cardId, "CORRECTION_REQUIRED");
     } else if (eventType === "CLOSED") {
-      if (actorType !== "COORDINATOR" || !nonemptyString(actorId) || policy.human_actor_ids.includes(actorId) || policy.advisor_actor_ids.includes(actorId) || (assignedCoordinators.has(cardId) && actorId !== assignedCoordinators.get(cardId))) addError(errors, "INVALID_COORDINATOR_ACTOR", locator);
-      else if (!["ACCEPTED", "REJECTED"].includes(state)) addError(errors, "INVALID_CARD_TRANSITION", locator);
+      if (actorType !== "COORDINATOR" || !policy.orchestrator_actor_ids.includes(actorId) || (assignedCoordinators.has(cardId) && actorId !== assignedCoordinators.get(cardId))) addError(errors, "INVALID_COORDINATOR_ACTOR", locator);
+      else if (!["ACCEPTED", "REJECTED", "CORRECTION_REQUIRED"].includes(state)) addError(errors, "INVALID_CARD_TRANSITION", locator);
       else states.set(cardId, "CLOSED");
     }
   });
 
   if (errors.length > 0) {
     const cardSummaries = [...cardMap.keys()].sort().map((cardId) => ({
-      card_hash: cardHashes.get(cardId), card_id: cardId,
+      card_hash: cardHashes.get(cardId),
       release_status: "WITHHELD_INVALID", state: "INVALID",
     }));
-    return [report({ errors, policyHash, activated, eventCount: events.length, tipHash: previousHash, cardSummaries }), 2];
+    return [report({ errors, policyHash, implementationDigest, activated, eventCount: events.length, tipHash: previousHash, cardSummaries }), 2];
   }
 
   const cardSummaries = [];
@@ -487,18 +509,17 @@ export function reduceInput(payload) {
       releaseStatus = "RELEASED";
       releasedCards.push({
         card_hash: cardHashes.get(cardId),
-        card_id: cardId,
         worker_profile: cardMap.get(cardId).routing.worker_profile,
       });
     } else if (state === "WAITING_APPROVAL") releaseStatus = "WITHHELD_APPROVAL";
     else if (state === "REJECTED") releaseStatus = "WITHHELD_REJECTED";
     else releaseStatus = "NOT_ASSIGNABLE";
     cardSummaries.push({
-      accepted: acceptedCards.has(cardId), card_hash: cardHashes.get(cardId), card_id: cardId,
+      accepted: acceptedCards.has(cardId), card_hash: cardHashes.get(cardId),
       release_status: releaseStatus, state,
     });
   }
-  return [report({ errors: [], policyHash, activated, eventCount: events.length, tipHash: previousHash, cardSummaries, releasedCards }), 0];
+  return [report({ errors: [], policyHash, implementationDigest, activated, eventCount: events.length, tipHash: previousHash, cardSummaries, releasedCards }), 0];
 }
 
 function main() {

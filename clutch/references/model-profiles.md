@@ -10,7 +10,7 @@ The protocol uses symbolic profiles so it remains portable across vendors and fu
 
 The model map is an adapter, not accepted policy. Validate every mapped model against the active environment before assignment. Do not silently replace an unavailable model.
 
-## Current Codex mapping example
+## Example mapping for one Codex host
 
 ```json
 {
@@ -36,7 +36,7 @@ The model map is an adapter, not accepted policy. Validate every mapped model ag
 }
 ```
 
-This example is not a claim that the models are available in every account or host. Other providers may map their own frontier, economy, and balanced models when the orchestrator supports them and representative evaluations pass.
+This example is not a claim that the models are available in every account or host. Each host needs its own explicit mapping from the symbolic profiles to available models. Keep that mapping outside the canonical skill so the protocol remains vendor-neutral. Other providers may map their own frontier, economy, and balanced models only after representative evaluations pass.
 
 ## Selection rules
 

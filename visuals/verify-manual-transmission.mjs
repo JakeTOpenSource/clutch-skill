@@ -99,7 +99,7 @@ assert.ok(architecture.includes("Only panel three overlays the edited lever, sel
 assert.ok(architecture.includes("Lower context volume and lower model price are separate possible benefits."));
 assert.ok(architecture.includes("NEUTRAL -> APPROVE CARD -> ENGAGED"));
 assert.ok(architecture.includes("the architecture is human-in-the-loop"));
-assert.ok(architecture.includes("every retry requires a new card and human approval"));
+assert.ok(architecture.includes("The same phase never runs twice."));
 assert.ok(readme.includes("guarantees no savings"));
 assert.ok(readme.includes("PREPARE_ONLY"));
 

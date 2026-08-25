@@ -1,0 +1,95 @@
+{
+  "schema_version": "clutch-stage0-preparation-receipt.v1",
+  "receipt_id": "clutch-stage0-preparation-001",
+  "sequence": 2,
+  "previous_receipt_ref": "evaluation/owner-acceptance-stage-0.json",
+  "status": "FROZEN_PREPARATION_MODEL_RUN_NOT_AUTHORIZED",
+  "recorded_date_metadata": "2026-08-23",
+  "model_run_authorized": false,
+  "github_publication_authorized": false,
+  "task_index_digest": "sha256:6569bde276aff38a50e1479a046f7a7b382e4f1f52f3659956a32b68dff1b34b",
+  "private_packet_digest": "sha256:460e6420d960554df2bb47942acd21a134dc3faa347ad6d06f3c261dc5acc999",
+  "private_source_receipts": [
+    {"path": "budget.json", "bytes": 1586, "sha256": "sha256:f04eef48cb104b50ae8ee00d189b6605f9b4e89a75394ad3443fa0983b45a2cb"},
+    {"path": "hidden-fixtures.mjs", "bytes": 12114, "sha256": "sha256:128c252fa45c34a73cc9cf1ce567e5679c143b8ad0a1a28dce4470d85e3df657"},
+    {"path": "price-sheet.json", "bytes": 2042, "sha256": "sha256:ee918574367ca8fdb7ec3ec622e77aa9e82622299e3a955fb8496f76f188dd2c"},
+    {"path": "run-config.json", "bytes": 2607, "sha256": "sha256:8edc599310247af6f70c6b4d5fd313bcba0ecef3c999e9b2470457e46e1ba1ed"},
+    {"path": "scripts/verify-stage0-packet.mjs", "bytes": 10464, "sha256": "sha256:3332a7d76597942036341a7a751316a3d71d5440bf976bac50dd6ecf1efc6448"},
+    {"path": "stage0-core.mjs", "bytes": 9241, "sha256": "sha256:2a2a12092baf85241537695be80fb70475160309ff2eae761c4d98c1b7b1e279"},
+    {"path": "task-population.mjs", "bytes": 12284, "sha256": "sha256:1745dd34b5a5ab2b2d02f09948fb5c9fa0c9ee8cc16852e98ad0d40112c5c00e"},
+    {"path": "telemetry-contract.json", "bytes": 1765, "sha256": "sha256:ec0eb397ea273c278343d036f91d7e4960c01fdc846eb4bf7a7c9d76d2af144b"},
+    {"path": "telemetry-fixtures.json", "bytes": 2156, "sha256": "sha256:2fd4970af3b1b6b6fa1ff5ddd1b5ca1aebbaa010a699d25ebbaa5e285d1af884"}
+  ],
+  "tasks": [
+    {
+      "task_id": "S0-T01",
+      "stratum": "SHORT_CONTROL_EXPECTED_TO_LOSE",
+      "transition_digest": "sha256:e34aa70b32523c179741165f440d665129d9dcfee44b10b066df7d744b01fba6",
+      "workspace_digest": "sha256:08694a311895db8a6115deb4affcc7f9453b4fc252771bb919623e74a46b441f",
+      "workspace_bytes": 3255,
+      "workspace_file_count": 5
+    },
+    {
+      "task_id": "S0-T02",
+      "stratum": "LONG_BOUNDED_BUILD",
+      "transition_digest": "sha256:8c4cafe1146f8b67622dc696958d5906026fe92599bfb0d829b41e9c4365ac7f",
+      "workspace_digest": "sha256:c1d342567ccbe4291b6ff84e1dfa9168b5252bdb0bbd3ad4a7488889d23fce2c",
+      "workspace_bytes": 395527,
+      "workspace_file_count": 5
+    },
+    {
+      "task_id": "S0-T03",
+      "stratum": "CONTRADICTORY_CONTEXT",
+      "transition_digest": "sha256:1ebdf1530ab808657997184f051563a4562c48932efb7d364a29203148cd41e4",
+      "workspace_digest": "sha256:b60ac25d92daf46422d4c983918cc6c6dfbfa5c03e92950f8d8c7636052c1957",
+      "workspace_bytes": 482946,
+      "workspace_file_count": 6
+    },
+    {
+      "task_id": "S0-T04",
+      "stratum": "STATE_CHANGED_AFTER_APPROVAL",
+      "transition_digest": "sha256:accaa0e77d961fddf123217c9deda4aa64098aad2a6fad61f8bac2379ce640ca",
+      "workspace_digest": "sha256:bcaed5d7ddc74166d81c9a29c1c79cdf98cbd5101065e582f0ecfabb566aca88",
+      "workspace_bytes": 286459,
+      "workspace_file_count": 6
+    },
+    {
+      "task_id": "S0-T05",
+      "stratum": "BOUNDARY_OR_INJECTION_STRESS",
+      "transition_digest": "sha256:dcb610f966bfc2411569682a68a7a4df959e6c7b158dc7c41c954600a6d0b1a0",
+      "workspace_digest": "sha256:422ec51f844afe66968caa39321f7c931dacfbcf17ec315ebae0fe2d462dd5a1",
+      "workspace_bytes": 296802,
+      "workspace_file_count": 6
+    }
+  ],
+  "design": {
+    "condition_runs": 20,
+    "maximum_agent_hours": 10,
+    "provider_calls_ceiling": 140,
+    "input_token_ceiling": 20000000,
+    "output_token_ceiling": 680000,
+    "per_request_input_token_ceiling": 260000,
+    "api_text_charge_ceiling_usd": 80,
+    "human_review_seconds_ceiling": 1800,
+    "maximum_total_economic_cost_at_100_usd_per_hour": 130,
+    "paid_builtin_tools": "DISABLED",
+    "automatic_retry": false,
+    "two_key_extension": "DISABLED",
+    "pedal_protocol": "SHADOW_ONLY"
+  },
+  "telemetry_feasibility": {
+    "official_response_usage_and_model_fields_documented": true,
+    "synthetic_parser_and_rejection_fixtures": "PASS_2_ACCEPTANCE_5_REJECTIONS",
+    "live_provider_capture": "NOT_RUN",
+    "invoice_reconciliation": "NOT_RUN",
+    "missing_completed_call_usage_rule": "HOLD",
+    "cost_basis": "CALCULATED_FROM_EXACT_USAGE_AND_FROZEN_API_PRICE_SHEET_NOT_CODEX_SUBSCRIPTION_BILLING"
+  },
+  "remaining_run_gates": [
+    "Perform a no-build live telemetry preflight only after separate provider-call authorization.",
+    "Reverify official prices immediately before execution.",
+    "Record separate Stage 0 model-run authorization.",
+    "Keep the exact private packet and public receipt digests fixed after authorization."
+  ],
+  "claim_ceiling": "TASK_AND_RESOURCE_PLAN_IDENTITY_ONLY_NO_LIVE_TELEMETRY_NO_MODEL_RUN_NO_SAVINGS_QUALITY_OR_RESILIENCE_CLAIM"
+}
